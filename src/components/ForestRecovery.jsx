@@ -186,7 +186,7 @@ const ForestRecovery = () => {
 
         <div className="flex flex-1 overflow-hidden">
           {/* Content Area */}
-          <div className="flex-1 p-4 space-y-4 overflow-y-auto">
+          <div className="flex-1 p-6 space-y-6 overflow-hidden flex flex-col">
             {/* Search and Filter Section */}
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
@@ -246,11 +246,11 @@ const ForestRecovery = () => {
                 <h3 className="text-sm font-semibold text-gray-900">Domain Controllers</h3>
               </div>
               
-              <div className="overflow-x-auto">
-                <table className="min-w-full text-sm">
-                  <thead className="bg-gray-50 border-b border-gray-200">
+              <div className="overflow-auto max-h-96" style={{ minHeight: '400px' }}>
+                <table className="w-full text-sm" style={{ minWidth: '1400px' }}>
+                  <thead className="bg-gray-50 border-b border-gray-200 sticky top-0 z-10">
                     <tr>
-                      <th className="text-left py-3 px-3 w-8">
+                      <th className="text-left py-3 px-3 font-medium text-gray-900 sticky left-0 bg-gray-50 z-20" style={{ width: '40px' }}>
                         <input
                           type="checkbox"
                           checked={selectAll}
@@ -258,23 +258,23 @@ const ForestRecovery = () => {
                           className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                         />
                       </th>
-                      <th className="text-left py-3 px-3 font-medium text-gray-900 whitespace-nowrap">Type</th>
-                      <th className="text-left py-3 px-3 font-medium text-gray-900 whitespace-nowrap min-w-[200px]">Domain</th>
-                      <th className="text-left py-3 px-3 font-medium text-gray-900 whitespace-nowrap min-w-[120px]">Domain SID</th>
-                      <th className="text-left py-3 px-3 font-medium text-gray-900 whitespace-nowrap">Site</th>
-                      <th className="text-left py-3 px-3 font-medium text-gray-900 whitespace-nowrap">SAM Account</th>
-                      <th className="text-left py-3 px-3 font-medium text-gray-900 whitespace-nowrap">NetBIOS</th>
-                      <th className="text-left py-3 px-3 font-medium text-gray-900 whitespace-nowrap min-w-[220px]">FQDN</th>
-                      <th className="text-center py-3 px-3 font-medium text-gray-900 whitespace-nowrap w-12">GC</th>
-                      <th className="text-center py-3 px-3 font-medium text-gray-900 whitespace-nowrap w-12">RO</th>
-                      <th className="text-left py-3 px-3 font-medium text-gray-900 whitespace-nowrap min-w-[120px]">IPv4 Address</th>
-                      <th className="text-left py-3 px-3 font-medium text-gray-900 whitespace-nowrap">Status</th>
+                      <th className="text-left py-3 px-3 font-medium text-gray-900 whitespace-nowrap" style={{ width: '80px' }}>Type</th>
+                      <th className="text-left py-3 px-3 font-medium text-gray-900 whitespace-nowrap" style={{ width: '180px' }}>Domain</th>
+                      <th className="text-left py-3 px-3 font-medium text-gray-900 whitespace-nowrap" style={{ width: '140px' }}>Domain SID</th>
+                      <th className="text-left py-3 px-3 font-medium text-gray-900 whitespace-nowrap" style={{ width: '150px' }}>Site</th>
+                      <th className="text-left py-3 px-3 font-medium text-gray-900 whitespace-nowrap" style={{ width: '120px' }}>SAM Account</th>
+                      <th className="text-left py-3 px-3 font-medium text-gray-900 whitespace-nowrap" style={{ width: '100px' }}>NetBIOS</th>
+                      <th className="text-left py-3 px-3 font-medium text-gray-900 whitespace-nowrap" style={{ width: '220px' }}>FQDN</th>
+                      <th className="text-center py-3 px-3 font-medium text-gray-900 whitespace-nowrap" style={{ width: '50px' }}>GC</th>
+                      <th className="text-center py-3 px-3 font-medium text-gray-900 whitespace-nowrap" style={{ width: '50px' }}>RO</th>
+                      <th className="text-left py-3 px-3 font-medium text-gray-900 whitespace-nowrap" style={{ width: '130px' }}>IPv4 Address</th>
+                      <th className="text-left py-3 px-3 font-medium text-gray-900 whitespace-nowrap" style={{ width: '100px' }}>Status</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
                     {domainControllers.map((dc) => (
                       <tr key={dc.id} className="hover:bg-gray-50">
-                        <td className="py-4 px-3">
+                        <td className="py-3 px-3 sticky left-0 bg-white hover:bg-gray-50 z-10" style={{ width: '40px' }}>
                           <input
                             type="checkbox"
                             checked={selectedRows.has(dc.id)}
@@ -282,51 +282,51 @@ const ForestRecovery = () => {
                             className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                           />
                         </td>
-                        <td className="py-4 px-3 whitespace-nowrap">
-                          <span className="text-gray-700">{dc.type}</span>
+                        <td className="py-3 px-3 whitespace-nowrap" style={{ width: '80px' }}>
+                          <span className="text-gray-700 text-xs">{dc.type}</span>
                         </td>
-                        <td className="py-4 px-3">
+                        <td className="py-3 px-3" style={{ width: '180px' }}>
                           <div className="flex items-center space-x-2">
                             <i className="fas fa-sitemap text-gray-400 text-xs"></i>
-                            <span className="font-medium text-gray-900 truncate">{dc.domain}</span>
+                            <span className="font-medium text-gray-900 truncate text-xs" title={dc.domain}>{dc.domain}</span>
                           </div>
                         </td>
-                        <td className="py-4 px-3">
-                          <span className="text-gray-700 font-mono text-xs truncate block max-w-[100px]" title={dc.domainSid}>{dc.domainSid}</span>
+                        <td className="py-3 px-3" style={{ width: '140px' }}>
+                          <span className="text-gray-700 font-mono text-xs truncate block" title={dc.domainSid}>{dc.domainSid}</span>
                         </td>
-                        <td className="py-4 px-3 whitespace-nowrap">
-                          <span className="text-gray-700">{dc.site}</span>
+                        <td className="py-3 px-3 whitespace-nowrap" style={{ width: '150px' }}>
+                          <span className="text-gray-700 text-xs truncate block" title={dc.site}>{dc.site}</span>
                         </td>
-                        <td className="py-4 px-3 whitespace-nowrap">
-                          <span className="text-gray-700">{dc.samAccountName}</span>
+                        <td className="py-3 px-3 whitespace-nowrap" style={{ width: '120px' }}>
+                          <span className="text-gray-700 text-xs">{dc.samAccountName}</span>
                         </td>
-                        <td className="py-4 px-3 whitespace-nowrap">
-                          <span className="text-gray-700">{dc.netBIOS}</span>
+                        <td className="py-3 px-3 whitespace-nowrap" style={{ width: '100px' }}>
+                          <span className="text-gray-700 text-xs">{dc.netBIOS}</span>
                         </td>
-                        <td className="py-4 px-3">
-                          <span className="text-gray-700 truncate block" title={dc.fqdn}>{dc.fqdn}</span>
+                        <td className="py-3 px-3" style={{ width: '220px' }}>
+                          <span className="text-gray-700 truncate block text-xs" title={dc.fqdn}>{dc.fqdn}</span>
                         </td>
-                        <td className="py-4 px-3 text-center">
+                        <td className="py-3 px-3 text-center" style={{ width: '50px' }}>
                           {dc.isGC ? (
-                            <i className="fas fa-check text-green-600"></i>
+                            <i className="fas fa-check text-green-600 text-xs"></i>
                           ) : (
-                            <i className="fas fa-times text-red-600"></i>
+                            <i className="fas fa-times text-red-600 text-xs"></i>
                           )}
                         </td>
-                        <td className="py-4 px-3 text-center">
+                        <td className="py-3 px-3 text-center" style={{ width: '50px' }}>
                           {dc.isRO ? (
-                            <i className="fas fa-check text-green-600"></i>
+                            <i className="fas fa-check text-green-600 text-xs"></i>
                           ) : (
-                            <i className="fas fa-times text-red-600"></i>
+                            <i className="fas fa-times text-red-600 text-xs"></i>
                           )}
                         </td>
-                        <td className="py-4 px-3 whitespace-nowrap">
+                        <td className="py-3 px-3 whitespace-nowrap" style={{ width: '130px' }}>
                           <span className="text-gray-700 font-mono text-xs">{dc.ipv4Address}</span>
                         </td>
-                        <td className="py-4 px-3 whitespace-nowrap">
-                          <div className="flex items-center space-x-2">
+                        <td className="py-3 px-3 whitespace-nowrap" style={{ width: '100px' }}>
+                          <div className="flex items-center space-x-1">
                             {getStatusIcon(dc.status)}
-                            <span className="text-gray-700">{dc.status}</span>
+                            <span className="text-gray-700 text-xs">{dc.status}</span>
                           </div>
                         </td>
                       </tr>
@@ -339,10 +339,10 @@ const ForestRecovery = () => {
 
           {/* Right Sidebar */}
           <div className={`bg-white border-l border-gray-200 flex-shrink-0 transition-all duration-300 overflow-y-auto ${
-            isRightSidebarOpen ? 'w-80' : 'w-0 border-l-0'
+            isRightSidebarOpen ? 'w-96' : 'w-0 border-l-0'
           }`}>
             {isRightSidebarOpen && (
-              <div className="w-80 p-6 space-y-6">
+              <div className="w-96 p-6 space-y-6">
                 {/* Dependencies Section */}
                 <div className="bg-white rounded-lg border border-gray-200 p-4">
                   <div className="flex items-center space-x-2 mb-4">
