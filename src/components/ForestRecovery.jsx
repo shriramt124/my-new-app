@@ -7,26 +7,7 @@ const ForestRecovery = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [domainFilter, setDomainFilter] = useState('all');
   const [statusFilter, setStatusFilter] = useState('all');
-  const [cleanupOptions, setCleanupOptions] = useState({
-    selectAll: false,
-    authRestoreSysvol: false,
-    cleanDNS: false,
-    currentUserPasswordReset: false,
-    domainControllerPasswordReset: false,
-    metadataCleanup: false,
-    removeCertificates: false,
-    removeExternalTrusts: false,
-    removeSecrets: false,
-    resetAllComputerAccounts: false,
-    resetAllUserPasswords: false,
-    resetDSRMPassword: false,
-    resetKrbtgtPassword: false,
-    resetRID500Password: false,
-    resetRODCRevealed: false,
-    resetTierZeroPasswords: false,
-    resetTrusts: false,
-    seizeFSMORoles: false
-  });
+  
 
   const domainControllers = [
     {
@@ -107,45 +88,7 @@ const ForestRecovery = () => {
     }
   };
 
-  const handleCleanupOption = (option) => {
-    if (option === 'selectAll') {
-      const newValue = !cleanupOptions.selectAll;
-      const newOptions = Object.keys(cleanupOptions).reduce((acc, key) => {
-        acc[key] = newValue;
-        return acc;
-      }, {});
-      setCleanupOptions(newOptions);
-    } else {
-      const newOptions = {
-        ...cleanupOptions,
-        [option]: !cleanupOptions[option]
-      };
-      const otherOptions = Object.keys(newOptions).filter(key => key !== 'selectAll');
-      const allSelected = otherOptions.every(key => newOptions[key]);
-      newOptions.selectAll = allSelected;
-      setCleanupOptions(newOptions);
-    }
-  };
-
-  const cleanupItems = [
-    { key: 'authRestoreSysvol', label: 'Auth Restore Sysvol' },
-    { key: 'cleanDNS', label: 'Clean DNS' },
-    { key: 'currentUserPasswordReset', label: 'Current User Password Reset' },
-    { key: 'domainControllerPasswordReset', label: 'Domain Controller Password Reset' },
-    { key: 'metadataCleanup', label: 'Metadata Cleanup' },
-    { key: 'removeCertificates', label: 'Remove Certificates' },
-    { key: 'removeExternalTrusts', label: 'Remove External Trusts' },
-    { key: 'removeSecrets', label: 'Remove Secrets' },
-    { key: 'resetAllComputerAccounts', label: 'Reset All Computer Accounts' },
-    { key: 'resetAllUserPasswords', label: 'Reset All User Passwords' },
-    { key: 'resetDSRMPassword', label: 'Reset DSRM Password' },
-    { key: 'resetKrbtgtPassword', label: 'Reset Krbtgt Password' },
-    { key: 'resetRID500Password', label: 'Reset RID 500 Password' },
-    { key: 'resetRODCRevealed', label: 'Reset RODC Revealed' },
-    { key: 'resetTierZeroPasswords', label: 'Reset Tier Zero Passwords' },
-    { key: 'resetTrusts', label: 'Reset Trusts' },
-    { key: 'seizeFSMORoles', label: 'Seize FSMO Roles' }
-  ];
+  
 
   return (
     <div className="bg-gray-50 min-h-screen flex flex-col">
@@ -319,59 +262,7 @@ const ForestRecovery = () => {
             </div>
           </div>
 
-          {/* Clean-up Section */}
-          <div className="bg-white rounded-lg border border-gray-200">
-            <div className="px-3 py-2 border-b border-gray-200">
-              <div className="flex items-center space-x-2">
-                <div className="w-6 h-6 bg-orange-500 rounded-lg flex items-center justify-center">
-                  <i className="fas fa-broom text-white text-xs"></i>
-                </div>
-                <h2 className="text-sm font-semibold text-gray-900">Clean-up</h2>
-              </div>
-            </div>
-
-            <div className="p-3 space-y-3">
-              {/* Select All */}
-              <div className="p-2 bg-blue-50 rounded-md border border-blue-200">
-                <label className="flex items-center">
-                  <input
-                    type="checkbox"
-                    checked={cleanupOptions.selectAll}
-                    onChange={() => handleCleanupOption('selectAll')}
-                    className="w-3 h-3 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                  />
-                  <span className="ml-2 text-xs font-medium text-blue-900">Select All</span>
-                </label>
-              </div>
-
-              {/* Cleanup Options */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-                {cleanupItems.map((item) => (
-                  <label key={item.key} className="flex items-center p-2 bg-gray-50 hover:bg-gray-100 rounded-md border border-gray-200 cursor-pointer transition-colors">
-                    <input
-                      type="checkbox"
-                      checked={cleanupOptions[item.key]}
-                      onChange={() => handleCleanupOption(item.key)}
-                      className="w-3 h-3 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                    />
-                    <span className="ml-2 text-xs text-gray-700">{item.label}</span>
-                  </label>
-                ))}
-              </div>
-
-              {/* Action Buttons */}
-              <div className="flex space-x-2 pt-2 border-t border-gray-200">
-                <button className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-1.5 rounded-md text-xs font-medium transition-colors flex items-center space-x-1.5">
-                  <i className="fas fa-play text-xs"></i>
-                  <span>Start</span>
-                </button>
-                <button className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-1.5 rounded-md text-xs font-medium transition-colors flex items-center space-x-1.5">
-                  <i className="fas fa-times text-xs"></i>
-                  <span>Exit</span>
-                </button>
-              </div>
-            </div>
-          </div>
+          
         </div>
 
         {/* Right Sidebar */}

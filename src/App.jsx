@@ -9,6 +9,7 @@ import AWSContent from './components/AWSContent';
 import AzureContent from './components/AzureContent';
 import ForensicsContent from './components/ForensicsContent';
 import LoginScreen from './components/LoginScreen';
+import Cleanup from './components/Cleanup';
 
 // Dashboard Components
 const NewDashboard = () => <div className="p-8"><h1 className="text-2xl font-bold">New Dashboard</h1></div>;
@@ -116,6 +117,7 @@ const App = () => {
           <Route path="/directory/computers/workstations" element={<DirectoryWorkstations />} />
           <Route path="/directory/identities" element={<DirectoryIdentities />} />
           <Route path="/directory/azure-isolation" element={<AzureIsolation />} />
+          <Route path="/directory/cleanup" element={<Cleanup />} />
           <Route path="/directory/restore" element={<DirectoryRestore />} />
 
           {/* AWS Routes */}

@@ -59,6 +59,7 @@ const Header = ({ currentUser, onLogout }) => {
         },
         { icon: 'fas fa-user-friends', label: 'Identities', desc: 'Manage user identities', path: '/directory/identities' },
         { icon: 'fas fa-cloud-upload-alt', label: 'Azure Isolation', desc: 'Azure AD integration', path: '/directory/azure-isolation' },
+        { icon: 'fas fa-broom', label: 'Cleanup', desc: 'Perform AD cleanup operations', path: '/directory/cleanup' },
         { icon: 'fas fa-history', label: 'Restore from Backup', desc: 'Restore AD objects', path: '/directory/restore-backup' }
       ]
     },
