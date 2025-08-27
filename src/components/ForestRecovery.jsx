@@ -10,12 +10,11 @@ const ForestRecovery = () => {
   const [isLeftSidebarCollapsed, setIsLeftSidebarCollapsed] = useState(false);
   const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(true);
 
-  const domainControllers = [
+  const forestData = [
     {
       id: 1,
-      type: 'Root',
-      domain: 'company.local',
-      domainSid: 'S-1-5-21-237783...',
+      domainName: 'company.local',
+      domainSid: 'S-1-5-21-237783456-789012345-567890123-1000',
       site: 'Default-First-Site-Name',
       samAccountName: 'DC01$',
       netBIOS: 'DC01',
@@ -27,9 +26,8 @@ const ForestRecovery = () => {
     },
     {
       id: 2,
-      type: 'Child',
-      domain: 'sales.company.local',
-      domainSid: 'S-1-5-21-445566...',
+      domainName: 'sales.company.local',
+      domainSid: 'S-1-5-21-445566778-889900112-223344556-2000',
       site: 'Sales-Site',
       samAccountName: 'SALESDC$',
       netBIOS: 'SALESDC',
@@ -41,9 +39,8 @@ const ForestRecovery = () => {
     },
     {
       id: 3,
-      type: 'Child',
-      domain: 'dev.company.local',
-      domainSid: 'S-1-5-21-778899...',
+      domainName: 'dev.company.local',
+      domainSid: 'S-1-5-21-778899001-112233445-556677889-3000',
       site: 'Dev-Site',
       samAccountName: 'DEVDC$',
       netBIOS: 'DEVDC',
@@ -52,6 +49,19 @@ const ForestRecovery = () => {
       isRO: false,
       ipv4Address: '10.0.2.10',
       status: 'Active'
+    },
+    {
+      id: 4,
+      domainName: 'test.company.local',
+      domainSid: 'S-1-5-21-334455667-778899001-112233445-4000',
+      site: 'Test-Site',
+      samAccountName: 'TESTDC$',
+      netBIOS: 'TESTDC',
+      fqdn: 'testdc.test.company.local',
+      isGC: false,
+      isRO: true,
+      ipv4Address: '10.0.3.10',
+      status: 'Error'
     }
   ];
 
@@ -73,7 +83,7 @@ const ForestRecovery = () => {
     if (selectAll) {
       setSelectedRows(new Set());
     } else {
-      setSelectedRows(new Set(domainControllers.map(dc => dc.id)));
+      setSelectedRows(new Set(forestData.map(dc => dc.id)));
     }
     setSelectAll(!selectAll);
   };
@@ -86,7 +96,7 @@ const ForestRecovery = () => {
       newSelected.add(id);
     }
     setSelectedRows(newSelected);
-    setSelectAll(newSelected.size === domainControllers.length);
+    setSelectAll(newSelected.size === forestData.length);
   };
 
   const getStatusIcon = (status) => {
@@ -224,12 +234,10 @@ const ForestRecovery = () => {
               </div>
             </div>
 
-          
-
-            {/* Domain Controllers Table */}
+            {/* Forest Recovery Table */}
             <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
               <div className="px-6 py-4 border-b border-gray-200 bg-gray-50">
-                <h3 className="text-sm font-semibold text-gray-900">Active Directory Overview</h3>
+                <h3 className="text-sm font-semibold text-gray-900">Forest Recovery Status</h3>
               </div>
               
               <div className="overflow-x-auto">
@@ -244,15 +252,20 @@ const ForestRecovery = () => {
                           className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                         />
                       </th>
-                      <th className="text-left py-3 px-6 font-medium text-gray-900">Domain</th>
-                      <th className="text-left py-3 px-6 font-medium text-gray-900">Type</th>
+                      <th className="text-left py-3 px-6 font-medium text-gray-900">Domain Name</th>
+                      <th className="text-left py-3 px-6 font-medium text-gray-900">Domain SID</th>
+                      <th className="text-left py-3 px-6 font-medium text-gray-900">Site</th>
+                      <th className="text-left py-3 px-6 font-medium text-gray-900">SAM Account Name</th>
+                      <th className="text-left py-3 px-6 font-medium text-gray-900">NetBIOS</th>
+                      <th className="text-left py-3 px-6 font-medium text-gray-900">FQDN</th>
+                      <th className="text-left py-3 px-6 font-medium text-gray-900">GC</th>
+                      <th className="text-left py-3 px-6 font-medium text-gray-900">RO</th>
+                      <th className="text-left py-3 px-6 font-medium text-gray-900">IPv4 Address</th>
                       <th className="text-left py-3 px-6 font-medium text-gray-900">Status</th>
-                      <th className="text-left py-3 px-6 font-medium text-gray-900">Controllers</th>
-                      <th className="text-left py-3 px-6 font-medium text-gray-900">Last Update</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
-                    {domainControllers.map((dc) => (
+                    {forestData.map((dc) => (
                       <tr key={dc.id} className="hover:bg-gray-50">
                         <td className="py-4 px-6">
                           <input
@@ -263,25 +276,49 @@ const ForestRecovery = () => {
                           />
                         </td>
                         <td className="py-4 px-6">
-                          <div className="flex items-center space-x-2">
-                            <i className="fas fa-sitemap text-gray-400 text-xs"></i>
-                            <span className="font-medium text-gray-900">{dc.domain}</span>
-                          </div>
+                          <span className="font-medium text-gray-900">{dc.domainName}</span>
                         </td>
                         <td className="py-4 px-6">
-                          <span className="text-gray-700">{dc.type}</span>
+                          <span className="text-gray-700 font-mono text-xs">{dc.domainSid}</span>
+                        </td>
+                        <td className="py-4 px-6">
+                          <span className="text-gray-700">{dc.site}</span>
+                        </td>
+                        <td className="py-4 px-6">
+                          <span className="text-gray-700">{dc.samAccountName}</span>
+                        </td>
+                        <td className="py-4 px-6">
+                          <span className="text-gray-700">{dc.netBIOS}</span>
+                        </td>
+                        <td className="py-4 px-6">
+                          <span className="text-gray-700">{dc.fqdn}</span>
+                        </td>
+                        <td className="py-4 px-6">
+                          <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                            dc.isGC 
+                              ? 'bg-green-100 text-green-800' 
+                              : 'bg-gray-100 text-gray-800'
+                          }`}>
+                            {dc.isGC ? 'Yes' : 'No'}
+                          </span>
+                        </td>
+                        <td className="py-4 px-6">
+                          <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                            dc.isRO 
+                              ? 'bg-yellow-100 text-yellow-800' 
+                              : 'bg-green-100 text-green-800'
+                          }`}>
+                            {dc.isRO ? 'Yes' : 'No'}
+                          </span>
+                        </td>
+                        <td className="py-4 px-6">
+                          <span className="text-gray-700 font-mono text-sm">{dc.ipv4Address}</span>
                         </td>
                         <td className="py-4 px-6">
                           <div className="flex items-center space-x-2">
                             {getStatusIcon(dc.status)}
                             <span className="text-gray-700">{dc.status}</span>
                           </div>
-                        </td>
-                        <td className="py-4 px-6">
-                          <span className="text-gray-700">{dc.type === 'Root' ? '3' : dc.type === 'Child' ? '2' : '1'}</span>
-                        </td>
-                        <td className="py-4 px-6">
-                          <span className="text-gray-700">2025-01-15 14:30</span>
                         </td>
                       </tr>
                     ))}
