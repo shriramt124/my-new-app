@@ -224,21 +224,7 @@ const ForestRecovery = () => {
               </div>
             </div>
 
-            {/* Stats Cards */}
-            <div className="grid grid-cols-3 gap-6">
-              <div className="bg-white rounded-lg border border-gray-200 p-6 text-center">
-                <div className="text-3xl font-bold text-gray-900 mb-1">2</div>
-                <div className="text-sm text-gray-600">AD Forests</div>
-              </div>
-              <div className="bg-white rounded-lg border border-gray-200 p-6 text-center">
-                <div className="text-3xl font-bold text-gray-900 mb-1">5</div>
-                <div className="text-sm text-gray-600">AD Domains</div>
-              </div>
-              <div className="bg-white rounded-lg border border-gray-200 p-6 text-center">
-                <div className="text-3xl font-bold text-gray-900 mb-1">12</div>
-                <div className="text-sm text-gray-600">Domain Controllers</div>
-              </div>
-            </div>
+          
 
             {/* Domain Controllers Table */}
             <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
@@ -301,6 +287,21 @@ const ForestRecovery = () => {
                     ))}
                   </tbody>
                 </table>
+              </div>
+            </div>
+            {/* Stats Cards */}
+            <div className="grid grid-cols-3 gap-6">
+              <div className="bg-white rounded-lg border border-gray-200 p-6 text-center">
+                <div className="text-3xl font-bold text-gray-900 mb-1">2</div>
+                <div className="text-sm text-gray-600">AD Forests</div>
+              </div>
+              <div className="bg-white rounded-lg border border-gray-200 p-6 text-center">
+                <div className="text-3xl font-bold text-gray-900 mb-1">5</div>
+                <div className="text-sm text-gray-600">AD Domains</div>
+              </div>
+              <div className="bg-white rounded-lg border border-gray-200 p-6 text-center">
+                <div className="text-3xl font-bold text-gray-900 mb-1">12</div>
+                <div className="text-sm text-gray-600">Domain Controllers</div>
               </div>
             </div>
           </div>
