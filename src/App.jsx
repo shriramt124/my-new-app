@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import MainContent from './components/MainContent';
@@ -8,6 +8,7 @@ import DirectoryContent from './components/DirectoryContent';
 import AWSContent from './components/AWSContent';
 import AzureContent from './components/AzureContent';
 import ForensicsContent from './components/ForensicsContent';
+import LoginScreen from './components/LoginScreen';
 
 // Dashboard Components
 const NewDashboard = () => <div className="p-8"><h1 className="text-2xl font-bold">New Dashboard</h1></div>;
@@ -44,10 +45,59 @@ const GenerateReport = () => <div className="p-8"><h1 className="text-2xl font-b
 const EvidenceCapture = () => <div className="p-8"><h1 className="text-2xl font-bold">Evidence Capture</h1></div>;
 
 const App = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Check for existing session on app load
+  useEffect(() => {
+    const storedUser = localStorage.getItem('currentUser');
+    if (storedUser) {
+      try {
+        const user = JSON.parse(storedUser);
+        setCurrentUser(user);
+        setIsAuthenticated(true);
+      } catch (error) {
+        localStorage.removeItem('currentUser');
+      }
+    }
+    setIsLoading(false);
+  }, []);
+
+  const handleLogin = (user) => {
+    setCurrentUser(user);
+    setIsAuthenticated(true);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('currentUser');
+    setCurrentUser(null);
+    setIsAuthenticated(false);
+  };
+
+  // Show loading spinner while checking authentication
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center mb-4 mx-auto">
+            <i className="fas fa-spinner fa-spin text-white"></i>
+          </div>
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show login screen if not authenticated
+  if (!isAuthenticated) {
+    return <LoginScreen onLogin={handleLogin} />;
+  }
+
   return (
     <HashRouter>
       <div className="min-h-screen bg-gray-50 flex flex-col">
-        <Header />
+        <Header currentUser={currentUser} onLogout={handleLogout} />
         <Routes>
           {/* Dashboard Routes */}
           <Route path="/" element={<ForestRecovery />} />
