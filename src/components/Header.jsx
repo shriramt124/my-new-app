@@ -199,43 +199,82 @@ const Header = ({ currentUser, onLogout }) => {
         </div>
 
         {/* Right Controls */}
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-1">
+          {/* Settings */}
+          <button className="p-2.5 text-gray-500 hover:text-gray-700 hover:bg-gray-100/60 rounded-lg transition-all duration-200" title="Settings">
+            <i className="fas fa-cog text-base"></i>
+          </button>
+
           {/* Notifications */}
-          <button className="relative p-2.5 text-gray-600 hover:text-gray-900 hover:bg-gray-100/60 rounded-xl transition-all duration-200">
-            <i className="fas fa-bell text-lg"></i>
-            <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center shadow-lg">3</span>
+          <button className="relative p-2.5 text-gray-500 hover:text-gray-700 hover:bg-gray-100/60 rounded-lg transition-all duration-200" title="Notifications">
+            <i className="fas fa-bell text-base"></i>
+            <span className="absolute -top-0.5 -right-0.5 w-3 h-3 bg-red-500 text-white text-xs rounded-full flex items-center justify-center shadow-sm">3</span>
+          </button>
+
+          {/* Help */}
+          <button className="p-2.5 text-gray-500 hover:text-gray-700 hover:bg-gray-100/60 rounded-lg transition-all duration-200" title="Help">
+            <i className="fas fa-question-circle text-base"></i>
           </button>
 
           {/* User Menu */}
-          <div className="relative" ref={dropdownRef}>
+          <div className="relative ml-2" ref={dropdownRef}>
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 setShowUserMenu(!showUserMenu);
               }}
-              className="flex items-center space-x-2 p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100/60 rounded-xl transition-all duration-200"
+              className="flex items-center space-x-2 p-1.5 text-gray-600 hover:text-gray-900 hover:bg-gray-100/60 rounded-lg transition-all duration-200"
+              title="User Menu"
             >
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center">
-                <span className="text-white text-sm font-medium">{currentUser?.name?.charAt(0) || 'U'}</span>
+              <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center shadow-sm">
+                <span className="text-white text-sm font-semibold">{currentUser?.name?.charAt(0).toUpperCase() || 'U'}</span>
               </div>
-              <span className="text-sm font-medium">{currentUser?.name || 'User'}</span>
-              <i className={`fas fa-chevron-down text-xs transition-transform ${showUserMenu ? 'rotate-180' : ''}`}></i>
+              <span className="text-sm font-medium hidden sm:block">{currentUser?.name || 'User'}</span>
+              <i className={`fas fa-chevron-down text-xs transition-transform duration-200 ${showUserMenu ? 'rotate-180' : ''}`}></i>
             </button>
 
             {/* User Dropdown */}
             {showUserMenu && (
-              <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-200 py-2 z-50">
-                <div className="px-4 py-2 border-b border-gray-100">
-                  <div className="text-sm font-medium text-gray-900">{currentUser?.name}</div>
-                  <div className="text-xs text-gray-500">@{currentUser?.username}</div>
+              <div className="absolute right-0 top-full mt-2 w-56 bg-white rounded-xl shadow-lg border border-gray-200/60 py-2 z-50">
+                {/* User Info Section */}
+                <div className="px-4 py-3 border-b border-gray-100">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center">
+                      <span className="text-white font-semibold">{currentUser?.name?.charAt(0).toUpperCase() || 'U'}</span>
+                    </div>
+                    <div>
+                      <div className="text-sm font-semibold text-gray-900">{currentUser?.name}</div>
+                      <div className="text-xs text-gray-500">@{currentUser?.username}</div>
+                    </div>
+                  </div>
                 </div>
-                <button
-                  onClick={onLogout}
-                  className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors flex items-center space-x-2"
-                >
-                  <i className="fas fa-sign-out-alt"></i>
-                  <span>Sign Out</span>
-                </button>
+
+                {/* Menu Items */}
+                <div className="py-1">
+                  <button className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors flex items-center space-x-2">
+                    <i className="fas fa-user text-gray-400"></i>
+                    <span>Profile Settings</span>
+                  </button>
+                  <button className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors flex items-center space-x-2">
+                    <i className="fas fa-cog text-gray-400"></i>
+                    <span>Account Settings</span>
+                  </button>
+                  <button className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors flex items-center space-x-2">
+                    <i className="fas fa-bell text-gray-400"></i>
+                    <span>Notifications</span>
+                  </button>
+                </div>
+
+                {/* Sign Out */}
+                <div className="border-t border-gray-100 py-1">
+                  <button
+                    onClick={onLogout}
+                    className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors flex items-center space-x-2"
+                  >
+                    <i className="fas fa-sign-out-alt text-red-500"></i>
+                    <span>Sign Out</span>
+                  </button>
+                </div>
               </div>
             )}
           </div>
