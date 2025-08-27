@@ -227,9 +227,17 @@ const Header = ({ currentUser, onLogout }) => {
               title="User Menu"
             >
               <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center shadow-sm">
-                <span className="text-white text-sm font-semibold">{currentUser?.name?.charAt(0).toUpperCase() || 'U'}</span>
+                <span className="text-white text-sm font-semibold">
+                  {currentUser?.name ? 
+                    currentUser.name.split(' ').map(word => word.charAt(0)).slice(0, 2).join('').toUpperCase() 
+                    : 'U'}
+                </span>
               </div>
-              <span className="text-sm font-medium hidden sm:block">{currentUser?.name || 'User'}</span>
+              <span className="text-sm font-medium hidden sm:block">
+                {currentUser?.name ? 
+                  currentUser.name.split(' ').map(word => word.charAt(0)).slice(0, 2).join('').toUpperCase() 
+                  : 'User'}
+              </span>
               <i className={`fas fa-chevron-down text-xs transition-transform duration-200 ${showUserMenu ? 'rotate-180' : ''}`}></i>
             </button>
 
@@ -240,7 +248,11 @@ const Header = ({ currentUser, onLogout }) => {
                 <div className="px-4 py-3 border-b border-gray-100">
                   <div className="flex items-center space-x-3">
                     <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center">
-                      <span className="text-white font-semibold">{currentUser?.name?.charAt(0).toUpperCase() || 'U'}</span>
+                      <span className="text-white font-semibold">
+                        {currentUser?.name ? 
+                          currentUser.name.split(' ').map(word => word.charAt(0)).slice(0, 2).join('').toUpperCase() 
+                          : 'U'}
+                      </span>
                     </div>
                     <div>
                       <div className="text-sm font-semibold text-gray-900">{currentUser?.name}</div>
