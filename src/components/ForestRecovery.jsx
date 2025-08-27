@@ -243,7 +243,7 @@ const ForestRecovery = () => {
             {/* Domain Controllers Table */}
             <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
               <div className="px-6 py-4 border-b border-gray-200 bg-gray-50">
-                <h3 className="text-sm font-semibold text-gray-900">Active Directory Overview</h3>
+                <h3 className="text-sm font-semibold text-gray-900">Domain Controllers</h3>
               </div>
               
               <div className="overflow-x-auto">
@@ -258,11 +258,17 @@ const ForestRecovery = () => {
                           className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                         />
                       </th>
-                      <th className="text-left py-3 px-6 font-medium text-gray-900">Domain</th>
                       <th className="text-left py-3 px-6 font-medium text-gray-900">Type</th>
+                      <th className="text-left py-3 px-6 font-medium text-gray-900">Domain</th>
+                      <th className="text-left py-3 px-6 font-medium text-gray-900">Domain SID</th>
+                      <th className="text-left py-3 px-6 font-medium text-gray-900">Site</th>
+                      <th className="text-left py-3 px-6 font-medium text-gray-900">SAM Account Name</th>
+                      <th className="text-left py-3 px-6 font-medium text-gray-900">NetBIOS</th>
+                      <th className="text-left py-3 px-6 font-medium text-gray-900">FQDN</th>
+                      <th className="text-left py-3 px-6 font-medium text-gray-900">GC</th>
+                      <th className="text-left py-3 px-6 font-medium text-gray-900">RO</th>
+                      <th className="text-left py-3 px-6 font-medium text-gray-900">IPv4 Address</th>
                       <th className="text-left py-3 px-6 font-medium text-gray-900">Status</th>
-                      <th className="text-left py-3 px-6 font-medium text-gray-900">Controllers</th>
-                      <th className="text-left py-3 px-6 font-medium text-gray-900">Last Update</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
@@ -277,13 +283,49 @@ const ForestRecovery = () => {
                           />
                         </td>
                         <td className="py-4 px-6">
+                          <span className="text-gray-700">{dc.type}</span>
+                        </td>
+                        <td className="py-4 px-6">
                           <div className="flex items-center space-x-2">
                             <i className="fas fa-sitemap text-gray-400 text-xs"></i>
                             <span className="font-medium text-gray-900">{dc.domain}</span>
                           </div>
                         </td>
                         <td className="py-4 px-6">
-                          <span className="text-gray-700">{dc.type}</span>
+                          <span className="text-gray-700 font-mono text-xs">{dc.domainSid}</span>
+                        </td>
+                        <td className="py-4 px-6">
+                          <span className="text-gray-700">{dc.site}</span>
+                        </td>
+                        <td className="py-4 px-6">
+                          <span className="text-gray-700">{dc.samAccountName}</span>
+                        </td>
+                        <td className="py-4 px-6">
+                          <span className="text-gray-700">{dc.netBIOS}</span>
+                        </td>
+                        <td className="py-4 px-6">
+                          <span className="text-gray-700">{dc.fqdn}</span>
+                        </td>
+                        <td className="py-4 px-6">
+                          <div className="flex items-center justify-center">
+                            {dc.isGC ? (
+                              <i className="fas fa-check text-green-600"></i>
+                            ) : (
+                              <i className="fas fa-times text-red-600"></i>
+                            )}
+                          </div>
+                        </td>
+                        <td className="py-4 px-6">
+                          <div className="flex items-center justify-center">
+                            {dc.isRO ? (
+                              <i className="fas fa-check text-green-600"></i>
+                            ) : (
+                              <i className="fas fa-times text-red-600"></i>
+                            )}
+                          </div>
+                        </td>
+                        <td className="py-4 px-6">
+                          <span className="text-gray-700 font-mono text-xs">{dc.ipv4Address}</span>
                         </td>
                         <td className="py-4 px-6">
                           <div className="flex items-center space-x-2">
@@ -291,31 +333,10 @@ const ForestRecovery = () => {
                             <span className="text-gray-700">{dc.status}</span>
                           </div>
                         </td>
-                        <td className="py-4 px-6">
-                          <span className="text-gray-700">{dc.type === 'Root' ? '3' : dc.type === 'Child' ? '2' : '1'}</span>
-                        </td>
-                        <td className="py-4 px-6">
-                          <span className="text-gray-700">2025-01-15 14:30</span>
-                        </td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
-              </div>
-            </div>
-            {/* Stats Cards */}
-            <div className="grid grid-cols-3 gap-6">
-              <div className="bg-white rounded-lg border border-gray-200 p-6 text-center">
-                <div className="text-3xl font-bold text-gray-900 mb-1">2</div>
-                <div className="text-sm text-gray-600">AD Forests</div>
-              </div>
-              <div className="bg-white rounded-lg border border-gray-200 p-6 text-center">
-                <div className="text-3xl font-bold text-gray-900 mb-1">5</div>
-                <div className="text-sm text-gray-600">AD Domains</div>
-              </div>
-              <div className="bg-white rounded-lg border border-gray-200 p-6 text-center">
-                <div className="text-3xl font-bold text-gray-900 mb-1">12</div>
-                <div className="text-sm text-gray-600">Domain Controllers</div>
               </div>
             </div>
           </div>
