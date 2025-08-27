@@ -206,22 +206,22 @@ const ForestRecovery = () => {
 
           {/* Statistics Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-gray-800 rounded-lg p-6 text-white">
+            <div className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-md transition-shadow">
               <div className="text-center">
-                <div className="text-3xl font-bold mb-2">2</div>
-                <div className="text-gray-300 text-sm">AD Forests</div>
+                <div className="text-3xl font-bold mb-2 text-gray-900">2</div>
+                <div className="text-gray-600 text-sm">AD Forests</div>
               </div>
             </div>
-            <div className="bg-gray-800 rounded-lg p-6 text-white">
+            <div className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-md transition-shadow">
               <div className="text-center">
-                <div className="text-3xl font-bold mb-2">5</div>
-                <div className="text-gray-300 text-sm">AD Domains</div>
+                <div className="text-3xl font-bold mb-2 text-gray-900">5</div>
+                <div className="text-gray-600 text-sm">AD Domains</div>
               </div>
             </div>
-            <div className="bg-gray-800 rounded-lg p-6 text-white">
+            <div className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-md transition-shadow">
               <div className="text-center">
-                <div className="text-3xl font-bold mb-2">12</div>
-                <div className="text-gray-300 text-sm">Domain Controllers</div>
+                <div className="text-3xl font-bold mb-2 text-gray-900">12</div>
+                <div className="text-gray-600 text-sm">Domain Controllers</div>
               </div>
             </div>
           </div>
@@ -282,67 +282,67 @@ const ForestRecovery = () => {
         </div>
 
         {/* Right Sidebar */}
-        <div className="w-80 bg-gray-900 text-white p-6 space-y-6">
+        <div className="w-80 bg-white border-l border-gray-200 p-6 space-y-6">
           {/* Dependencies Section */}
-          <div>
+          <div className="bg-white rounded-lg border border-gray-200 p-4">
             <div className="flex items-center space-x-2 mb-4">
-              <i className="fas fa-cog text-sm"></i>
-              <h3 className="text-sm font-semibold">Dependencies</h3>
+              <i className="fas fa-cog text-sm text-gray-600"></i>
+              <h3 className="text-sm font-semibold text-gray-900">Dependencies</h3>
             </div>
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-300">DNS Services</span>
+                <span className="text-sm text-gray-700">DNS Services</span>
                 <div className="w-2 h-2 bg-green-500 rounded-full"></div>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-300">LDAP Connection</span>
+                <span className="text-sm text-gray-700">LDAP Connection</span>
                 <div className="w-2 h-2 bg-green-500 rounded-full"></div>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-300">Kerberos Auth</span>
+                <span className="text-sm text-gray-700">Kerberos Auth</span>
                 <div className="w-2 h-2 bg-green-500 rounded-full"></div>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-300">Replication</span>
+                <span className="text-sm text-gray-700">Replication</span>
                 <div className="w-2 h-2 bg-green-500 rounded-full"></div>
               </div>
             </div>
           </div>
 
           {/* Recent Activity Section */}
-          <div>
+          <div className="bg-white rounded-lg border border-gray-200 p-4">
             <div className="flex items-center space-x-2 mb-4">
-              <i className="fas fa-clock text-sm"></i>
-              <h3 className="text-sm font-semibold">Recent Activity</h3>
+              <i className="fas fa-clock text-sm text-gray-600"></i>
+              <h3 className="text-sm font-semibold text-gray-900">Recent Activity</h3>
             </div>
             <div className="space-y-4">
               <div className="border-l-2 border-blue-500 pl-3">
-                <div className="text-sm font-medium">Domain Controller Updated</div>
-                <div className="text-xs text-gray-400">DC01.company.local • 4 min ago</div>
+                <div className="text-sm font-medium text-gray-900">Domain Controller Updated</div>
+                <div className="text-xs text-gray-500">DC01.company.local • 4 min ago</div>
               </div>
               <div className="border-l-2 border-green-500 pl-3">
-                <div className="text-sm font-medium">User Group Created</div>
-                <div className="text-xs text-gray-400">Sales-Team • 15 min ago</div>
+                <div className="text-sm font-medium text-gray-900">User Group Created</div>
+                <div className="text-xs text-gray-500">Sales-Team • 15 min ago</div>
               </div>
               <div className="border-l-2 border-yellow-500 pl-3">
-                <div className="text-sm font-medium">Policy Warning</div>
-                <div className="text-xs text-gray-400">Password policy • 1 hour ago</div>
+                <div className="text-sm font-medium text-gray-900">Policy Warning</div>
+                <div className="text-xs text-gray-500">Password policy • 1 hour ago</div>
               </div>
               <div className="border-l-2 border-green-500 pl-3">
-                <div className="text-sm font-medium">Backup Completed</div>
-                <div className="text-xs text-gray-400">System state • 3 hours ago</div>
+                <div className="text-sm font-medium text-gray-900">Backup Completed</div>
+                <div className="text-xs text-gray-500">System state • 3 hours ago</div>
               </div>
             </div>
           </div>
 
           {/* Status Section */}
-          <div className="pt-4 border-t border-gray-700">
+          <div className="bg-white rounded-lg border border-gray-200 p-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2">
                 <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                <span className="text-sm">Ready</span>
+                <span className="text-sm text-gray-900">Ready</span>
               </div>
-              <span className="text-xs text-gray-400">Last refresh: 2:15 PM</span>
+              <span className="text-xs text-gray-500">Last refresh: 2:15 PM</span>
             </div>
           </div>
         </div>
