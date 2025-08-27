@@ -186,25 +186,25 @@ const ForestRecovery = () => {
 
         <div className="flex flex-1 overflow-hidden">
           {/* Content Area */}
-          <div className="flex-1 p-6 space-y-6 overflow-y-auto">
+          <div className="flex-1 p-4 space-y-4 overflow-y-auto">
             {/* Search and Filter Section */}
             <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-3">
                 <div className="relative">
                   <input
                     type="text"
                     placeholder="Search domains..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-80 pl-10 pr-4 py-2 text-sm border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-64 pl-8 pr-4 py-2 text-sm border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
-                  <i className="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm"></i>
+                  <i className="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-xs"></i>
                 </div>
 
                 <select 
                   value={domainFilter} 
                   onChange={(e) => setDomainFilter(e.target.value)}
-                  className="px-4 py-2 text-sm border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="px-3 py-2 text-sm border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="all">All Domains</option>
                   <option value="root">Root Domain</option>
@@ -214,7 +214,7 @@ const ForestRecovery = () => {
                 <select 
                   value={statusFilter} 
                   onChange={(e) => setStatusFilter(e.target.value)}
-                  className="px-4 py-2 text-sm border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="px-3 py-2 text-sm border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="all">All Status</option>
                   <option value="active">Active</option>
@@ -225,18 +225,18 @@ const ForestRecovery = () => {
             </div>
 
             {/* Stats Cards */}
-            <div className="grid grid-cols-3 gap-6">
-              <div className="bg-white rounded-lg border border-gray-200 p-6 text-center">
-                <div className="text-3xl font-bold text-gray-900 mb-1">2</div>
-                <div className="text-sm text-gray-600">AD Forests</div>
+            <div className="grid grid-cols-3 gap-4">
+              <div className="bg-white rounded-lg border border-gray-200 p-4 text-center">
+                <div className="text-2xl font-bold text-gray-900 mb-1">2</div>
+                <div className="text-xs text-gray-600">AD Forests</div>
               </div>
-              <div className="bg-white rounded-lg border border-gray-200 p-6 text-center">
-                <div className="text-3xl font-bold text-gray-900 mb-1">5</div>
-                <div className="text-sm text-gray-600">AD Domains</div>
+              <div className="bg-white rounded-lg border border-gray-200 p-4 text-center">
+                <div className="text-2xl font-bold text-gray-900 mb-1">5</div>
+                <div className="text-xs text-gray-600">AD Domains</div>
               </div>
-              <div className="bg-white rounded-lg border border-gray-200 p-6 text-center">
-                <div className="text-3xl font-bold text-gray-900 mb-1">12</div>
-                <div className="text-sm text-gray-600">Domain Controllers</div>
+              <div className="bg-white rounded-lg border border-gray-200 p-4 text-center">
+                <div className="text-2xl font-bold text-gray-900 mb-1">12</div>
+                <div className="text-xs text-gray-600">Domain Controllers</div>
               </div>
             </div>
 
@@ -247,10 +247,10 @@ const ForestRecovery = () => {
               </div>
               
               <div className="overflow-x-auto">
-                <table className="w-full text-sm">
+                <table className="min-w-full text-sm">
                   <thead className="bg-gray-50 border-b border-gray-200">
                     <tr>
-                      <th className="text-left py-3 px-6">
+                      <th className="text-left py-3 px-3 w-8">
                         <input
                           type="checkbox"
                           checked={selectAll}
@@ -258,23 +258,23 @@ const ForestRecovery = () => {
                           className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                         />
                       </th>
-                      <th className="text-left py-3 px-6 font-medium text-gray-900">Type</th>
-                      <th className="text-left py-3 px-6 font-medium text-gray-900">Domain</th>
-                      <th className="text-left py-3 px-6 font-medium text-gray-900">Domain SID</th>
-                      <th className="text-left py-3 px-6 font-medium text-gray-900">Site</th>
-                      <th className="text-left py-3 px-6 font-medium text-gray-900">SAM Account Name</th>
-                      <th className="text-left py-3 px-6 font-medium text-gray-900">NetBIOS</th>
-                      <th className="text-left py-3 px-6 font-medium text-gray-900">FQDN</th>
-                      <th className="text-left py-3 px-6 font-medium text-gray-900">GC</th>
-                      <th className="text-left py-3 px-6 font-medium text-gray-900">RO</th>
-                      <th className="text-left py-3 px-6 font-medium text-gray-900">IPv4 Address</th>
-                      <th className="text-left py-3 px-6 font-medium text-gray-900">Status</th>
+                      <th className="text-left py-3 px-3 font-medium text-gray-900 whitespace-nowrap">Type</th>
+                      <th className="text-left py-3 px-3 font-medium text-gray-900 whitespace-nowrap min-w-[200px]">Domain</th>
+                      <th className="text-left py-3 px-3 font-medium text-gray-900 whitespace-nowrap min-w-[120px]">Domain SID</th>
+                      <th className="text-left py-3 px-3 font-medium text-gray-900 whitespace-nowrap">Site</th>
+                      <th className="text-left py-3 px-3 font-medium text-gray-900 whitespace-nowrap">SAM Account</th>
+                      <th className="text-left py-3 px-3 font-medium text-gray-900 whitespace-nowrap">NetBIOS</th>
+                      <th className="text-left py-3 px-3 font-medium text-gray-900 whitespace-nowrap min-w-[220px]">FQDN</th>
+                      <th className="text-center py-3 px-3 font-medium text-gray-900 whitespace-nowrap w-12">GC</th>
+                      <th className="text-center py-3 px-3 font-medium text-gray-900 whitespace-nowrap w-12">RO</th>
+                      <th className="text-left py-3 px-3 font-medium text-gray-900 whitespace-nowrap min-w-[120px]">IPv4 Address</th>
+                      <th className="text-left py-3 px-3 font-medium text-gray-900 whitespace-nowrap">Status</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
                     {domainControllers.map((dc) => (
                       <tr key={dc.id} className="hover:bg-gray-50">
-                        <td className="py-4 px-6">
+                        <td className="py-4 px-3">
                           <input
                             type="checkbox"
                             checked={selectedRows.has(dc.id)}
@@ -282,52 +282,48 @@ const ForestRecovery = () => {
                             className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                           />
                         </td>
-                        <td className="py-4 px-6">
+                        <td className="py-4 px-3 whitespace-nowrap">
                           <span className="text-gray-700">{dc.type}</span>
                         </td>
-                        <td className="py-4 px-6">
+                        <td className="py-4 px-3">
                           <div className="flex items-center space-x-2">
                             <i className="fas fa-sitemap text-gray-400 text-xs"></i>
-                            <span className="font-medium text-gray-900">{dc.domain}</span>
+                            <span className="font-medium text-gray-900 truncate">{dc.domain}</span>
                           </div>
                         </td>
-                        <td className="py-4 px-6">
-                          <span className="text-gray-700 font-mono text-xs">{dc.domainSid}</span>
+                        <td className="py-4 px-3">
+                          <span className="text-gray-700 font-mono text-xs truncate block max-w-[100px]" title={dc.domainSid}>{dc.domainSid}</span>
                         </td>
-                        <td className="py-4 px-6">
+                        <td className="py-4 px-3 whitespace-nowrap">
                           <span className="text-gray-700">{dc.site}</span>
                         </td>
-                        <td className="py-4 px-6">
+                        <td className="py-4 px-3 whitespace-nowrap">
                           <span className="text-gray-700">{dc.samAccountName}</span>
                         </td>
-                        <td className="py-4 px-6">
+                        <td className="py-4 px-3 whitespace-nowrap">
                           <span className="text-gray-700">{dc.netBIOS}</span>
                         </td>
-                        <td className="py-4 px-6">
-                          <span className="text-gray-700">{dc.fqdn}</span>
+                        <td className="py-4 px-3">
+                          <span className="text-gray-700 truncate block" title={dc.fqdn}>{dc.fqdn}</span>
                         </td>
-                        <td className="py-4 px-6">
-                          <div className="flex items-center justify-center">
-                            {dc.isGC ? (
-                              <i className="fas fa-check text-green-600"></i>
-                            ) : (
-                              <i className="fas fa-times text-red-600"></i>
-                            )}
-                          </div>
+                        <td className="py-4 px-3 text-center">
+                          {dc.isGC ? (
+                            <i className="fas fa-check text-green-600"></i>
+                          ) : (
+                            <i className="fas fa-times text-red-600"></i>
+                          )}
                         </td>
-                        <td className="py-4 px-6">
-                          <div className="flex items-center justify-center">
-                            {dc.isRO ? (
-                              <i className="fas fa-check text-green-600"></i>
-                            ) : (
-                              <i className="fas fa-times text-red-600"></i>
-                            )}
-                          </div>
+                        <td className="py-4 px-3 text-center">
+                          {dc.isRO ? (
+                            <i className="fas fa-check text-green-600"></i>
+                          ) : (
+                            <i className="fas fa-times text-red-600"></i>
+                          )}
                         </td>
-                        <td className="py-4 px-6">
+                        <td className="py-4 px-3 whitespace-nowrap">
                           <span className="text-gray-700 font-mono text-xs">{dc.ipv4Address}</span>
                         </td>
-                        <td className="py-4 px-6">
+                        <td className="py-4 px-3 whitespace-nowrap">
                           <div className="flex items-center space-x-2">
                             {getStatusIcon(dc.status)}
                             <span className="text-gray-700">{dc.status}</span>
