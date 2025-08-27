@@ -1,17 +1,22 @@
-import React, { useState, useRef, useEffect } from 'react';
 
-const Header = ({ activeTab, setActiveTab }) => {
+import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+
+const Header = () => {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [activeSubmenu, setActiveSubmenu] = useState(null);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const dropdownRef = useRef(null);
   const hoverTimeoutRef = useRef(null);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const tabs = [
     {
       id: 'dashboards',
       label: 'Dashboards',
       icon: 'fas fa-chart-bar',
+      path: '/dashboards',
       items: [
         { icon: 'fas fa-plus-circle', label: 'New Dashboard', desc: 'Create a new dashboard from scratch' },
         { icon: 'fas fa-palette', label: 'Templates', desc: 'Use pre-built dashboard templates' },
@@ -23,6 +28,7 @@ const Header = ({ activeTab, setActiveTab }) => {
       id: 'directory',
       label: 'Active Directory',
       icon: 'fas fa-users',
+      path: '/directory',
       items: [
         { 
           icon: 'fas fa-desktop', 
@@ -44,6 +50,7 @@ const Header = ({ activeTab, setActiveTab }) => {
       id: 'aws',
       label: 'AWS',
       icon: 'fab fa-aws',
+      path: '/aws',
       items: [
         { icon: 'fas fa-server', label: 'EC2 Instances', desc: 'Manage virtual servers' },
         { icon: 'fas fa-cube', label: 'S3 Storage', desc: 'Object storage service' },
@@ -55,6 +62,7 @@ const Header = ({ activeTab, setActiveTab }) => {
       id: 'azure',
       label: 'Azure',
       icon: 'fab fa-microsoft',
+      path: '/azure',
       items: [
         { icon: 'fas fa-server', label: 'Virtual Machines', desc: 'Create and manage VMs' },
         { icon: 'fas fa-network-wired', label: 'Virtual Networks', desc: 'Configure network topology' },
@@ -66,6 +74,7 @@ const Header = ({ activeTab, setActiveTab }) => {
       id: 'forensics',
       label: 'Digital Forensics',
       icon: 'fas fa-search',
+      path: '/forensics',
       items: [
         { icon: 'fas fa-search-plus', label: 'Evidence Search', desc: 'Search through digital evidence' },
         { icon: 'fas fa-folder-plus', label: 'New Case', desc: 'Create new investigation case' },
@@ -74,6 +83,15 @@ const Header = ({ activeTab, setActiveTab }) => {
       ]
     }
   ];
+
+  // Get current active tab based on location
+  const getCurrentTab = () => {
+    const currentPath = location.pathname;
+    if (currentPath === '/' || currentPath === '/dashboards') return 'dashboards';
+    return currentPath.substring(1); // Remove leading slash
+  };
+
+  const activeTab = getCurrentTab();
 
   // Handle mouse enter with delay
   const handleMouseEnter = (tabId) => {
@@ -118,8 +136,8 @@ const Header = ({ activeTab, setActiveTab }) => {
     };
   }, []);
 
-  const handleTabClick = (tabId) => {
-    setActiveTab(tabId);
+  const handleTabClick = (tab) => {
+    navigate(tab.path);
     setActiveDropdown(null);
     setActiveSubmenu(null);
   };
@@ -160,7 +178,7 @@ const Header = ({ activeTab, setActiveTab }) => {
           </div>
         </div>
 
-        {/* Right me Controls */}
+        {/* Right Controls */}
         <div className="flex items-center space-x-2">
           {['fas fa-cog', 'fas fa-bell', 'fas fa-user-circle', 'fas fa-question-circle'].map((icon, index) => (
             <button 
@@ -173,7 +191,7 @@ const Header = ({ activeTab, setActiveTab }) => {
         </div>
       </div>
 
-      {/* Tab ka Navigation */}
+      {/* Tab Navigation */}
       <div className="relative">
         <div className="flex items-center justify-center px-8 py-2 bg-gradient-to-r from-white via-gray-50/50 to-white">
           <div className="flex items-center space-x-2">
@@ -185,7 +203,7 @@ const Header = ({ activeTab, setActiveTab }) => {
                 onMouseLeave={handleMouseLeave}
               >
                 <button
-                  onClick={() => handleTabClick(tab.id)}
+                  onClick={() => handleTabClick(tab)}
                   className={`group relative px-6 py-3 text-sm font-medium transition-all duration-300 flex items-center space-x-2 rounded-lg ${
                     activeTab === tab.id
                       ? 'text-blue-700 bg-blue-50/90 shadow-md border border-blue-200/50'
