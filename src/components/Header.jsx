@@ -1,116 +1,17 @@
+
 import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate, useLocation, Routes, Route } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
-// Mock Login Component
-const Login = ({ onLogin }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-
-  const handleLogin = () => {
-    // Mock data for login
-    const mockUser = { username: 'user', password: 'password' };
-    if (username === mockUser.username && password === mockUser.password) {
-      onLogin({ name: 'Mock User', username: 'mock_user' });
-    } else {
-      setError('Invalid username or password');
-    }
-  };
-
-  return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-600 to-blue-700">
-      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-xl shadow-xl border border-gray-200/30 backdrop-blur-sm">
-        <div className="text-center">
-          <h2 className="text-3xl font-extrabold text-gray-900">Welcome Back</h2>
-          <p className="mt-2 text-sm text-gray-600">Sign in to your account</p>
-        </div>
-        <form className="mt-8 space-y-6" onSubmit={(e) => e.preventDefault()}>
-          <div>
-            <label htmlFor="username" className="sr-only">Username</label>
-            <input
-              id="username"
-              name="username"
-              type="text"
-              autoComplete="username"
-              required
-              className="relative block w-full px-3 py-3 border border-gray-300 rounded-md placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-              placeholder="Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </div>
-          <div>
-            <label htmlFor="password" className="sr-only">Password</label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              autoComplete="current-password"
-              required
-              className="relative block w-full px-3 py-3 border border-gray-300 rounded-md placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-
-          {error && <p className="text-center text-red-500 text-sm">{error}</p>}
-
-          <div>
-            <button
-              type="submit"
-              onClick={handleLogin}
-              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
-            >
-              Sign in
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  );
-};
-
-// Mock Dashboard Component
-const Dashboard = () => {
-  return (
-    <div className="p-8">
-      <h1 className="text-3xl font-bold text-gray-900 mb-6">Dashboard</h1>
-      <p className="text-gray-700">Welcome to your personalized dashboard!</p>
-      {/* Add more dashboard content here */}
-    </div>
-  );
-};
-
-const Header = () => {
+const Header = ({ currentUser, onLogout }) => {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [activeSubmenu, setActiveSubmenu] = useState(null);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const dropdownRef = useRef(null);
   const hoverTimeoutRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
-
-  // Authentication state
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [currentUser, setCurrentUser] = useState(null);
-  const [showUserMenu, setShowUserMenu] = useState(false);
-  const [searchQuery, setSearchQuery] = useState(''); // State for search query
-
-  // Handle login
-  const handleLoginSuccess = (user) => {
-    setCurrentUser(user);
-    setIsAuthenticated(true);
-    navigate('/dashboard'); // Redirect to dashboard after login
-  };
-
-  // Handle logout
-  const handleLogout = () => {
-    setCurrentUser(null);
-    setIsAuthenticated(false);
-    setShowUserMenu(false);
-    navigate('/'); // Redirect to login page after logout
-  };
 
   // Close user menu when clicking outside
   useEffect(() => {
@@ -124,7 +25,6 @@ const Header = () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
-
 
   const tabs = [
     {
@@ -282,6 +182,8 @@ const Header = () => {
             <input
               type="text"
               placeholder="Tell me what you want to do..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
               onFocus={() => setIsSearchFocused(true)}
               onBlur={() => setIsSearchFocused(false)}
               className={`w-full pl-12 pr-6 py-3 text-sm border rounded-2xl bg-white/80 backdrop-blur-sm focus:outline-none transition-all duration-300 placeholder-gray-500 ${
@@ -308,7 +210,7 @@ const Header = () => {
           <div className="relative" ref={dropdownRef}>
             <button
               onClick={(e) => {
-                e.stopPropagation(); // Prevent closing when clicking the button itself
+                e.stopPropagation();
                 setShowUserMenu(!showUserMenu);
               }}
               className="flex items-center space-x-2 p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100/60 rounded-xl transition-all duration-200"
@@ -328,7 +230,7 @@ const Header = () => {
                   <div className="text-xs text-gray-500">@{currentUser?.username}</div>
                 </div>
                 <button
-                  onClick={handleLogout}
+                  onClick={onLogout}
                   className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors flex items-center space-x-2"
                 >
                   <i className="fas fa-sign-out-alt"></i>
@@ -375,7 +277,6 @@ const Header = () => {
         {/* Dropdown Menu */}
         {activeDropdown && currentTab && (
           <div
-            ref={dropdownRef}
             className="absolute top-full left-0 right-0 bg-white/98 backdrop-blur-xl shadow-2xl border border-gray-200/60 z-50 animate-in slide-in-from-top-2 duration-200"
             onMouseEnter={handleDropdownMouseEnter}
             onMouseLeave={handleMouseLeave}
@@ -453,26 +354,4 @@ const Header = () => {
   );
 };
 
-// App Component to handle routing and authentication
-const App = () => {
-  return (
-    <Routes>
-      <Route path="/" element={<Login onLogin={useNavigate()}/>} />
-      <Route path="/dashboard" element={<Dashboard />} />
-      {/* Add other routes here */}
-    </Routes>
-  );
-};
-
-// Mock useNavigate to pass to Login component for redirection
-const useNavigate = () => {
-  const navigate = React.useMemo(() => (path) => {
-    // This is a simplified mock. In a real app, this would use actual routing.
-    console.log(`Navigating to: ${path}`);
-    // For this example, we'll just log the navigation.
-    // In a real scenario, this would be the actual navigate function from react-router-dom.
-  }, []);
-  return navigate;
-};
-
-export default App;
+export default Header;
