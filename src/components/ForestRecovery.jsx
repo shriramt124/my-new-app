@@ -4,6 +4,9 @@ import React, { useState } from 'react';
 const ForestRecovery = () => {
   const [selectedRows, setSelectedRows] = useState(new Set());
   const [selectAll, setSelectAll] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [domainFilter, setDomainFilter] = useState('all');
+  const [statusFilter, setStatusFilter] = useState('all');
   const [cleanupOptions, setCleanupOptions] = useState({
     selectAll: false,
     authRestoreSysvol: false,
@@ -28,18 +31,60 @@ const ForestRecovery = () => {
   const domainControllers = [
     {
       id: 1,
-      type: 'Forest Root',
-      domain: 'praevia.local',
+      type: 'Root',
+      domain: 'company.local',
       domainSid: 'S-1-5-21-237783...',
-      site: 'London',
-      samAccountName: 'AU09$',
-      netBIOS: 'AU09',
-      fqdn: 'au09.praevia.local',
+      site: 'Default-First-Site-Name',
+      samAccountName: 'DC01$',
+      netBIOS: 'DC01',
+      fqdn: 'dc01.company.local',
       isGC: true,
       isRO: false,
-      ipv4Address: '10.0.0.10'
+      ipv4Address: '10.0.0.1',
+      status: 'Active'
+    },
+    {
+      id: 2,
+      type: 'Child',
+      domain: 'sales.company.local',
+      domainSid: 'S-1-5-21-445566...',
+      site: 'Sales-Site',
+      samAccountName: 'SALESDC$',
+      netBIOS: 'SALESDC',
+      fqdn: 'salesdc.sales.company.local',
+      isGC: false,
+      isRO: false,
+      ipv4Address: '10.0.1.10',
+      status: 'Warning'
+    },
+    {
+      id: 3,
+      type: 'Child',
+      domain: 'dev.company.local',
+      domainSid: 'S-1-5-21-778899...',
+      site: 'Dev-Site',
+      samAccountName: 'DEVDC$',
+      netBIOS: 'DEVDC',
+      fqdn: 'devdc.dev.company.local',
+      isGC: false,
+      isRO: false,
+      ipv4Address: '10.0.2.10',
+      status: 'Active'
     }
   ];
+
+  // Filter domain controllers based on search and filters
+  const filteredDomainControllers = domainControllers.filter(dc => {
+    const matchesSearch = searchQuery === '' || 
+      dc.domain.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      dc.fqdn.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      dc.netBIOS.toLowerCase().includes(searchQuery.toLowerCase());
+    
+    const matchesDomain = domainFilter === 'all' || dc.domain === domainFilter;
+    const matchesStatus = statusFilter === 'all' || dc.status.toLowerCase() === statusFilter.toLowerCase();
+    
+    return matchesSearch && matchesDomain && matchesStatus;
+  });
 
   const handleRowSelect = (rowId) => {
     const newSelected = new Set(selectedRows);
@@ -49,7 +94,7 @@ const ForestRecovery = () => {
       newSelected.add(rowId);
     }
     setSelectedRows(newSelected);
-    setSelectAll(newSelected.size === domainControllers.length);
+    setSelectAll(newSelected.size === filteredDomainControllers.length);
   };
 
   const handleSelectAll = () => {
@@ -57,7 +102,7 @@ const ForestRecovery = () => {
       setSelectedRows(new Set());
       setSelectAll(false);
     } else {
-      setSelectedRows(new Set(domainControllers.map(dc => dc.id)));
+      setSelectedRows(new Set(filteredDomainControllers.map(dc => dc.id)));
       setSelectAll(true);
     }
   };
@@ -126,6 +171,51 @@ const ForestRecovery = () => {
       <div className="flex">
         {/* Main Content Area */}
         <div className="flex-1 p-6 space-y-6">
+          {/* Search and Filter Section */}
+          <div className="flex items-center space-x-4 mb-6">
+            {/* Search Bar */}
+            <div className="relative flex-1 max-w-md">
+              <input
+                type="text"
+                placeholder="Search domains..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-10 pr-4 py-2 text-sm border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              />
+              <i className="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm"></i>
+            </div>
+
+            {/* Domain Filter Dropdown */}
+            <div className="relative">
+              <select 
+                value={domainFilter}
+                onChange={(e) => setDomainFilter(e.target.value)}
+                className="appearance-none bg-gray-800 text-white px-4 py-2 pr-8 rounded-lg text-sm font-medium border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
+              >
+                <option value="all">All Domains</option>
+                <option value="praevia.local">praevia.local</option>
+                <option value="company.local">company.local</option>
+                <option value="dev.company.local">dev.company.local</option>
+              </select>
+              <i className="fas fa-chevron-down absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 text-xs pointer-events-none"></i>
+            </div>
+
+            {/* Status Filter Dropdown */}
+            <div className="relative">
+              <select 
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+                className="appearance-none bg-gray-800 text-white px-4 py-2 pr-8 rounded-lg text-sm font-medium border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
+              >
+                <option value="all">All Status</option>
+                <option value="active">Active</option>
+                <option value="warning">Warning</option>
+                <option value="error">Error</option>
+              </select>
+              <i className="fas fa-chevron-down absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 text-xs pointer-events-none"></i>
+            </div>
+          </div>
+
           {/* Domain Controllers */}
           <div className="bg-white rounded-lg border border-gray-200">
             <div className="p-4 border-b border-gray-200">
@@ -156,11 +246,12 @@ const ForestRecovery = () => {
                     <th className="px-4 py-3 text-left font-medium text-gray-700">FQDN</th>
                     <th className="px-4 py-3 text-left font-medium text-gray-700">IsGC</th>
                     <th className="px-4 py-3 text-left font-medium text-gray-700">IsRO</th>
+                    <th className="px-4 py-3 text-left font-medium text-gray-700">Status</th>
                     <th className="px-4 py-3 text-left font-medium text-gray-700">IPv4Address</th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {domainControllers.map((dc) => (
+                  {filteredDomainControllers.map((dc) => (
                     <tr 
                       key={dc.id} 
                       className={`hover:bg-gray-50 ${selectedRows.has(dc.id) ? 'bg-blue-50' : ''}`}
@@ -194,6 +285,20 @@ const ForestRecovery = () => {
                           !dc.isRO ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
                         }`}>
                           {dc.isRO ? 'True' : 'False'}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3">
+                        <span className={`px-2 py-1 rounded text-xs font-medium flex items-center space-x-1 ${
+                          dc.status === 'Active' ? 'bg-green-100 text-green-800' : 
+                          dc.status === 'Warning' ? 'bg-yellow-100 text-yellow-800' : 
+                          'bg-red-100 text-red-800'
+                        }`}>
+                          <div className={`w-2 h-2 rounded-full ${
+                            dc.status === 'Active' ? 'bg-green-500' : 
+                            dc.status === 'Warning' ? 'bg-yellow-500' : 
+                            'bg-red-500'
+                          }`}></div>
+                          <span>{dc.status}</span>
                         </span>
                       </td>
                       <td className="px-4 py-3 text-gray-700 font-mono text-xs">{dc.ipv4Address}</td>
