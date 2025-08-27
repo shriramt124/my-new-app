@@ -150,10 +150,7 @@ const LoginScreen = ({ onLogin }) => {
           </div>
         </div>
 
-        {/* Footer */}
-        <div className="text-center text-xs text-gray-500">
-          <p>© 2024 Forest Recovery. All rights reserved.</p>
-        </div>
+        
       </div>
     </div>
   );
