@@ -190,7 +190,7 @@ const ForestRecovery = () => {
               <select 
                 value={domainFilter}
                 onChange={(e) => setDomainFilter(e.target.value)}
-                className="appearance-none bg-gray-800 text-white px-3 py-1.5 pr-6 rounded-md text-xs font-medium border border-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer"
+                className="appearance-none bg-gray-200 text-gray-800 px-3 py-1.5 pr-6 rounded-md text-xs font-medium border border-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer"
               >
                 <option value="all">All Domains</option>
                 <option value="praevia.local">praevia.local</option>
@@ -205,7 +205,7 @@ const ForestRecovery = () => {
               <select 
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="appearance-none bg-gray-800 text-white px-3 py-1.5 pr-6 rounded-md text-xs font-medium border border-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer"
+                className="appearance-none bg-gray-200 text-gray-800 px-3 py-1.5 pr-6 rounded-md text-xs font-medium border border-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer"
               >
                 <option value="all">All Status</option>
                 <option value="active">Active</option>
