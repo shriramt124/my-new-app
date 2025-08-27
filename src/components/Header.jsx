@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
@@ -18,10 +17,10 @@ const Header = () => {
       icon: 'fas fa-chart-bar',
       path: '/dashboards',
       items: [
-        { icon: 'fas fa-plus-circle', label: 'New Dashboard', desc: 'Create a new dashboard from scratch' },
-        { icon: 'fas fa-palette', label: 'Templates', desc: 'Use pre-built dashboard templates' },
-        { icon: 'fas fa-eye', label: 'Preview Mode', desc: 'Preview your dashboard' },
-        { icon: 'fas fa-download', label: 'Export Data', desc: 'Export dashboard data' }
+        { icon: 'fas fa-plus-circle', label: 'New Dashboard', desc: 'Create a new dashboard from scratch', path: '/dashboards/new' },
+        { icon: 'fas fa-palette', label: 'Templates', desc: 'Use pre-built dashboard templates', path: '/dashboards/templates' },
+        { icon: 'fas fa-eye', label: 'Preview Mode', desc: 'Preview your dashboard', path: '/dashboards/preview' },
+        { icon: 'fas fa-download', label: 'Export Data', desc: 'Export dashboard data', path: '/dashboards/export' }
       ]
     },
     {
@@ -30,20 +29,21 @@ const Header = () => {
       icon: 'fas fa-users',
       path: '/directory',
       items: [
-        { 
-          icon: 'fas fa-desktop', 
-          label: 'Computers', 
+        {
+          icon: 'fas fa-desktop',
+          label: 'Computers',
           desc: 'Manage domain computers',
+          path: '/directory/computers',
           submenu: [
-            { icon: 'fas fa-key', label: 'Account Password Reset', desc: 'Reset computer accounts' },
-            { icon: 'fas fa-shield-alt', label: 'Domain Controllers', desc: 'Manage domain controllers' },
-            { icon: 'fas fa-server', label: 'Servers', desc: 'Manage domain servers' },
-            { icon: 'fas fa-laptop', label: 'Workstations', desc: 'Manage user workstations' }
+            { icon: 'fas fa-key', label: 'Account Password Reset', desc: 'Reset computer accounts', path: '/directory/computers/password-reset' },
+            { icon: 'fas fa-shield-alt', label: 'Domain Controllers', desc: 'Manage domain controllers', path: '/directory/computers/domain-controllers' },
+            { icon: 'fas fa-server', label: 'Servers', desc: 'Manage domain servers', path: '/directory/computers/servers' },
+            { icon: 'fas fa-laptop', label: 'Workstations', desc: 'Manage user workstations', path: '/directory/computers/workstations' }
           ]
         },
-        { icon: 'fas fa-user-friends', label: 'Identities', desc: 'Manage user identities' },
-        { icon: 'fas fa-cloud-upload-alt', label: 'Azure Isolation', desc: 'Azure AD integration' },
-        { icon: 'fas fa-history', label: 'Restore from Backup', desc: 'Restore AD objects' }
+        { icon: 'fas fa-user-friends', label: 'Identities', desc: 'Manage user identities', path: '/directory/identities' },
+        { icon: 'fas fa-cloud-upload-alt', label: 'Azure Isolation', desc: 'Azure AD integration', path: '/directory/azure-isolation' },
+        { icon: 'fas fa-history', label: 'Restore from Backup', desc: 'Restore AD objects', path: '/directory/restore-backup' }
       ]
     },
     {
@@ -52,10 +52,10 @@ const Header = () => {
       icon: 'fab fa-aws',
       path: '/aws',
       items: [
-        { icon: 'fas fa-server', label: 'EC2 Instances', desc: 'Manage virtual servers' },
-        { icon: 'fas fa-cube', label: 'S3 Storage', desc: 'Object storage service' },
-        { icon: 'fas fa-database', label: 'RDS Database', desc: 'Relational database service' },
-        { icon: 'fas fa-chart-line', label: 'CloudWatch', desc: 'Monitoring and logging' }
+        { icon: 'fas fa-server', label: 'EC2 Instances', desc: 'Manage virtual servers', path: '/aws/ec2' },
+        { icon: 'fas fa-cube', label: 'S3 Storage', desc: 'Object storage service', path: '/aws/s3' },
+        { icon: 'fas fa-database', label: 'RDS Database', desc: 'Relational database service', path: '/aws/rds' },
+        { icon: 'fas fa-chart-line', label: 'CloudWatch', desc: 'Monitoring and logging', path: '/aws/cloudwatch' }
       ]
     },
     {
@@ -64,10 +64,10 @@ const Header = () => {
       icon: 'fab fa-microsoft',
       path: '/azure',
       items: [
-        { icon: 'fas fa-server', label: 'Virtual Machines', desc: 'Create and manage VMs' },
-        { icon: 'fas fa-network-wired', label: 'Virtual Networks', desc: 'Configure network topology' },
-        { icon: 'fas fa-shield-virus', label: 'Security Center', desc: 'Unified security management' },
-        { icon: 'fas fa-history', label: 'Backup & Restore', desc: 'Data backup solutions' }
+        { icon: 'fas fa-server', label: 'Virtual Machines', desc: 'Create and manage VMs', path: '/azure/vms' },
+        { icon: 'fas fa-network-wired', label: 'Virtual Networks', desc: 'Configure network topology', path: '/azure/vnets' },
+        { icon: 'fas fa-shield-virus', label: 'Security Center', desc: 'Unified security management', path: '/azure/security-center' },
+        { icon: 'fas fa-history', label: 'Backup & Restore', desc: 'Data backup solutions', path: '/azure/backup' }
       ]
     },
     {
@@ -76,10 +76,10 @@ const Header = () => {
       icon: 'fas fa-search',
       path: '/forensics',
       items: [
-        { icon: 'fas fa-search-plus', label: 'Evidence Search', desc: 'Search through digital evidence' },
-        { icon: 'fas fa-folder-plus', label: 'New Case', desc: 'Create new investigation case' },
-        { icon: 'fas fa-file-alt', label: 'Generate Report', desc: 'Create investigation report' },
-        { icon: 'fas fa-camera', label: 'Evidence Capture', desc: 'Capture digital evidence' }
+        { icon: 'fas fa-search-plus', label: 'Evidence Search', desc: 'Search through digital evidence', path: '/forensics/search' },
+        { icon: 'fas fa-folder-plus', label: 'New Case', desc: 'Create new investigation case', path: '/forensics/new-case' },
+        { icon: 'fas fa-file-alt', label: 'Generate Report', desc: 'Create investigation report', path: '/forensics/report' },
+        { icon: 'fas fa-camera', label: 'Evidence Capture', desc: 'Capture digital evidence', path: '/forensics/capture' }
       ]
     }
   ];
@@ -88,7 +88,9 @@ const Header = () => {
   const getCurrentTab = () => {
     const currentPath = location.pathname;
     if (currentPath === '/' || currentPath === '/dashboards') return 'dashboards';
-    return currentPath.substring(1); // Remove leading slash
+    const matchedTab = tabs.find(tab => currentPath.startsWith(tab.path));
+    if (matchedTab) return matchedTab.id;
+    return null;
   };
 
   const activeTab = getCurrentTab();
@@ -161,14 +163,14 @@ const Header = () => {
         {/* Search Bar - Centered */}
         <div className="flex-1 max-w-2xl mx-8">
           <div className="relative group">
-            <input 
-              type="text" 
-              placeholder="Tell me what you want to do..." 
+            <input
+              type="text"
+              placeholder="Tell me what you want to do..."
               onFocus={() => setIsSearchFocused(true)}
               onBlur={() => setIsSearchFocused(false)}
               className={`w-full pl-12 pr-6 py-3 text-sm border rounded-2xl bg-white/80 backdrop-blur-sm focus:outline-none transition-all duration-300 placeholder-gray-500 ${
-                isSearchFocused 
-                  ? 'ring-2 ring-blue-500/30 border-blue-400 bg-white shadow-xl' 
+                isSearchFocused
+                  ? 'ring-2 ring-blue-500/30 border-blue-400 bg-white shadow-xl'
                   : 'border-gray-300/60 hover:border-gray-400/60 hover:bg-white shadow-sm'
               }`}
             />
@@ -181,7 +183,7 @@ const Header = () => {
         {/* Right Controls */}
         <div className="flex items-center space-x-2">
           {['fas fa-cog', 'fas fa-bell', 'fas fa-user-circle', 'fas fa-question-circle'].map((icon, index) => (
-            <button 
+            <button
               key={index}
               className="p-3 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-xl transition-all duration-200 group"
             >
@@ -212,9 +214,11 @@ const Header = () => {
                 >
                   <i className={`${tab.icon} text-sm transition-transform group-hover:scale-110`}></i>
                   <span className="font-medium">{tab.label}</span>
-                  <i className={`fas fa-chevron-down text-xs transition-all duration-200 ${
-                    activeDropdown === tab.id ? 'rotate-180 opacity-100' : 'opacity-60'
-                  }`}></i>
+                  {tab.items && tab.items.length > 0 && (
+                    <i className={`fas fa-chevron-down text-xs transition-all duration-200 ${
+                      activeDropdown === tab.id ? 'rotate-180 opacity-100' : 'opacity-60'
+                    }`}></i>
+                  )}
                 </button>
               </div>
             ))}
@@ -223,7 +227,7 @@ const Header = () => {
 
         {/* Dropdown Menu */}
         {activeDropdown && currentTab && (
-          <div 
+          <div
             ref={dropdownRef}
             className="absolute top-full left-0 right-0 bg-white/98 backdrop-blur-xl shadow-2xl border border-gray-200/60 z-50 animate-in slide-in-from-top-2 duration-200"
             onMouseEnter={handleDropdownMouseEnter}
@@ -235,7 +239,14 @@ const Header = () => {
                   {currentTab.items.map((item, index) => (
                     <div key={index} className="relative">
                       <button
-                        onClick={() => !item.submenu && setActiveDropdown(null)}
+                        onClick={() => {
+                          if (item.path) {
+                            navigate(item.path);
+                            setActiveDropdown(null);
+                          } else if (!item.submenu) {
+                            setActiveDropdown(null);
+                          }
+                        }}
                         onMouseEnter={() => item.submenu && handleSubmenuHover(item.label)}
                         className="w-full flex items-center space-x-3 p-3 text-left rounded-lg hover:bg-blue-50 transition-all duration-200 group"
                       >
@@ -263,7 +274,14 @@ const Header = () => {
                     {currentTab.items.find(item => item.label === activeSubmenu)?.submenu?.map((subItem, index) => (
                       <button
                         key={index}
-                        onClick={() => setActiveDropdown(null)}
+                        onClick={() => {
+                          if (subItem.path) {
+                            navigate(subItem.path);
+                            setActiveDropdown(null);
+                          } else {
+                            setActiveDropdown(null);
+                          }
+                        }}
                         className="w-full flex items-center space-x-3 p-3 text-left rounded-lg hover:bg-blue-50 transition-all duration-200 group"
                       >
                         <div className="flex-shrink-0 w-8 h-8 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg flex items-center justify-center group-hover:from-blue-100 group-hover:to-blue-200 transition-all duration-200">

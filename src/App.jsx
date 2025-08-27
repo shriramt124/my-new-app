@@ -9,18 +9,85 @@ import AWSContent from './components/AWSContent';
 import AzureContent from './components/AzureContent';
 import ForensicsContent from './components/ForensicsContent';
 
+// Dashboard Components
+const NewDashboard = () => <div className="p-8"><h1 className="text-2xl font-bold">New Dashboard</h1></div>;
+const DashboardTemplates = () => <div className="p-8"><h1 className="text-2xl font-bold">Dashboard Templates</h1></div>;
+const DashboardPreview = () => <div className="p-8"><h1 className="text-2xl font-bold">Dashboard Preview</h1></div>;
+const DashboardExport = () => <div className="p-8"><h1 className="text-2xl font-bold">Export Dashboard Data</h1></div>;
+
+// Directory Components
+const DirectoryComputers = () => <div className="p-8"><h1 className="text-2xl font-bold">Directory Computers</h1></div>;
+const ComputerPasswordReset = () => <div className="p-8"><h1 className="text-2xl font-bold">Computer Password Reset</h1></div>;
+const DomainControllers = () => <div className="p-8"><h1 className="text-2xl font-bold">Domain Controllers</h1></div>;
+const DirectoryServers = () => <div className="p-8"><h1 className="text-2xl font-bold">Directory Servers</h1></div>;
+const DirectoryWorkstations = () => <div className="p-8"><h1 className="text-2xl font-bold">Directory Workstations</h1></div>;
+const DirectoryIdentities = () => <div className="p-8"><h1 className="text-2xl font-bold">Directory Identities</h1></div>;
+const AzureIsolation = () => <div className="p-8"><h1 className="text-2xl font-bold">Azure Isolation</h1></div>;
+const DirectoryRestore = () => <div className="p-8"><h1 className="text-2xl font-bold">Directory Restore from Backup</h1></div>;
+
+// AWS Components
+const EC2Instances = () => <div className="p-8"><h1 className="text-2xl font-bold">EC2 Instances</h1></div>;
+const S3Storage = () => <div className="p-8"><h1 className="text-2xl font-bold">S3 Storage</h1></div>;
+const RDSDatabase = () => <div className="p-8"><h1 className="text-2xl font-bold">RDS Database</h1></div>;
+const CloudWatch = () => <div className="p-8"><h1 className="text-2xl font-bold">CloudWatch</h1></div>;
+
+// Azure Components
+const VirtualMachines = () => <div className="p-8"><h1 className="text-2xl font-bold">Azure Virtual Machines</h1></div>;
+const VirtualNetworks = () => <div className="p-8"><h1 className="text-2xl font-bold">Azure Virtual Networks</h1></div>;
+const SecurityCenter = () => <div className="p-8"><h1 className="text-2xl font-bold">Azure Security Center</h1></div>;
+const AzureBackup = () => <div className="p-8"><h1 className="text-2xl font-bold">Azure Backup & Restore</h1></div>;
+
+// Forensics Components
+const EvidenceSearch = () => <div className="p-8"><h1 className="text-2xl font-bold">Evidence Search</h1></div>;
+const NewCase = () => <div className="p-8"><h1 className="text-2xl font-bold">New Forensics Case</h1></div>;
+const GenerateReport = () => <div className="p-8"><h1 className="text-2xl font-bold">Generate Report</h1></div>;
+const EvidenceCapture = () => <div className="p-8"><h1 className="text-2xl font-bold">Evidence Capture</h1></div>;
+
 const App = () => {
   return (
     <HashRouter>
       <div className="min-h-screen bg-gray-50 flex flex-col">
         <Header />
         <Routes>
+          {/* Dashboard Routes */}
           <Route path="/" element={<ForestRecovery />} />
           <Route path="/dashboards" element={<ForestRecovery />} />
+          <Route path="/dashboards/new" element={<NewDashboard />} />
+          <Route path="/dashboards/templates" element={<DashboardTemplates />} />
+          <Route path="/dashboards/preview" element={<DashboardPreview />} />
+          <Route path="/dashboards/export" element={<DashboardExport />} />
+
+          {/* Directory Routes */}
           <Route path="/directory" element={<DirectoryContent />} />
+          <Route path="/directory/computers" element={<DirectoryComputers />} />
+          <Route path="/directory/computers/password-reset" element={<ComputerPasswordReset />} />
+          <Route path="/directory/computers/domain-controllers" element={<DomainControllers />} />
+          <Route path="/directory/computers/servers" element={<DirectoryServers />} />
+          <Route path="/directory/computers/workstations" element={<DirectoryWorkstations />} />
+          <Route path="/directory/identities" element={<DirectoryIdentities />} />
+          <Route path="/directory/azure-isolation" element={<AzureIsolation />} />
+          <Route path="/directory/restore" element={<DirectoryRestore />} />
+
+          {/* AWS Routes */}
           <Route path="/aws" element={<AWSContent />} />
+          <Route path="/aws/ec2" element={<EC2Instances />} />
+          <Route path="/aws/s3" element={<S3Storage />} />
+          <Route path="/aws/rds" element={<RDSDatabase />} />
+          <Route path="/aws/cloudwatch" element={<CloudWatch />} />
+
+          {/* Azure Routes */}
           <Route path="/azure" element={<AzureContent />} />
+          <Route path="/azure/virtual-machines" element={<VirtualMachines />} />
+          <Route path="/azure/virtual-networks" element={<VirtualNetworks />} />
+          <Route path="/azure/security-center" element={<SecurityCenter />} />
+          <Route path="/azure/backup" element={<AzureBackup />} />
+
+          {/* Forensics Routes */}
           <Route path="/forensics" element={<ForensicsContent />} />
+          <Route path="/forensics/evidence-search" element={<EvidenceSearch />} />
+          <Route path="/forensics/new-case" element={<NewCase />} />
+          <Route path="/forensics/generate-report" element={<GenerateReport />} />
+          <Route path="/forensics/evidence-capture" element={<EvidenceCapture />} />
         </Routes>
       </div>
     </HashRouter>
