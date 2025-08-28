@@ -177,7 +177,7 @@ const Header = ({ currentUser, onLogout, isCollapsed, setIsCollapsed }) => {
         {/* Top Row: Search, Profile, Settings, Help */}
         <div className="px-6 py-3 flex items-center justify-between border-b border-cyber-light/20">
           {/* Search Bar */}
-          <div className="flex-1 max-w-md mx-auto">
+          <div className="flex-1 max-w-md">
             <div className="relative">
               <input
                 type="text"
