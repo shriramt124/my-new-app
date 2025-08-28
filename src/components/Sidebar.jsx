@@ -22,16 +22,16 @@ const Sidebar = ({ isCollapsed, setIsCollapsed, tabs }) => {
 
   return (
     <div 
-      className={`fixed left-0 top-0 bottom-0 bg-cyber-black border-r border-cyber-light/20 shadow-cyber transition-all duration-300 z-30 ${isCollapsed ? 'w-16' : 'w-64'}`}
+      className={`fixed left-0 top-0 bottom-0 bg-cyber-black border-r border-cyber-light/20 shadow-cyber transition-all duration-300 z-30 ${isCollapsed ? 'w-14' : 'w-56'}`}
     >
       {/* Logo Section */}
-      <div className="flex items-center justify-between p-4 border-b border-cyber-light/20">
+      <div className="flex items-center justify-between p-3 border-b border-cyber-light/20">
         <div className="flex items-center">
-          <div className="flex-shrink-0 w-8 h-8 bg-cyber-accent rounded-md flex items-center justify-center shadow-cyber-sm">
-            <i className="fas fa-shield-alt text-white"></i>
+          <div className="flex-shrink-0 w-7 h-7 bg-cyber-accent rounded-md flex items-center justify-center shadow-cyber-sm">
+            <i className="fas fa-shield-alt text-white text-sm"></i>
           </div>
           {!isCollapsed && (
-            <span className="ml-3 font-bold text-white text-lg">CyberDefense</span>
+            <span className="ml-2 font-bold text-white text-base">CyberDefense</span>
           )}
         </div>
         <button 
@@ -43,20 +43,20 @@ const Sidebar = ({ isCollapsed, setIsCollapsed, tabs }) => {
       </div>
 
       {/* Navigation Menu */}
-      <div className="py-4 overflow-y-auto">
+      <div className="py-3 overflow-y-auto">
         <ul className="space-y-1">
           {tabs.map((tab) => (
             <li key={tab.id}>
               <NavLink
                 to={`/${tab.id}`}
                 className={({ isActive }) =>
-                  `flex items-center ${isCollapsed ? 'justify-center' : 'px-4'} py-3 ${isActive 
+                  `flex items-center ${isCollapsed ? 'justify-center' : 'px-3'} py-2.5 ${isActive 
                     ? 'bg-cyber-light/10 text-cyber-accent border-l-2 border-cyber-accent' 
                     : 'text-gray-400 hover:bg-cyber-light/5 hover:text-gray-200'}`
                 }
               >
-                <i className={`${tab.icon} ${isCollapsed ? 'text-xl' : 'text-lg mr-3'}`}></i>
-                {!isCollapsed && <span>{tab.label}</span>}
+                <i className={`${tab.icon} ${isCollapsed ? 'text-lg' : 'text-base mr-2.5'}`}></i>
+                {!isCollapsed && <span className="text-sm">{tab.label}</span>}
               </NavLink>
             </li>
           ))}
@@ -64,15 +64,15 @@ const Sidebar = ({ isCollapsed, setIsCollapsed, tabs }) => {
         
         {/* Recovery Items */}
         {activeTab === 'directory' && (
-          <div className="mt-6">
-            <div className={`${isCollapsed ? 'text-center' : 'px-4'} mb-2`}>
+          <div className="mt-4">
+            <div className={`${isCollapsed ? 'text-center' : 'px-3'} mb-2`}>
               {!isCollapsed && <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Recovery</p>}
             </div>
-            <ul className="space-y-1">
+            <ul className="space-y-0.5">
               {recoveryItems.map((item, index) => (
                 <li key={index}>
                   <div 
-                    className={`flex items-center ${isCollapsed ? 'justify-center' : 'px-4'} py-2 cursor-pointer ${item.active 
+                    className={`flex items-center ${isCollapsed ? 'justify-center' : 'px-3'} py-2 cursor-pointer ${item.active 
                       ? 'bg-cyber-accent/20 text-cyber-accent border-l-2 border-cyber-accent' 
                       : 'text-gray-400 hover:bg-cyber-light/5 hover:text-gray-200'}`}
                     onClick={() => {
@@ -83,8 +83,8 @@ const Sidebar = ({ isCollapsed, setIsCollapsed, tabs }) => {
                       setRecoveryItems(updatedItems);
                     }}
                   >
-                    <i className={`${item.icon} ${isCollapsed ? 'text-xl' : 'text-lg mr-3'}`}></i>
-                    {!isCollapsed && <span className="text-sm">{item.label}</span>}
+                    <i className={`${item.icon} ${isCollapsed ? 'text-lg' : 'text-base mr-2.5'}`}></i>
+                    {!isCollapsed && <span className="text-xs">{item.label}</span>}
                   </div>
                 </li>
               ))}
@@ -94,11 +94,11 @@ const Sidebar = ({ isCollapsed, setIsCollapsed, tabs }) => {
       </div>
 
       {/* Bottom Section */}
-      <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-cyber-light/20">
+      <div className="absolute bottom-0 left-0 right-0 p-3 border-t border-cyber-light/20">
         <div className={`flex ${isCollapsed ? 'justify-center' : 'justify-between'} items-center`}>
           {!isCollapsed && <span className="text-xs text-gray-500">v1.0.0</span>}
           <button className="text-gray-400 hover:text-cyber-accent transition-colors">
-            <i className="fas fa-sign-out-alt"></i>
+            <i className="fas fa-sign-out-alt text-sm"></i>
           </button>
         </div>
       </div>
