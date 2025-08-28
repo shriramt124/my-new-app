@@ -3,9 +3,20 @@
 
 module.exports = {
   packagerConfig: {
-    asar:{//tell teh asar that keep this script fiel as a regular file do not pack it inside the app.asar
-      unpackDir:'scripts'
-    }
+    asar: {
+      unpack: "{scripts/**/*,scripts}"
+    },
+    timeout: 300000, // 5 minutes timeout
+    ignore: [
+      /node_modules\/\.cache/,
+      /\.vite/,
+      /out/,
+      /attached_assets/,
+      /\.git/,
+      /\.replit/,
+      /README\.md/,
+      /\.gitignore/
+    ]
   },
   rebuildConfig: {},
   makers: [
@@ -26,7 +37,29 @@ module.exports = {
       config: {},
     },
   ],
-ugins: [
+  hooks: {
+    packageAfterCopy: async (config, buildPath, electronVersion, platform, arch) => {
+      try {
+        const fs = require('fs-extra');
+        const path = require('path');
+        
+        // Copy scripts directory to the build
+        const scriptsSource = path.join(config.projectDir, 'scripts');
+        const scriptsDestination = path.join(buildPath, 'scripts');
+        
+        if (await fs.pathExists(scriptsSource)) {
+          await fs.copy(scriptsSource, scriptsDestination);
+          console.log('Scripts directory copied to build');
+        } else {
+          console.log('Scripts directory not found, skipping copy');
+        }
+      } catch (error) {
+        console.error('Error in packageAfterCopy hook:', error);
+        // Don't fail the build, just log the error
+      }
+    }
+  },
+  plugins: [
     {
       name: '@electron-forge/plugin-vite',
       config: {

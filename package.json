@@ -27,6 +27,7 @@
     "@electron-forge/plugin-fuses": "^7.8.3",
     "@electron-forge/plugin-vite": "^7.8.3",
     "@electron/fuses": "^1.8.0",
+    "@electron/rebuild": "^3.7.2",
     "autoprefixer": "^10.4.21",
     "electron": "37.3.1",
     "postcss": "^8.5.6",
