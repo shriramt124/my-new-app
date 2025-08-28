@@ -6,17 +6,8 @@ module.exports = {
     asar: {
       unpack: "{scripts/**/*,scripts}"
     },
-    timeout: 300000, // 5 minutes timeout
-    ignore: [
-      /node_modules\/\.cache/,
-      /\.vite/,
-      /out/,
-      /attached_assets/,
-      /\.git/,
-      /\.replit/,
-      /README\.md/,
-      /\.gitignore/
-    ]
+    timeout: 300000 // 5 minutes timeout
+    // Removed ignore patterns to let Vite plugin handle this automatically
   },
   rebuildConfig: {},
   makers: [
@@ -43,9 +34,13 @@ module.exports = {
         const fs = require('fs-extra');
         const path = require('path');
         
-        // Copy scripts directory to the build
-        const scriptsSource = path.join(config.projectDir, 'scripts');
+        // Use process.cwd() instead of config.projectDir which may be undefined
+        const projectDir = config.projectDir || process.cwd();
+        const scriptsSource = path.join(projectDir, 'scripts');
         const scriptsDestination = path.join(buildPath, 'scripts');
+        
+        console.log(`Attempting to copy scripts from: ${scriptsSource}`);
+        console.log(`To destination: ${scriptsDestination}`);
         
         if (await fs.pathExists(scriptsSource)) {
           await fs.copy(scriptsSource, scriptsDestination);
