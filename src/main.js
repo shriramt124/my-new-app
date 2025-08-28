@@ -71,17 +71,28 @@ ipcMain.handle('run-powershell', async (event, command) => {
       scriptsPath = path.join(__dirname, '..', '..', 'scripts');
     }
     
-    // Replace relative script paths with absolute paths
-    let resolvedCommand = command;
+    // Build the full script path
+    let fullScriptPath;
     if (command.includes('.\\scripts\\') || command.includes('./scripts/')) {
+      // Handle relative paths
       const scriptName = command.split(/[\\\/]/).pop();
-      const fullScriptPath = path.join(scriptsPath, scriptName);
-      resolvedCommand = `"${fullScriptPath}"`;
+      fullScriptPath = path.join(scriptsPath, scriptName);
+    } else if (path.isAbsolute(command)) {
+      // Handle absolute paths
+      fullScriptPath = command;
+    } else {
+      // Handle just script filename
+      fullScriptPath = path.join(scriptsPath, command);
     }
     
-    exec(`powershell -Command "${resolvedCommand}"`, { cwd: scriptsPath }, (error, stdout, stderr) => {
+    // Use the absolute path with PowerShell -File parameter for better reliability
+    const powershellCommand = `& "${fullScriptPath}"`;
+    
+    exec(`powershell -Command "${powershellCommand}"`, { cwd: scriptsPath }, (error, stdout, stderr) => {
       if (error) {
         console.error('PowerShell Error:', error);
+        console.error('Script path attempted:', fullScriptPath);
+        console.error('Scripts directory:', scriptsPath);
         return resolve({ success: false, error: error.message, output: stderr });
       }
       if (stderr) {
