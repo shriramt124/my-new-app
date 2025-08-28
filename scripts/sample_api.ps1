@@ -1,32 +1,4 @@
 # sample_api.ps1
-$data = @{
-    users = @(
-        @{
-            id = 1;
-            name = "John Doe";
-            email = "john.doe@example.com";
-            isActive = $true
-        },
-        @{
-            id = 2;
-            name = "Jane Smith";
-            email = "jane.smith@example.com";
-            isActive = $false
-        },
-        @{
-            id = 3;
-            name = "Peter Jones";
-            email = "peter.jones@example.com";
-            isActive = $true
-        }
-    );
-    metadata = @{
-        source = "PowerShell Mock API";
-        timestamp = (Get-Date).ToString("o")
-    }
-}
-
-$data | ConvertTo-Json
 # Sample API Mock Data Script
 # This script returns mock JSON data for testing
 
@@ -46,6 +18,12 @@ $mockData = @{
                 name = "Jane Smith"
                 email = "jane@example.com"
                 active = $true
+            },
+            @{
+                id = 3
+                name = "Peter Jones"
+                email = "peter.jones@example.com"
+                active = $true
             }
         )
         server_info = @{
@@ -53,9 +31,13 @@ $mockData = @{
             os = "Windows"
             powershell_version = $PSVersionTable.PSVersion.ToString()
         }
+        metadata = @{
+            source = "PowerShell Mock API"
+            timestamp = (Get-Date).ToString("o")
+        }
     }
 }
 
-# Convert to JSON and output
+# Convert to JSON and output (single output only)
 $jsonOutput = $mockData | ConvertTo-Json -Depth 10
 Write-Output $jsonOutput
