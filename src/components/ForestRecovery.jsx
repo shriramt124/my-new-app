@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 
-const ForestRecovery = () => {
+const ForestRecovery = ({ isCollapsed }) => {
   const [selectedRows, setSelectedRows] = useState(new Set());
   const [selectAll, setSelectAll] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -92,79 +92,43 @@ const ForestRecovery = () => {
   const getStatusIcon = (status) => {
     switch (status) {
       case 'Active':
-        return <div className="w-2 h-2 bg-green-500 rounded-full"></div>;
+        return <div className="w-2 h-2 bg-cyber-accent rounded-full"></div>;
       case 'Warning':
-        return <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>;
+        return <div className="w-2 h-2 bg-cyber-yellow rounded-full"></div>;
       case 'Error':
-        return <div className="w-2 h-2 bg-red-500 rounded-full"></div>;
+        return <div className="w-2 h-2 bg-cyber-red rounded-full"></div>;
       default:
-        return <div className="w-2 h-2 bg-gray-500 rounded-full"></div>;
+        return <div className="w-2 h-2 bg-cyber-light/30 rounded-full"></div>;
     }
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen flex">
-      {/* Left Sidebar */}
-      <div className={`bg-white border-r border-gray-200 flex-shrink-0 transition-all duration-300 ${
-        isLeftSidebarCollapsed ? 'w-12' : 'w-48'
-      }`}>
-        <div className="p-3">
-          <div className="flex items-center justify-between mb-6">
-            {!isLeftSidebarCollapsed && (
-              <div className="flex items-center space-x-2">
-                <div className="w-6 h-6 bg-blue-600 rounded-lg flex items-center justify-center">
-                  <i className="fas fa-shield-alt text-white text-xs"></i>
-                </div>
-                <span className="font-semibold text-gray-900 text-sm">Recovery</span>
-              </div>
-            )}
-            <button
-              onClick={() => setIsLeftSidebarCollapsed(!isLeftSidebarCollapsed)}
-              className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors"
-            >
-              <i className={`fas ${isLeftSidebarCollapsed ? 'fa-chevron-right' : 'fa-chevron-left'} text-gray-600 text-xs`}></i>
-            </button>
-          </div>
-
-          <nav className="space-y-1">
-            {sidebarItems.map((item, index) => (
-              <div
-                key={index}
-                className={`flex items-center space-x-2 px-2 py-2 rounded-lg cursor-pointer transition-colors ${
-                  item.active 
-                    ? 'bg-blue-50 text-blue-700' 
-                    : 'text-gray-600 hover:bg-gray-50'
-                }`}
-              >
-                <i className={`${item.icon} text-xs`}></i>
-                {!isLeftSidebarCollapsed && (
-                  <span className="text-xs font-medium">{item.label}</span>
-                )}
-              </div>
-            ))}
-          </nav>
-        </div>
-      </div>
-
+    <div className="bg-cyber-black min-h-screen w-full overflow-hidden">
       {/* Main Content */}
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className={`flex-1 flex flex-col min-w-0 w-full transition-all duration-300 ${isCollapsed ? 'ml-16' : 'ml-64'}`}>
         {/* Header */}
-        <div className="bg-white border-b border-gray-200 px-4 py-3 flex-shrink-0">
+        <div className="bg-cyber-darker border-b border-cyber-dark/50 px-4 py-3 flex-shrink-0">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <div className="flex items-center space-x-2">
-                <div className="w-6 h-6 bg-emerald-500 rounded-lg flex items-center justify-center">
-                  <i className="fas fa-tree text-white text-xs"></i>
+                <div className="w-6 h-6 bg-cyber-accent rounded-lg flex items-center justify-center shadow-cyber-sm">
+                  <i className="fas fa-tree text-cyber-black text-xs"></i>
                 </div>
                 <div>
-                  <h1 className="text-base font-semibold text-gray-900">Forest Recovery</h1>
-                  <p className="text-xs text-gray-600">Recover and restore your Active Directory forest</p>
+                  <h1 className="text-base font-semibold text-cyber-light">Forest Recovery</h1>
+                  <p className="text-xs text-cyber-light/70">Recover and restore your Active Directory forest</p>
                 </div>
               </div>
             </div>
             
             <div className="flex items-center space-x-2">
-              <button className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-md text-xs font-medium transition-colors flex items-center space-x-1">
+              <button 
+                className="bg-cyber-accent hover:bg-cyber-accent/80 text-cyber-black px-3 py-1.5 rounded-md text-xs font-medium transition-colors flex items-center space-x-1 shadow-cyber-sm"
+                onClick={() => {
+                  // Add refresh functionality here
+                  console.log('Refreshing data...');
+                }}
+              >
                 <i className="fas fa-sync-alt text-xs"></i>
                 <span>Refresh</span>
               </button>
@@ -173,8 +137,8 @@ const ForestRecovery = () => {
                 onClick={() => setIsRightSidebarOpen(!isRightSidebarOpen)}
                 className={`p-1.5 rounded-lg transition-colors ${
                   isRightSidebarOpen 
-                    ? 'bg-blue-100 text-blue-700' 
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    ? 'bg-cyber-accent/20 text-cyber-accent border border-cyber-accent/30' 
+                    : 'bg-cyber-dark text-cyber-light/70 hover:bg-cyber-dark/80'
                 }`}
                 title="Toggle sidebar"
               >
@@ -186,7 +150,7 @@ const ForestRecovery = () => {
 
         <div className="flex flex-1 overflow-hidden min-h-0">
           {/* Content Area */}
-          <div className="flex-1 p-4 flex flex-col min-w-0">
+          <div className="flex-1 p-4 flex flex-col min-w-0 overflow-hidden" style={{ maxWidth: isRightSidebarOpen ? 'calc(100% - 50px)' : '100%' }}>
             {/* Search and Filter Section */}
             <div className="flex items-center space-x-3 mb-4">
               <div className="relative">
@@ -195,15 +159,15 @@ const ForestRecovery = () => {
                   placeholder="Search domains..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-48 pl-6 pr-3 py-1.5 text-xs border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-48 pl-6 pr-3 py-1.5 text-xs border border-cyber-light/30 rounded-lg bg-cyber-dark text-cyber-light focus:outline-none focus:ring-1 focus:ring-cyber-accent focus:border-cyber-accent"
                 />
-                <i className="fas fa-search absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400 text-xs"></i>
+                <i className="fas fa-search absolute left-2 top-1/2 transform -translate-y-1/2 text-cyber-light/50 text-xs"></i>
               </div>
 
               <select 
                 value={domainFilter} 
                 onChange={(e) => setDomainFilter(e.target.value)}
-                className="px-2 py-1.5 text-xs border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="px-2 py-1.5 text-xs border border-cyber-light/30 rounded-lg bg-cyber-dark text-cyber-light focus:outline-none focus:ring-1 focus:ring-cyber-accent"
               >
                 <option value="all">All Domains</option>
                 <option value="root">Root Domain</option>
@@ -213,7 +177,7 @@ const ForestRecovery = () => {
               <select 
                 value={statusFilter} 
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="px-2 py-1.5 text-xs border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="px-2 py-1.5 text-xs border border-cyber-light/30 rounded-lg bg-cyber-dark text-cyber-light focus:outline-none focus:ring-1 focus:ring-cyber-accent"
               >
                 <option value="all">All Status</option>
                 <option value="active">Active</option>
@@ -223,87 +187,87 @@ const ForestRecovery = () => {
             </div>
 
             {/* Domain Controllers Table */}
-            <div className="bg-white rounded-lg border border-gray-200 overflow-hidden flex-1 min-h-0">
-              <div className="px-4 py-3 border-b border-gray-200 bg-gray-50">
-                <h3 className="text-sm font-semibold text-gray-900">Domain Controllers</h3>
+            <div className="bg-cyber-dark rounded-lg border border-cyber-light/10 overflow-hidden shadow-cyber-sm w-[800px]">
+              <div className="px-4 py-3 border-b border-cyber-light/10 bg-cyber-darker">
+                <h3 className="text-sm font-semibold text-cyber-light">Domain Controllers</h3>
               </div>
               
-              <div className="overflow-auto flex-1" style={{ height: 'calc(100vh - 300px)' }}>
-                <table className="w-full text-xs" style={{ minWidth: '1200px' }}>
-                  <thead className="bg-gray-50 border-b border-gray-200 sticky top-0 z-10">
+              <div className="overflow-x-auto" style={{ height: 'calc(100vh - 300px)', width: '100%', maxWidth: isRightSidebarOpen ? '100%' : '100%' }}>
+                <table className="w-full text-xs" style={{ minWidth: '500px', maxWidth: '100%' }}>
+                  <thead className="bg-cyber-darker border-b border-cyber-light/10 sticky top-0 z-10">
                     <tr>
-                      <th className="text-left py-2 px-2 font-medium text-gray-900 sticky left-0 bg-gray-50 z-20" style={{ width: '30px' }}>
+                      <th className="text-left py-2 px-2 font-medium text-cyber-light sticky left-0 bg-cyber-darker z-20" style={{ width: '30px' }}>
                         <input
                           type="checkbox"
                           checked={selectAll}
                           onChange={handleSelectAll}
-                          className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                          className="rounded border-cyber-light/30 text-cyber-accent bg-cyber-dark focus:ring-cyber-accent"
                         />
                       </th>
-                      <th className="text-left py-2 px-2 font-medium text-gray-900 whitespace-nowrap" style={{ width: '60px' }}>Type</th>
-                      <th className="text-left py-2 px-2 font-medium text-gray-900 whitespace-nowrap" style={{ width: '140px' }}>Domain</th>
-                      <th className="text-left py-2 px-2 font-medium text-gray-900 whitespace-nowrap" style={{ width: '120px' }}>Domain SID</th>
-                      <th className="text-left py-2 px-2 font-medium text-gray-900 whitespace-nowrap" style={{ width: '120px' }}>Site</th>
-                      <th className="text-left py-2 px-2 font-medium text-gray-900 whitespace-nowrap" style={{ width: '100px' }}>SAM Account</th>
-                      <th className="text-left py-2 px-2 font-medium text-gray-900 whitespace-nowrap" style={{ width: '80px' }}>NetBIOS</th>
-                      <th className="text-left py-2 px-2 font-medium text-gray-900 whitespace-nowrap" style={{ width: '180px' }}>FQDN</th>
-                      <th className="text-center py-2 px-2 font-medium text-gray-900 whitespace-nowrap" style={{ width: '40px' }}>GC</th>
-                      <th className="text-center py-2 px-2 font-medium text-gray-900 whitespace-nowrap" style={{ width: '40px' }}>RO</th>
-                      <th className="text-left py-2 px-2 font-medium text-gray-900 whitespace-nowrap" style={{ width: '100px' }}>IPv4 Address</th>
-                      <th className="text-left py-2 px-2 font-medium text-gray-900 whitespace-nowrap" style={{ width: '80px' }}>Status</th>
+                      <th className="text-left py-2 px-2 font-medium text-cyber-light whitespace-nowrap" style={{ width: '60px' }}>Type</th>
+                      <th className="text-left py-2 px-2 font-medium text-cyber-light whitespace-nowrap" style={{ width: '140px' }}>Domain</th>
+                      <th className="text-left py-2 px-2 font-medium text-cyber-light whitespace-nowrap" style={{ width: '120px' }}>Domain SID</th>
+                      <th className="text-left py-2 px-2 font-medium text-cyber-light whitespace-nowrap" style={{ width: '120px' }}>Site</th>
+                      <th className="text-left py-2 px-2 font-medium text-cyber-light whitespace-nowrap" style={{ width: '100px' }}>SAM Account</th>
+                      <th className="text-left py-2 px-2 font-medium text-cyber-light whitespace-nowrap" style={{ width: '80px' }}>NetBIOS</th>
+                      <th className="text-left py-2 px-2 font-medium text-cyber-light whitespace-nowrap" style={{ width: '180px' }}>FQDN</th>
+                      <th className="text-center py-2 px-2 font-medium text-cyber-light whitespace-nowrap" style={{ width: '40px' }}>GC</th>
+                      <th className="text-center py-2 px-2 font-medium text-cyber-light whitespace-nowrap" style={{ width: '40px' }}>RO</th>
+                      <th className="text-left py-2 px-2 font-medium text-cyber-light whitespace-nowrap" style={{ width: '100px' }}>IPv4 Address</th>
+                      <th className="text-left py-2 px-2 font-medium text-cyber-light whitespace-nowrap" style={{ width: '80px' }}>Status</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-200">
+                  <tbody className="divide-y divide-cyber-light/10">
                     {domainControllers.map((dc) => (
-                      <tr key={dc.id} className="hover:bg-gray-50">
-                        <td className="py-2 px-2 sticky left-0 bg-white hover:bg-gray-50 z-10" style={{ width: '30px' }}>
+                      <tr key={dc.id} className="hover:bg-cyber-darker">
+                        <td className="py-2 px-2 sticky left-0 bg-cyber-dark hover:bg-cyber-darker z-10" style={{ width: '30px' }}>
                           <input
                             type="checkbox"
                             checked={selectedRows.has(dc.id)}
                             onChange={() => handleRowSelect(dc.id)}
-                            className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                            className="rounded border-cyber-light/30 text-cyber-accent bg-cyber-dark focus:ring-cyber-accent"
                           />
                         </td>
                         <td className="py-2 px-2 whitespace-nowrap" style={{ width: '60px' }}>
-                          <span className="text-gray-700 text-xs">{dc.type}</span>
+                          <span className="text-cyber-light/70 text-xs">{dc.type}</span>
                         </td>
                         <td className="py-2 px-2" style={{ width: '140px' }}>
                           <div className="flex items-center space-x-1">
-                            <i className="fas fa-sitemap text-gray-400 text-xs"></i>
-                            <span className="font-medium text-gray-900 truncate text-xs" title={dc.domain}>{dc.domain}</span>
+                            <i className="fas fa-sitemap text-cyber-light/50 text-xs"></i>
+                            <span className="font-medium text-cyber-light truncate text-xs" title={dc.domain}>{dc.domain}</span>
                           </div>
                         </td>
                         <td className="py-2 px-2" style={{ width: '120px' }}>
-                          <span className="text-gray-700 font-mono text-xs truncate block" title={dc.domainSid}>{dc.domainSid}</span>
+                          <span className="text-cyber-light/70 font-mono text-xs truncate block" title={dc.domainSid}>{dc.domainSid}</span>
                         </td>
                         <td className="py-2 px-2 whitespace-nowrap" style={{ width: '120px' }}>
-                          <span className="text-gray-700 text-xs truncate block" title={dc.site}>{dc.site}</span>
+                          <span className="text-cyber-light/70 text-xs truncate block" title={dc.site}>{dc.site}</span>
                         </td>
                         <td className="py-2 px-2 whitespace-nowrap" style={{ width: '100px' }}>
-                          <span className="text-gray-700 text-xs">{dc.samAccountName}</span>
+                          <span className="text-cyber-light/70 text-xs">{dc.samAccountName}</span>
                         </td>
                         <td className="py-2 px-2 whitespace-nowrap" style={{ width: '80px' }}>
-                          <span className="text-gray-700 text-xs">{dc.netBIOS}</span>
+                          <span className="text-cyber-light/70 text-xs">{dc.netBIOS}</span>
                         </td>
                         <td className="py-2 px-2" style={{ width: '180px' }}>
-                          <span className="text-gray-700 truncate block text-xs" title={dc.fqdn}>{dc.fqdn}</span>
+                          <span className="text-cyber-light/70 truncate block text-xs" title={dc.fqdn}>{dc.fqdn}</span>
                         </td>
                         <td className="py-2 px-2 text-center" style={{ width: '40px' }}>
                           {dc.isGC ? (
-                            <i className="fas fa-check text-green-600 text-xs"></i>
+                            <i className="fas fa-check text-cyber-accent text-xs"></i>
                           ) : (
-                            <i className="fas fa-times text-red-600 text-xs"></i>
+                            <i className="fas fa-times text-cyber-red text-xs"></i>
                           )}
                         </td>
                         <td className="py-2 px-2 text-center" style={{ width: '40px' }}>
                           {dc.isRO ? (
-                            <i className="fas fa-check text-green-600 text-xs"></i>
+                            <i className="fas fa-check text-cyber-accent text-xs"></i>
                           ) : (
-                            <i className="fas fa-times text-red-600 text-xs"></i>
+                            <i className="fas fa-times text-cyber-red text-xs"></i>
                           )}
                         </td>
                         <td className="py-2 px-2 whitespace-nowrap" style={{ width: '100px' }}>
-                          <span className="text-gray-700 font-mono text-xs">{dc.ipv4Address}</span>
+                          <span className="text-cyber-light/70 font-mono text-xs">{dc.ipv4Address}</span>
                         </td>
                         <td className="py-2 px-2 whitespace-nowrap" style={{ width: '80px' }}>
                           <div className="flex items-center space-x-1">
@@ -319,68 +283,68 @@ const ForestRecovery = () => {
             </div>
 
             {/* Stats Cards - Moved to bottom */}
-            <div className="grid grid-cols-3 gap-3 mt-4">
-              <div className="bg-white rounded-lg border border-gray-200 p-3 text-center">
-                <div className="text-lg font-bold text-gray-900 mb-1">2</div>
-                <div className="text-xs text-gray-600">AD Forests</div>
+            <div className="grid grid-cols-3 gap-3 mt-4 w-[800px]">
+              <div className="bg-cyber-dark rounded-lg border border-cyber-light/10 p-3 text-center shadow-cyber-sm">
+                <div className="text-lg font-bold text-cyber-accent mb-1">2</div>
+                <div className="text-xs text-cyber-light/70">AD Forests</div>
               </div>
-              <div className="bg-white rounded-lg border border-gray-200 p-3 text-center">
-                <div className="text-lg font-bold text-gray-900 mb-1">5</div>
-                <div className="text-xs text-gray-600">AD Domains</div>
+              <div className="bg-cyber-dark rounded-lg border border-cyber-light/10 p-3 text-center shadow-cyber-sm">
+                <div className="text-lg font-bold text-cyber-accent mb-1">5</div>
+                <div className="text-xs text-cyber-light/70">AD Domains</div>
               </div>
-              <div className="bg-white rounded-lg border border-gray-200 p-3 text-center">
-                <div className="text-lg font-bold text-gray-900 mb-1">12</div>
-                <div className="text-xs text-gray-600">Domain Controllers</div>
+              <div className="bg-cyber-dark rounded-lg border border-cyber-light/10 p-3 text-center shadow-cyber-sm">
+                <div className="text-lg font-bold text-cyber-accent mb-1">12</div>
+                <div className="text-xs text-cyber-light/70">Domain Controllers</div>
               </div>
             </div>
           </div>
 
           {/* Right Sidebar */}
-          <div className={`bg-white border-l border-gray-200 flex-shrink-0 transition-all duration-300 overflow-y-auto ${
+          <div className={`bg-cyber-darker border-l border-cyber-dark/30 flex-shrink-0 transition-all duration-300 overflow-y-auto ${
             isRightSidebarOpen ? 'w-80' : 'w-0 border-l-0'
-          }`}>
+          }`} style={{ position: 'relative', zIndex: 5 }}>
             {isRightSidebarOpen && (
               <div className="w-80 p-4 space-y-4">
                 {/* Dependencies Section */}
-                <div className="bg-white rounded-lg border border-gray-200 p-3">
+                <div className="bg-cyber-dark rounded-lg border border-cyber-light/10 p-3 shadow-cyber-sm">
                   <div className="flex items-center space-x-2 mb-3">
-                    <i className="fas fa-link text-gray-600 text-sm"></i>
-                    <h3 className="text-sm font-semibold text-gray-900">Dependencies</h3>
+                    <i className="fas fa-link text-cyber-light/70 text-sm"></i>
+                    <h3 className="text-sm font-semibold text-cyber-light">Dependencies</h3>
                   </div>
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs text-gray-700">DNS Services</span>
-                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                      <span className="text-xs text-cyber-light/70">DNS Services</span>
+                      <div className="w-2 h-2 bg-cyber-accent rounded-full"></div>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-xs text-gray-700">LDAP Connection</span>
-                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                      <span className="text-xs text-cyber-light/70">LDAP Connection</span>
+                      <div className="w-2 h-2 bg-cyber-accent rounded-full"></div>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-xs text-gray-700">Kerberos Auth</span>
-                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                      <span className="text-xs text-cyber-light/70">Kerberos Auth</span>
+                      <div className="w-2 h-2 bg-cyber-accent rounded-full"></div>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-xs text-gray-700">Replication</span>
-                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                      <span className="text-xs text-cyber-light/70">Replication</span>
+                      <div className="w-2 h-2 bg-cyber-accent rounded-full"></div>
                     </div>
                   </div>
                 </div>
 
                 {/* Recent Activity Section */}
-                <div className="bg-white rounded-lg border border-gray-200 p-3">
+                <div className="bg-cyber-dark rounded-lg border border-cyber-light/10 p-3 shadow-cyber-sm">
                   <div className="flex items-center space-x-2 mb-3">
-                    <i className="fas fa-clock text-gray-600 text-sm"></i>
-                    <h3 className="text-sm font-semibold text-gray-900">Recent Activity</h3>
+                    <i className="fas fa-clock text-cyber-light/70 text-sm"></i>
+                    <h3 className="text-sm font-semibold text-cyber-light">Recent Activity</h3>
                   </div>
                   <div className="space-y-2">
                     {recentActivity.map((activity, index) => (
                       <div key={index} className="flex items-start space-x-2">
-                        <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></div>
+                        <div className="w-1.5 h-1.5 bg-cyber-accent rounded-full mt-1.5 flex-shrink-0"></div>
                         <div className="flex-1 min-w-0">
-                          <div className="text-xs font-medium text-gray-900">{activity.action}</div>
-                          <div className="text-xs text-gray-600">{activity.target}</div>
-                          <div className="text-xs text-gray-500 mt-0.5">{activity.time}</div>
+                          <div className="text-xs font-medium text-cyber-light">{activity.action}</div>
+                          <div className="text-xs text-cyber-light/70">{activity.target}</div>
+                          <div className="text-xs text-cyber-light/50 mt-0.5">{activity.time}</div>
                         </div>
                       </div>
                     ))}
@@ -388,18 +352,18 @@ const ForestRecovery = () => {
                 </div>
 
                 {/* Status Summary */}
-                <div className="bg-white rounded-lg border border-gray-200 p-3">
+                <div className="bg-cyber-dark rounded-lg border border-cyber-light/10 p-3 shadow-cyber-sm">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs text-gray-600">Status</span>
-                    <span className="text-xs text-green-600">Ready</span>
+                    <span className="text-xs text-cyber-light/70">Status</span>
+                    <span className="text-xs text-cyber-accent">Ready</span>
                   </div>
-                  <div className="text-xs text-gray-500">Last refresh: 2:15 PM</div>
+                  <div className="text-xs text-cyber-light/50">Last refresh: 2:15 PM</div>
                   
-                  <div className="mt-3 pt-3 border-t border-gray-200">
-                    <div className="flex items-center space-x-2 text-xs text-gray-600">
-                      <i className="fas fa-exclamation-triangle text-yellow-500"></i>
+                  <div className="mt-3 pt-3 border-t border-cyber-light/10">
+                    <div className="flex items-center space-x-2 text-xs text-cyber-light/70">
+                      <i className="fas fa-exclamation-triangle text-cyber-yellow"></i>
                       <span>1 warning</span>
-                      <button className="text-blue-600 hover:text-blue-800">View Logs</button>
+                      <button className="text-cyber-accent hover:text-cyber-accent/80">View Logs</button>
                     </div>
                   </div>
                 </div>

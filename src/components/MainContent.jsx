@@ -1,7 +1,7 @@
 
 import React from 'react';
 
-const MainContent = ({ activeTab }) => {
+const MainContent = ({ activeTab, isCollapsed }) => {
   const getTabContent = () => {
     switch (activeTab) {
       case 'dashboards':
@@ -127,9 +127,9 @@ const MainContent = ({ activeTab }) => {
   };
 
   return (
-    <div className="flex-1 overflow-y-auto bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 min-h-screen">
+    <div className="flex-1 overflow-y-auto bg-gradient-to-br from-cyber-black via-cyber-darker to-cyber-black min-h-screen w-full">
       <div className="p-8">
-        <div className="max-w-7xl mx-auto">
+        <div className="w-full">
           {getTabContent()}
         </div>
       </div>

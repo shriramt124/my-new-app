@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { HashRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Header from './components/Header';
 import MainContent from './components/MainContent';
 import ForestRecovery from './components/ForestRecovery';
@@ -51,9 +51,11 @@ const EvidenceCapture = () => <div className="p-8"><h1 className="text-2xl font-
  
 
 const App = () => {
+  // Declare all state hooks at the top level to avoid conditional hook calls
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   // Check for existing session on app load
   useEffect(() => {
@@ -95,26 +97,32 @@ const App = () => {
     );
   }
 
+  // All useState hooks are now called at the top level
+  
   // Show login screen if not authenticated
   if (!isAuthenticated) {
+    console.log('Not authenticated, showing login screen');
     return <LoginScreen onLogin={handleLogin} />;
   }
-
+  
+  console.log('Authenticated, showing main application');
+  
   return (
     <HashRouter>
-      <div className="min-h-screen bg-gray-50 flex flex-col">
-        <Header currentUser={currentUser} onLogout={handleLogout} />
-        <Routes>
+      <div className="min-h-screen bg-cyber-black flex flex-col">
+        <Header currentUser={currentUser} onLogout={handleLogout} isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
+        <div className="pt-16 text-white w-full">
+          <Routes>
           {/* Dashboard Routes */}
-          <Route path="/" element={<ForestRecovery />} />
-          <Route path="/dashboards" element={<ForestRecovery />} />
+          <Route path="/" element={<Navigate to="/directory" />} />
+          <Route path="/dashboards" element={<MainContent activeTab="dashboards" isCollapsed={isCollapsed} />} />
           <Route path="/dashboards/new" element={<NewDashboard />} />
           <Route path="/dashboards/templates" element={<DashboardTemplates />} />
           <Route path="/dashboards/preview" element={<DashboardPreview />} />
           <Route path="/dashboards/export" element={<DashboardExport />} />
 
           {/* Directory Routes */}
-          <Route path="/directory" element={<DirectoryContent />} />
+          <Route path="/directory" element={<DirectoryContent isCollapsed={isCollapsed} />} />
           <Route path="/directory/computers" element={<DirectoryComputers />} />
           <Route path="/directory/computers/password-reset" element={<ComputerPasswordReset />} />
           <Route path="/directory/computers/domain-controllers" element={<DomainControllers />} />
@@ -126,21 +134,21 @@ const App = () => {
           <Route path="/directory/restore" element={<DirectoryRestore />} />
 
           {/* AWS Routes */}
-          <Route path="/aws" element={<AWSContent />} />
+          <Route path="/aws" element={<AWSContent isCollapsed={isCollapsed} />} />
           <Route path="/aws/ec2" element={<EC2Instances />} />
           <Route path="/aws/s3" element={<S3Storage />} />
           <Route path="/aws/rds" element={<RDSDatabase />} />
           <Route path="/aws/cloudwatch" element={<CloudWatch />} />
 
           {/* Azure Routes */}
-          <Route path="/azure" element={<AzureContent />} />
+          <Route path="/azure" element={<AzureContent isCollapsed={isCollapsed} />} />
           <Route path="/azure/virtual-machines" element={<VirtualMachines />} />
           <Route path="/azure/virtual-networks" element={<VirtualNetworks />} />
           <Route path="/azure/security-center" element={<SecurityCenter />} />
           <Route path="/azure/backup" element={<AzureBackup />} />
 
           {/* Forensics Routes */}
-          <Route path="/forensics" element={<ForensicsContent />} />
+          <Route path="/forensics" element={<ForensicsContent isCollapsed={isCollapsed} />} />
           <Route path="/forensics/evidence-search" element={<EvidenceSearch />} />
           <Route path="/forensics/new-case" element={<NewCase />} />
           <Route path="/forensics/generate-report" element={<GenerateReport />} />
@@ -150,6 +158,7 @@ const App = () => {
           {/* Testign powershell route */}
           <Route path="/testing" element={<TestingPowerShell />} />
         </Routes>
+        </div>
       </div>
     </HashRouter>
   );

@@ -1,8 +1,9 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
+import Sidebar from './Sidebar';
 
-const Header = ({ currentUser, onLogout }) => {
+const Header = ({ currentUser, onLogout, isCollapsed, setIsCollapsed }) => {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [activeSubmenu, setActiveSubmenu] = useState(null);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
@@ -165,139 +166,96 @@ const Header = ({ currentUser, onLogout }) => {
   const currentTab = tabs.find(tab => tab.id === activeDropdown);
 
   return (
-    <div className="relative bg-white shadow-lg border-b border-gray-200/60 z-50">
-      {/* Top Bar with Logo and Search */}
-      <div className="flex items-center justify-between px-8 py-4 bg-gradient-to-r from-slate-50/90 via-white to-slate-50/90 border-b border-gray-200/50">
-        {/* Logo */}
-        <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center shadow-lg">
-            <i className="fas fa-shield-alt text-white text-lg"></i>
-          </div>
-          <div>
-            <h1 className="text-xl font-bold text-gray-900">Logo</h1>
-          </div>
-        </div>
-
-        {/* Search Bar - Centered */}
-        <div className="flex-1 max-w-2xl mx-8">
-          <div className="relative group">
-            <input
-              type="text"
-              placeholder="Tell me what you want to do..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              onFocus={() => setIsSearchFocused(true)}
-              onBlur={() => setIsSearchFocused(false)}
-              className={`w-full pl-12 pr-6 py-3 text-sm border rounded-2xl bg-white/80 backdrop-blur-sm focus:outline-none transition-all duration-300 placeholder-gray-500 ${
-                isSearchFocused
-                  ? 'ring-2 ring-blue-500/30 border-blue-400 bg-white shadow-xl'
-                  : 'border-gray-300/60 hover:border-gray-400/60 hover:bg-white shadow-sm'
-              }`}
-            />
-            <i className={`fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-lg transition-colors ${
-              isSearchFocused ? 'text-blue-500' : 'text-gray-400'
-            }`}></i>
-          </div>
-        </div>
-
-        {/* Right Controls */}
-        <div className="flex items-center space-x-1">
-          {/* Settings */}
-          <button className="p-2.5 text-gray-500 hover:text-gray-700 hover:bg-gray-100/60 rounded-lg transition-all duration-200" title="Settings">
-            <i className="fas fa-cog text-base"></i>
-          </button>
-
-          {/* Notifications */}
-          <button className="relative p-2.5 text-gray-500 hover:text-gray-700 hover:bg-gray-100/60 rounded-lg transition-all duration-200" title="Notifications">
-            <i className="fas fa-bell text-base"></i>
-            <span className="absolute -top-0.5 -right-0.5 w-3 h-3 bg-red-500 text-white text-xs rounded-full flex items-center justify-center shadow-sm">3</span>
-          </button>
-
-          {/* Help */}
-          <button className="p-2.5 text-gray-500 hover:text-gray-700 hover:bg-gray-100/60 rounded-lg transition-all duration-200" title="Help">
-            <i className="fas fa-question-circle text-base"></i>
-          </button>
-
-          {/* User Menu */}
-          <div className="relative ml-2" ref={dropdownRef}>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setShowUserMenu(!showUserMenu);
-              }}
-              className="flex items-center space-x-2 p-1.5 text-gray-600 hover:text-gray-900 hover:bg-gray-100/60 rounded-lg transition-all duration-200"
-              title="User Menu"
-            >
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center shadow-sm">
-                <span className="text-white text-sm font-semibold">
-                  {currentUser?.name ? 
-                    currentUser.name.split(' ').map(word => word.charAt(0)).slice(0, 2).join('').toUpperCase() 
-                    : 'U'}
-                </span>
+    <>
+      {/* Sidebar */}
+      <Sidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} tabs={tabs} />
+      
+      {/* Main Header */}
+      <div 
+        className={`fixed top-0 right-0 bg-cyber-darker border-b border-cyber-light/20 shadow-cyber-sm transition-all duration-300 z-20 ${isCollapsed ? 'left-16' : 'left-64'}`}
+      >
+        {/* Top Row: Search, Profile, Settings, Help */}
+        <div className="px-4 py-3 flex items-center justify-between border-b border-cyber-light/20">
+          {/* Search Bar */}
+          <div className="flex-1 mx-auto">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Search..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onFocus={() => setIsSearchFocused(true)}
+                onBlur={() => setIsSearchFocused(false)}
+                className={`w-full bg-cyber-dark/70 text-gray-300 border rounded-lg py-1.5 px-4 pl-10 focus:outline-none focus:ring-1 transition-all ${isSearchFocused ? 'border-cyber-accent ring-cyber-accent/30' : 'border-cyber-light/20'}`}
+              />
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <i className="fas fa-search text-gray-400"></i>
               </div>
-              <span className="text-sm font-medium hidden sm:block">
-                {currentUser?.name ? 
-                  currentUser.name.split(' ').map(word => word.charAt(0)).slice(0, 2).join('').toUpperCase() 
-                  : 'User'}
-              </span>
-              <i className={`fas fa-chevron-down text-xs transition-transform duration-200 ${showUserMenu ? 'rotate-180' : ''}`}></i>
+            </div>
+          </div>
+
+          {/* Right Side Icons */}
+          <div className="flex items-center space-x-4">
+            {/* Settings */}
+            <button className="text-gray-400 hover:text-cyber-accent transition-colors">
+              <i className="fas fa-cog"></i>
             </button>
-
-            {/* User Dropdown */}
-            {showUserMenu && (
-              <div className="absolute right-0 top-full mt-2 w-56 bg-white rounded-xl shadow-lg border border-gray-200/60 py-2 z-50">
-                {/* User Info Section */}
-                <div className="px-4 py-3 border-b border-gray-100">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center">
-                      <span className="text-white font-semibold">
-                        {currentUser?.name ? 
-                          currentUser.name.split(' ').map(word => word.charAt(0)).slice(0, 2).join('').toUpperCase() 
-                          : 'U'}
-                      </span>
-                    </div>
-                    <div>
-                      <div className="text-sm font-semibold text-gray-900">{currentUser?.name}</div>
-                      <div className="text-xs text-gray-500">@{currentUser?.username}</div>
-                    </div>
+            
+            {/* Notifications */}
+            <div className="relative">
+              <button className="text-gray-400 hover:text-cyber-accent transition-colors">
+                <i className="fas fa-bell"></i>
+                <span className="absolute -top-1 -right-1 bg-cyber-danger text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">3</span>
+              </button>
+            </div>
+            
+            {/* Help */}
+            <button className="text-gray-400 hover:text-cyber-accent transition-colors">
+              <i className="fas fa-question-circle"></i>
+            </button>
+            
+            {/* User Menu */}
+            <div className="relative" ref={dropdownRef}>
+              <button 
+                onClick={() => setShowUserMenu(!showUserMenu)}
+                className="flex items-center text-sm font-medium text-gray-300 hover:text-white"
+              >
+                <div className="h-8 w-8 rounded-full bg-cyber-accent flex items-center justify-center text-white font-semibold">
+                  {currentUser?.name ? currentUser.name.charAt(0).toUpperCase() : 'U'}
+                </div>
+              </button>
+              
+              {showUserMenu && (
+                <div className="absolute right-0 mt-2 w-48 bg-cyber-dark border border-cyber-light/30 rounded-md shadow-cyber-sm py-1 z-50">
+                  <div className="px-4 py-2 border-b border-cyber-light/20">
+                    <p className="text-sm font-medium text-white">{currentUser?.name || 'User'}</p>
+                    <p className="text-xs text-gray-400">{currentUser?.username || 'user@example.com'}</p>
                   </div>
-                </div>
-
-                {/* Menu Items */}
-                <div className="py-1">
-                  <button className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors flex items-center space-x-2">
-                    <i className="fas fa-user text-gray-400"></i>
-                    <span>Profile Settings</span>
-                  </button>
-                  <button className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors flex items-center space-x-2">
-                    <i className="fas fa-cog text-gray-400"></i>
-                    <span>Account Settings</span>
-                  </button>
-                  <button className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors flex items-center space-x-2">
-                    <i className="fas fa-bell text-gray-400"></i>
-                    <span>Notifications</span>
-                  </button>
-                </div>
-
-                {/* Sign Out */}
-                <div className="border-t border-gray-100 py-1">
-                  <button
+                  <a href="#" className="block px-4 py-2 text-sm text-gray-300 hover:bg-cyber-light/10 hover:text-cyber-accent">
+                    <i className="fas fa-user-circle mr-2"></i> Profile Settings
+                  </a>
+                  <a href="#" className="block px-4 py-2 text-sm text-gray-300 hover:bg-cyber-light/10 hover:text-cyber-accent">
+                    <i className="fas fa-cog mr-2"></i> Account Settings
+                  </a>
+                  <a href="#" className="block px-4 py-2 text-sm text-gray-300 hover:bg-cyber-light/10 hover:text-cyber-accent">
+                    <i className="fas fa-bell mr-2"></i> Notifications
+                  </a>
+                  <div className="border-t border-cyber-light/20 mt-1"></div>
+                  <button 
                     onClick={onLogout}
-                    className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors flex items-center space-x-2"
+                    className="block w-full text-left px-4 py-2 text-sm text-cyber-danger hover:bg-cyber-light/10 hover:text-cyber-danger"
                   >
-                    <i className="fas fa-sign-out-alt text-red-500"></i>
-                    <span>Sign Out</span>
+                    <i className="fas fa-sign-out-alt mr-2"></i> Sign out
                   </button>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
-      </div>
 
       {/* Tab Navigation */}
       <div className="relative">
-        <div className="flex items-center justify-center px-8 py-2 bg-gradient-to-r from-white via-gray-50/50 to-white">
+        <div className="flex items-center justify-center px-8 py-2 bg-gradient-to-r from-cyber-dark via-cyber-darker/90 to-cyber-dark border-b border-cyber-light/20">
           <div className="flex items-center space-x-2">
             {tabs.map((tab) => (
               <div
@@ -310,8 +268,8 @@ const Header = ({ currentUser, onLogout }) => {
                   onClick={() => handleTabClick(tab)}
                   className={`group relative px-6 py-3 text-sm font-medium transition-all duration-300 flex items-center space-x-2 rounded-lg ${
                     activeTab === tab.id
-                      ? 'text-blue-700 bg-blue-50/90 shadow-md border border-blue-200/50'
-                      : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50/80'
+                      ? 'text-cyber-accent bg-cyber-light/10 shadow-md border border-cyber-light/20'
+                      : 'text-gray-300 hover:text-cyber-accent hover:bg-cyber-light/5'
                   }`}
                 >
                   <i className={`${tab.icon} text-sm transition-transform group-hover:scale-110`}></i>
@@ -330,7 +288,7 @@ const Header = ({ currentUser, onLogout }) => {
         {/* Dropdown Menu */}
         {activeDropdown && currentTab && (
           <div
-            className="absolute top-full left-0 right-0 bg-white/98 backdrop-blur-xl shadow-2xl border border-gray-200/60 z-50 animate-in slide-in-from-top-2 duration-200"
+            className="absolute top-full left-0 right-0 bg-cyber-darker/98 backdrop-blur-xl shadow-cyber-lg border border-cyber-light/20 z-50 animate-in slide-in-from-top-2 duration-200"
             onMouseEnter={handleDropdownMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
@@ -349,19 +307,19 @@ const Header = ({ currentUser, onLogout }) => {
                           }
                         }}
                         onMouseEnter={() => item.submenu && handleSubmenuHover(item.label)}
-                        className="w-full flex items-center space-x-3 p-3 text-left rounded-lg hover:bg-blue-50 transition-all duration-200 group"
+                        className="w-full flex items-center space-x-3 p-3 text-left rounded-lg hover:bg-cyber-light/10 transition-all duration-200 group"
                       >
-                        <div className="flex-shrink-0 w-8 h-8 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg flex items-center justify-center group-hover:from-blue-100 group-hover:to-blue-200 transition-all duration-200">
-                          <i className={`${item.icon} text-sm text-gray-600 group-hover:text-blue-700`}></i>
+                        <div className="flex-shrink-0 w-8 h-8 bg-gradient-to-br from-cyber-dark to-cyber-darker rounded-lg flex items-center justify-center group-hover:from-cyber-accent/20 group-hover:to-cyber-accent/10 transition-all duration-200">
+                          <i className={`${item.icon} text-sm text-gray-400 group-hover:text-cyber-accent`}></i>
                         </div>
                         <div className="flex-1">
-                          <h4 className="text-sm font-semibold text-gray-900 group-hover:text-blue-900">
+                          <h4 className="text-sm font-semibold text-gray-200 group-hover:text-cyber-accent">
                             {item.label}
                           </h4>
-                          <p className="text-xs text-gray-600">{item.desc}</p>
+                          <p className="text-xs text-gray-400">{item.desc}</p>
                         </div>
                         {item.submenu && (
-                          <i className="fas fa-chevron-right text-xs text-gray-400 group-hover:text-blue-600"></i>
+                          <i className="fas fa-chevron-right text-xs text-gray-400 group-hover:text-cyber-accent"></i>
                         )}
                       </button>
                     </div>
@@ -370,8 +328,8 @@ const Header = ({ currentUser, onLogout }) => {
 
                 {/* Submenu Panel */}
                 {activeSubmenu && (
-                  <div className="space-y-2 border-l border-gray-200 pl-6">
-                    <h3 className="text-sm font-bold text-gray-900 mb-3">{activeSubmenu}</h3>
+                  <div className="space-y-2 border-l border-cyber-light/20 pl-6">
+                    <h3 className="text-sm font-bold text-gray-200 mb-3">{activeSubmenu}</h3>
                     {currentTab.items.find(item => item.label === activeSubmenu)?.submenu?.map((subItem, index) => (
                       <button
                         key={index}
@@ -383,16 +341,16 @@ const Header = ({ currentUser, onLogout }) => {
                             setActiveDropdown(null);
                           }
                         }}
-                        className="w-full flex items-center space-x-3 p-3 text-left rounded-lg hover:bg-blue-50 transition-all duration-200 group"
+                        className="w-full flex items-center space-x-3 p-3 text-left rounded-lg hover:bg-cyber-light/10 transition-all duration-200 group"
                       >
-                        <div className="flex-shrink-0 w-8 h-8 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg flex items-center justify-center group-hover:from-blue-100 group-hover:to-blue-200 transition-all duration-200">
-                          <i className={`${subItem.icon} text-sm text-gray-600 group-hover:text-blue-700`}></i>
+                        <div className="flex-shrink-0 w-8 h-8 bg-gradient-to-br from-cyber-dark to-cyber-darker rounded-lg flex items-center justify-center group-hover:from-cyber-accent/20 group-hover:to-cyber-accent/10 transition-all duration-200">
+                          <i className={`${subItem.icon} text-sm text-gray-400 group-hover:text-cyber-accent`}></i>
                         </div>
                         <div className="flex-1">
-                          <h4 className="text-sm font-semibold text-gray-900 group-hover:text-blue-900">
+                          <h4 className="text-sm font-semibold text-gray-200 group-hover:text-cyber-accent">
                             {subItem.label}
                           </h4>
-                          <p className="text-xs text-gray-600">{subItem.desc}</p>
+                          <p className="text-xs text-gray-400">{subItem.desc}</p>
                         </div>
                       </button>
                     ))}
@@ -404,6 +362,7 @@ const Header = ({ currentUser, onLogout }) => {
         )}
       </div>
     </div>
+    </>
   );
 };
 
