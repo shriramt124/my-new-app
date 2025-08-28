@@ -175,9 +175,9 @@ const Header = ({ currentUser, onLogout, isCollapsed, setIsCollapsed }) => {
         className={`fixed top-0 right-0 bg-cyber-darker border-b border-cyber-light/20 shadow-cyber-sm transition-all duration-300 z-20 ${isCollapsed ? 'left-16' : 'left-64'}`}
       >
         {/* Top Row: Search, Profile, Settings, Help */}
-        <div className="px-4 py-3 flex items-center justify-between border-b border-cyber-light/20">
+        <div className="px-6 py-3 flex items-center justify-between border-b border-cyber-light/20">
           {/* Search Bar */}
-          <div className="flex-1 mx-auto">
+          <div className="flex-1 max-w-md mx-auto">
             <div className="relative">
               <input
                 type="text"
@@ -195,7 +195,7 @@ const Header = ({ currentUser, onLogout, isCollapsed, setIsCollapsed }) => {
           </div>
 
           {/* Right Side Icons */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-6 ml-6">
             {/* Settings */}
             <button className="text-gray-400 hover:text-cyber-accent transition-colors">
               <i className="fas fa-cog"></i>
