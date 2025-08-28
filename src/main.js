@@ -1,7 +1,7 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'node:path';
 import started from 'electron-squirrel-startup';
-const { exec } = require('child_process');
+const { exec } = require('child_process'); // Keep this for now, though we'll adjust its usage
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
@@ -59,47 +59,76 @@ app.on('window-all-closed', () => {
 
 
 // Handle IPC: Run PowerShell command
-ipcMain.handle('run-powershell', async (event, command) => {
+ipcMain.handle('run-powershell', async (event, scriptName, args = []) => {
   return new Promise((resolve, reject) => {
-    // Resolve the correct path for the scripts directory
-    let scriptsPath;
+    let scriptPath;
     if (app.isPackaged) {
-      // In packaged app, scripts are in the resources folder
-      scriptsPath = path.join(process.resourcesPath, 'scripts');
-    } else {
-      // In development, scripts are in the project root
-      scriptsPath = path.join(__dirname, '..', '..', 'scripts');
-    }
-    
-    // Build the full script path
-    let fullScriptPath;
-    if (command.includes('.\\scripts\\') || command.includes('./scripts/')) {
-      // Handle relative paths
-      const scriptName = command.split(/[\\\/]/).pop();
-      fullScriptPath = path.join(scriptsPath, scriptName);
-    } else if (path.isAbsolute(command)) {
-      // Handle absolute paths
-      fullScriptPath = command;
-    } else {
-      // Handle just script filename
-      fullScriptPath = path.join(scriptsPath, command);
-    }
-    
-    // Use the absolute path with PowerShell -File parameter for better reliability
-    const powershellCommand = `& "${fullScriptPath}"`;
-    
-    exec(`powershell -Command "${powershellCommand}"`, { cwd: scriptsPath }, (error, stdout, stderr) => {
-      if (error) {
-        console.error('PowerShell Error:', error);
-        console.error('Script path attempted:', fullScriptPath);
-        console.error('Scripts directory:', scriptsPath);
-        return resolve({ success: false, error: error.message, output: stderr });
+      // In packaged app, scripts are in the resources/scripts folder
+      // We need to find the correct path to the 'scripts' directory within the unpacked resources
+      // This is typically next to the 'app.asar' or 'app.asar.unpacked' folder
+      scriptPath = path.join(process.resourcesPath, 'scripts', scriptName);
+      // Ensure the script path is correct for packaged applications
+      if (!fs.existsSync(scriptPath)) {
+           // If the script is in the root of the scripts folder
+          scriptPath = path.join(process.resourcesPath, 'scripts', scriptName);
       }
-      if (stderr) {
-        console.warn('PowerShell stderr:', stderr);
-        // Sometimes non-error output goes to stderr, but we still accept stdout
+    } else {
+      // In development, scripts are in the project root's 'scripts' folder
+      // Adjust the path relative to the current file (__dirname)
+      scriptPath = path.join(__dirname, '..', '..', 'scripts', scriptName);
+    }
+
+    // Check if the script file actually exists
+    if (!fs.existsSync(scriptPath)) {
+      console.error(`Script not found at: ${scriptPath}`);
+      return resolve({ success: false, error: `Script not found: ${scriptName}`, output: '' });
+    }
+
+    // Construct the command to execute
+    // For PowerShell scripts, use powershell.exe -File
+    const command = 'powershell.exe';
+    const commandArgs = ['-File', scriptPath, ...args];
+
+    const scriptProcess = spawn(command, commandArgs, {
+      cwd: path.dirname(scriptPath), // Set the working directory to the script's directory
+      shell: true // Use shell to ensure powershell.exe can be found and executed correctly
+    });
+
+    let stdoutData = '';
+    let stderrData = '';
+
+    scriptProcess.stdout.on('data', (data) => {
+      stdoutData += data.toString();
+    });
+
+    scriptProcess.stderr.on('data', (data) => {
+      stderrData += data.toString();
+    });
+
+    scriptProcess.on('error', (err) => {
+      console.error(`Failed to start script process: ${err}`);
+      resolve({ success: false, error: `Failed to start script: ${err.message}`, output: '' });
+    });
+
+    scriptProcess.on('close', (code) => {
+      if (code === 0) {
+        resolve({ success: true, output: stdoutData.trim() });
+      } else {
+        console.error(`Script exited with code ${code}`);
+        console.error('Stderr:', stderrData);
+        resolve({ success: false, error: `Script execution failed with code ${code}`, output: stderrData.trim() });
       }
-      resolve({ success: true, output: stdout.trim() });
     });
   });
 });
+
+// Helper function to get script path based on packaging
+const getScriptPath = (scriptName) => {
+  if (app.isPackaged) {
+    // In packaged app, scripts are in the resources/scripts folder
+    return path.join(process.resourcesPath, 'scripts', scriptName);
+  } else {
+    // In development, scripts are in the project root's 'scripts' folder
+    return path.join(__dirname, '..', '..', 'scripts', scriptName);
+  }
+};

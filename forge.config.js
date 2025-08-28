@@ -3,9 +3,8 @@
 
 module.exports = {
   packagerConfig: {
-    asar: true,
-    asar:{//tell teh asar that keep this script fiel as a regular file do not pack it inside the app.asar
-      unpackDir:'scripts'
+    asar: {
+      unpack: "scripts/**/*"
     }
   },
   rebuildConfig: {},
