@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 
-const ForestRecovery = () => {
+const ForestRecovery = ({ isCollapsed }) => {
   const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedDomain, setSelectedDomain] = useState('All Domains');
@@ -113,13 +113,15 @@ const ForestRecovery = () => {
   };
 
   return (
-    <div className="h-full bg-cyber-darker overflow-hidden">
+    <div className={`h-screen bg-cyber-darker overflow-hidden transition-all duration-300 ${
+      isCollapsed ? 'ml-16' : 'ml-64'
+    }`}>
       <div className="flex h-full">
         {/* Main Content Area */}
         <div className={`flex-1 flex flex-col transition-all duration-300 ${
           isRightSidebarOpen ? 'mr-80' : 'mr-0'
         }`}>
-          {/* Header Section */}
+          {/* Page Header */}
           <div className="bg-cyber-dark border-b border-cyber-light/10 px-6 py-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">

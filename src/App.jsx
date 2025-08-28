@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Header from './components/Header';
@@ -48,7 +47,7 @@ const EvidenceCapture = () => <div className="p-8"><h1 className="text-2xl font-
 
 
 //testing component 
- 
+
 
 const App = () => {
   // Declare all state hooks at the top level to avoid conditional hook calls
@@ -98,15 +97,15 @@ const App = () => {
   }
 
   // All useState hooks are now called at the top level
-  
+
   // Show login screen if not authenticated
   if (!isAuthenticated) {
     console.log('Not authenticated, showing login screen');
     return <LoginScreen onLogin={handleLogin} />;
   }
-  
+
   console.log('Authenticated, showing main application');
-  
+
   return (
     <HashRouter>
       <div className="min-h-screen bg-cyber-black flex flex-col">
@@ -123,6 +122,7 @@ const App = () => {
 
           {/* Directory Routes */}
           <Route path="/directory" element={<DirectoryContent isCollapsed={isCollapsed} />} />
+          <Route path="/directory/forest-recovery" element={<ForestRecovery isCollapsed={isCollapsed} />} />
           <Route path="/directory/computers" element={<DirectoryComputers />} />
           <Route path="/directory/computers/password-reset" element={<ComputerPasswordReset />} />
           <Route path="/directory/computers/domain-controllers" element={<DomainControllers />} />
