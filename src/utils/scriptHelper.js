@@ -1,14 +1,14 @@
 
-const path = require('path');
-const fs = require('fs');
-const { app } = require('electron');
+import path from 'node:path';
+import fs from 'node:fs';
+import { app } from 'electron';
 
 class ScriptHelper {
   static getScriptsPath() {
     if (app.isPackaged) {
       return path.join(process.resourcesPath, 'app.asar.unpacked', 'scripts');
     } else {
-      return path.join(__dirname, '..', '..', 'scripts');
+      return path.join(process.cwd(), 'scripts');
     }
   }
 
@@ -56,4 +56,4 @@ class ScriptHelper {
   }
 }
 
-module.exports = ScriptHelper;
+export default ScriptHelper;
