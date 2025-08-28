@@ -61,7 +61,25 @@ app.on('window-all-closed', () => {
 // Handle IPC: Run PowerShell command
 ipcMain.handle('run-powershell', async (event, command) => {
   return new Promise((resolve, reject) => {
-    exec(`powershell -Command "${command}"`, (error, stdout, stderr) => {
+    // Resolve the correct path for the scripts directory
+    let scriptsPath;
+    if (app.isPackaged) {
+      // In packaged app, scripts are in the resources folder
+      scriptsPath = path.join(process.resourcesPath, 'scripts');
+    } else {
+      // In development, scripts are in the project root
+      scriptsPath = path.join(__dirname, '..', '..', 'scripts');
+    }
+    
+    // Replace relative script paths with absolute paths
+    let resolvedCommand = command;
+    if (command.includes('.\\scripts\\') || command.includes('./scripts/')) {
+      const scriptName = command.split(/[\\\/]/).pop();
+      const fullScriptPath = path.join(scriptsPath, scriptName);
+      resolvedCommand = `"${fullScriptPath}"`;
+    }
+    
+    exec(`powershell -Command "${resolvedCommand}"`, { cwd: scriptsPath }, (error, stdout, stderr) => {
       if (error) {
         console.error('PowerShell Error:', error);
         return resolve({ success: false, error: error.message, output: stderr });

@@ -9,7 +9,7 @@ function TestingPowerShell() {
         setLoading(true);
         try {
             // Execute the mock API PowerShell script
-            const command = ".\\scripts\\sample_api.ps1";
+            const command = "sample_api.ps1";
 
             const result = await window.electronAPI.runPowerShellCommand(command);
 
