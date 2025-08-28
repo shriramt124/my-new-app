@@ -54,13 +54,6 @@ const ForestRecovery = ({ isCollapsed }) => {
     }
   ];
 
-  const sidebarItems = [
-    { icon: 'fas fa-tachometer-alt', label: 'Active Directory', active: true },
-    { icon: 'fas fa-chart-line', label: 'Analytics', active: false },
-    { icon: 'fas fa-file-alt', label: 'Reports', active: false },
-    { icon: 'fas fa-cog', label: 'Settings', active: false }
-  ];
-
   const recentActivity = [
     { action: 'Domain Controller Updated', target: 'DC01.company.local', time: '4 min ago' },
     { action: 'User Group Created', target: 'Sales-Team', time: '15 min ago' },
@@ -294,7 +287,7 @@ const ForestRecovery = ({ isCollapsed }) => {
             </div>
           </div>
 
-          {/* Right Sidebar */}
+          {/* Right Sidebar - Collapsible with hamburger menu */}
           <div className={`bg-white border-l border-gray-200 flex-shrink-0 transition-all duration-300 overflow-y-auto ${
             isRightSidebarOpen ? 'w-80' : 'w-0 border-l-0'
           }`}>
