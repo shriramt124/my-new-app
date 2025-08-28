@@ -4,7 +4,7 @@
 module.exports = {
   packagerConfig: {
     asar: {
-      unpack: "scripts/**/*"
+      unpack: "{scripts/**/*,scripts}"
     }
   },
   rebuildConfig: {},
@@ -26,6 +26,21 @@ module.exports = {
       config: {},
     },
   ],
+  hooks: {
+    packageAfterCopy: async (config, buildPath, electronVersion, platform, arch) => {
+      const fs = require('fs-extra');
+      const path = require('path');
+      
+      // Copy scripts directory to the build
+      const scriptsSource = path.join(config.projectDir, 'scripts');
+      const scriptsDestination = path.join(buildPath, 'scripts');
+      
+      if (fs.existsSync(scriptsSource)) {
+        await fs.copy(scriptsSource, scriptsDestination);
+        console.log('Scripts directory copied to build');
+      }
+    }
+  },
   plugins: [
     {
       name: '@electron-forge/plugin-vite',
