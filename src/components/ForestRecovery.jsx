@@ -184,7 +184,7 @@ const ForestRecovery = ({ isCollapsed }) => {
               
               {/* Horizontally Scrollable Table */}
               <div className="flex-1 overflow-auto">
-                <table className="w-full text-sm min-w-max">
+                <table className="w-full text-sm min-w-[500px]">
                   <thead className="bg-cyber-darker border-b border-cyber-light/10 sticky top-0 z-10">
                     <tr>
                       <th className="text-left py-3 px-4 font-medium text-cyber-light w-12">
