@@ -1,7 +1,8 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'node:path';
 import started from 'electron-squirrel-startup';
-const { exec } = require('child_process'); // Keep this for now, though we'll adjust its usage
+const { exec ,spawn } = require('child_process'); // Keep this for now, though we'll adjust its usage
+const fs = require('fs');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
