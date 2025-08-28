@@ -101,36 +101,34 @@ const ForestRecovery = ({ isCollapsed }) => {
       {/* Main Content */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Header */}
-        <div className="bg-white border-b border-gray-200 px-4 py-3 flex-shrink-0">
+        <div className="bg-white border-b border-gray-200 px-6 py-4 flex-shrink-0">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div className="flex items-center space-x-2">
-                <div className="w-6 h-6 bg-emerald-500 rounded-lg flex items-center justify-center">
-                  <i className="fas fa-tree text-white text-xs"></i>
-                </div>
-                <div>
-                  <h1 className="text-base font-semibold text-gray-900">Forest Recovery</h1>
-                  <p className="text-xs text-gray-600">Recover and restore your Active Directory forest</p>
-                </div>
+              <div className="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center">
+                <i className="fas fa-tree text-white text-sm"></i>
+              </div>
+              <div>
+                <h1 className="text-lg font-semibold text-gray-900">Page heading</h1>
+                <p className="text-sm text-gray-600">Recover and restore your Active Directory forest</p>
               </div>
             </div>
             
-            <div className="flex items-center space-x-2">
-              <button className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-md text-xs font-medium transition-colors flex items-center space-x-1">
-                <i className="fas fa-sync-alt text-xs"></i>
+            <div className="flex items-center space-x-3">
+              <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors flex items-center space-x-2">
+                <i className="fas fa-sync-alt text-sm"></i>
                 <span>Refresh</span>
               </button>
               
               <button
                 onClick={() => setIsRightSidebarOpen(!isRightSidebarOpen)}
-                className={`p-1.5 rounded-lg transition-colors ${
+                className={`p-2 rounded-lg transition-colors ${
                   isRightSidebarOpen 
-                    ? 'bg-blue-100 text-blue-700' 
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    ? 'bg-blue-600 text-white' 
+                    : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
                 }`}
-                title="Toggle sidebar"
+                title="Toggle Dependencies and Recent Activity"
               >
-                <i className="fas fa-bars text-xs"></i>
+                <i className="fas fa-bars text-sm"></i>
               </button>
             </div>
           </div>
@@ -288,15 +286,14 @@ const ForestRecovery = ({ isCollapsed }) => {
           </div>
 
           {/* Right Sidebar - Collapsible with hamburger menu */}
-          <div className={`bg-white border-l border-gray-200 flex-shrink-0 transition-all duration-300 overflow-y-auto ${
+          <div className={`bg-gray-50 border-l border-gray-200 flex-shrink-0 transition-all duration-300 overflow-y-auto ${
             isRightSidebarOpen ? 'w-80' : 'w-0 border-l-0'
           }`}>
             {isRightSidebarOpen && (
               <div className="w-80 p-4 space-y-4">
                 {/* Dependencies Section */}
-                <div className="bg-white rounded-lg border border-gray-200 p-3">
-                  <div className="flex items-center space-x-2 mb-3">
-                    <i className="fas fa-link text-gray-600 text-sm"></i>
+                <div className="bg-white rounded-lg border border-gray-200 p-4">
+                  <div className="flex items-center space-x-2 mb-4">
                     <h3 className="text-sm font-semibold text-gray-900">Dependencies</h3>
                   </div>
                   <div className="space-y-2">
@@ -320,9 +317,8 @@ const ForestRecovery = ({ isCollapsed }) => {
                 </div>
 
                 {/* Recent Activity Section */}
-                <div className="bg-white rounded-lg border border-gray-200 p-3">
-                  <div className="flex items-center space-x-2 mb-3">
-                    <i className="fas fa-clock text-gray-600 text-sm"></i>
+                <div className="bg-white rounded-lg border border-gray-200 p-4">
+                  <div className="flex items-center space-x-2 mb-4">
                     <h3 className="text-sm font-semibold text-gray-900">Recent Activity</h3>
                   </div>
                   <div className="space-y-2">
