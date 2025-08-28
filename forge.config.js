@@ -28,16 +28,23 @@ module.exports = {
   ],
   hooks: {
     packageAfterCopy: async (config, buildPath, electronVersion, platform, arch) => {
-      const fs = require('fs-extra');
-      const path = require('path');
-      
-      // Copy scripts directory to the build
-      const scriptsSource = path.join(config.projectDir, 'scripts');
-      const scriptsDestination = path.join(buildPath, 'scripts');
-      
-      if (fs.existsSync(scriptsSource)) {
-        await fs.copy(scriptsSource, scriptsDestination);
-        console.log('Scripts directory copied to build');
+      try {
+        const fs = require('fs-extra');
+        const path = require('path');
+        
+        // Copy scripts directory to the build
+        const scriptsSource = path.join(config.projectDir, 'scripts');
+        const scriptsDestination = path.join(buildPath, 'scripts');
+        
+        if (await fs.pathExists(scriptsSource)) {
+          await fs.copy(scriptsSource, scriptsDestination);
+          console.log('Scripts directory copied to build');
+        } else {
+          console.log('Scripts directory not found, skipping copy');
+        }
+      } catch (error) {
+        console.error('Error in packageAfterCopy hook:', error);
+        // Don't fail the build, just log the error
       }
     }
   },
