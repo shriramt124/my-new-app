@@ -4,10 +4,12 @@
 module.exports = {
   packagerConfig: {
     asar: {
-      unpack: "{scripts/**/*,scripts}"
+      unpack: "scripts/**/*"
     },
-    timeout: 300000 // 5 minutes timeout
-    // Removed ignore patterns to let Vite plugin handle this automatically
+    timeout: 300000, // 5 minutes timeout
+    extraResource: [
+      "scripts"
+    ]
   },
   rebuildConfig: {},
   makers: [
@@ -34,17 +36,20 @@ module.exports = {
         const fs = require('fs-extra');
         const path = require('path');
         
-        // Use process.cwd() instead of config.projectDir which may be undefined
+        // Get the source directory where the original project files are
         const projectDir = config.projectDir || process.cwd();
         const scriptsSource = path.join(projectDir, 'scripts');
-        const scriptsDestination = path.join(buildPath, 'scripts');
         
-        console.log(`Attempting to copy scripts from: ${scriptsSource}`);
-        console.log(`To destination: ${scriptsDestination}`);
+        // Copy to resources directory for extraResource access
+        const resourcesDestination = path.join(buildPath, '..', 'resources', 'scripts');
+        
+        console.log(`Copying scripts from: ${scriptsSource}`);
+        console.log(`To resources: ${resourcesDestination}`);
         
         if (await fs.pathExists(scriptsSource)) {
-          await fs.copy(scriptsSource, scriptsDestination);
-          console.log('Scripts directory copied to build');
+          await fs.ensureDir(path.dirname(resourcesDestination));
+          await fs.copy(scriptsSource, resourcesDestination);
+          console.log('Scripts directory copied to resources');
         } else {
           console.log('Scripts directory not found, skipping copy');
         }

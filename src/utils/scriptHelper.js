@@ -6,7 +6,7 @@ import { app } from 'electron';
 class ScriptHelper {
   static getScriptsPath() {
     if (app.isPackaged) {
-      return path.join(process.resourcesPath, 'app.asar.unpacked', 'scripts');
+      return path.join(process.resourcesPath, 'scripts');
     } else {
       return path.join(process.cwd(), 'scripts');
     }

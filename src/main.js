@@ -65,21 +65,14 @@ ipcMain.handle('run-powershell', async (event, scriptName, args = []) => {
     let scriptPath;
     
     if (app.isPackaged) {
-      // Try multiple possible locations for packaged app
-      const possiblePaths = [
-        path.join(process.resourcesPath, 'app.asar.unpacked', 'scripts', scriptName),
-        path.join(process.resourcesPath, 'scripts', scriptName),
-        path.join(__dirname, '..', 'scripts', scriptName)
-      ];
+      // For packaged app, look in the resources directory
+      scriptPath = path.join(process.resourcesPath, 'scripts', scriptName);
       
-      scriptPath = possiblePaths.find(p => fs.existsSync(p));
-      
-      if (!scriptPath) {
-        console.error('Script not found in any of these locations:');
-        possiblePaths.forEach(p => console.error(' -', p));
+      if (!fs.existsSync(scriptPath)) {
+        console.error(`Script not found at: ${scriptPath}`);
         return resolve({ 
           success: false, 
-          error: `Script not found: ${scriptName}. Searched in: ${possiblePaths.join(', ')}`, 
+          error: `Script not found: ${scriptName} at ${scriptPath}`, 
           output: '' 
         });
       }
