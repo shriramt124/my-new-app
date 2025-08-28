@@ -150,7 +150,9 @@ const ForestRecovery = ({ isCollapsed }) => {
 
         <div className="flex flex-1 overflow-hidden min-h-0">
           {/* Content Area */}
-          <div className="flex-1 p-4 flex flex-col min-w-0 overflow-hidden" style={{ maxWidth: isRightSidebarOpen ? 'calc(100% - 50px)' : '100%' }}>
+          <div className={`flex-1 p-4 flex flex-col min-w-0 overflow-hidden transition-all duration-300 ${
+            isRightSidebarOpen ? 'mr-80' : 'mr-0'
+          }`}>
             {/* Search and Filter Section */}
             <div className="flex items-center space-x-3 mb-4">
               <div className="relative">
@@ -187,13 +189,13 @@ const ForestRecovery = ({ isCollapsed }) => {
             </div>
 
             {/* Domain Controllers Table */}
-            <div className="bg-cyber-dark rounded-lg border border-cyber-light/10 overflow-hidden shadow-cyber-sm w-[800px]">
+            <div className="bg-cyber-dark rounded-lg border border-cyber-light/10 overflow-hidden shadow-cyber-sm flex-1">
               <div className="px-4 py-3 border-b border-cyber-light/10 bg-cyber-darker">
                 <h3 className="text-sm font-semibold text-cyber-light">Domain Controllers</h3>
               </div>
               
-              <div className="overflow-x-auto" style={{ height: 'calc(100vh - 300px)', width: '100%', maxWidth: isRightSidebarOpen ? '100%' : '100%' }}>
-                <table className="w-full text-xs" style={{ minWidth: '500px', maxWidth: '100%' }}>
+              <div className="overflow-auto h-full">
+                <table className="w-full text-xs">
                   <thead className="bg-cyber-darker border-b border-cyber-light/10 sticky top-0 z-10">
                     <tr>
                       <th className="text-left py-2 px-2 font-medium text-cyber-light sticky left-0 bg-cyber-darker z-20" style={{ width: '30px' }}>
@@ -283,7 +285,7 @@ const ForestRecovery = ({ isCollapsed }) => {
             </div>
 
             {/* Stats Cards - Moved to bottom */}
-            <div className="grid grid-cols-3 gap-3 mt-4 w-[800px]">
+            <div className="grid grid-cols-3 gap-3 mt-4">
               <div className="bg-cyber-dark rounded-lg border border-cyber-light/10 p-3 text-center shadow-cyber-sm">
                 <div className="text-lg font-bold text-cyber-accent mb-1">2</div>
                 <div className="text-xs text-cyber-light/70">AD Forests</div>
@@ -299,12 +301,26 @@ const ForestRecovery = ({ isCollapsed }) => {
             </div>
           </div>
 
-          {/* Right Sidebar */}
-          <div className={`bg-cyber-darker border-l border-cyber-dark/30 flex-shrink-0 transition-all duration-300 overflow-y-auto ${
-            isRightSidebarOpen ? 'w-80' : 'w-0 border-l-0'
-          }`} style={{ position: 'relative', zIndex: 5 }}>
-            {isRightSidebarOpen && (
-              <div className="w-80 p-4 space-y-4">
+          {/* Right Sidebar - Fixed positioning */}
+          <div className={`fixed right-0 top-0 bottom-0 bg-cyber-darker border-l border-cyber-dark/30 transition-all duration-300 overflow-y-auto z-40 ${
+            isRightSidebarOpen ? 'w-80 translate-x-0' : 'w-80 translate-x-full'
+          }`}>
+            <div className="h-full">
+              {/* Sidebar Header */}
+              <div className="p-4 border-b border-cyber-dark/30 bg-cyber-darker">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-sm font-semibold text-cyber-light">Information Panel</h3>
+                  <button
+                    onClick={() => setIsRightSidebarOpen(false)}
+                    className="text-cyber-light/50 hover:text-cyber-light transition-colors"
+                  >
+                    <i className="fas fa-times text-sm"></i>
+                  </button>
+                </div>
+              </div>
+
+              {/* Sidebar Content */}
+              <div className="p-4 space-y-4">
                 {/* Dependencies Section */}
                 <div className="bg-cyber-dark rounded-lg border border-cyber-light/10 p-3 shadow-cyber-sm">
                   <div className="flex items-center space-x-2 mb-3">
@@ -368,7 +384,7 @@ const ForestRecovery = ({ isCollapsed }) => {
                   </div>
                 </div>
               </div>
-            )}
+            </div>
           </div>
         </div>
       </div>
