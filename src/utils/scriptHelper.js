@@ -6,7 +6,15 @@ import { app } from 'electron';
 class ScriptHelper {
   static getScriptsPath() {
     if (app.isPackaged) {
-      return path.join(process.resourcesPath, 'scripts');
+      // Try multiple possible locations for packaged app
+      const possiblePaths = [
+        path.join(process.resourcesPath, 'scripts'),
+        path.join(process.resourcesPath, 'app.asar.unpacked', 'scripts'),
+        path.join(process.resourcesPath, 'app', 'scripts')
+      ];
+      
+      const existingPath = possiblePaths.find(p => fs.existsSync(p));
+      return existingPath || possiblePaths[0]; // Return first path if none exist
     } else {
       return path.join(process.cwd(), 'scripts');
     }

@@ -8,7 +8,7 @@ module.exports = {
     },
     timeout: 300000, // 5 minutes timeout
     extraResource: [
-      "scripts"
+      "./scripts"
     ]
   },
   rebuildConfig: {},
@@ -30,35 +30,7 @@ module.exports = {
       config: {},
     },
   ],
-  hooks: {
-    packageAfterCopy: async (config, buildPath, electronVersion, platform, arch) => {
-      try {
-        const fs = require('fs-extra');
-        const path = require('path');
-        
-        // Get the source directory where the original project files are
-        const projectDir = config.projectDir || process.cwd();
-        const scriptsSource = path.join(projectDir, 'scripts');
-        
-        // Copy to resources directory for extraResource access
-        const resourcesDestination = path.join(buildPath, '..', 'resources', 'scripts');
-        
-        console.log(`Copying scripts from: ${scriptsSource}`);
-        console.log(`To resources: ${resourcesDestination}`);
-        
-        if (await fs.pathExists(scriptsSource)) {
-          await fs.ensureDir(path.dirname(resourcesDestination));
-          await fs.copy(scriptsSource, resourcesDestination);
-          console.log('Scripts directory copied to resources');
-        } else {
-          console.log('Scripts directory not found, skipping copy');
-        }
-      } catch (error) {
-        console.error('Error in packageAfterCopy hook:', error);
-        // Don't fail the build, just log the error
-      }
-    }
-  },
+  
   plugins: [
     {
       name: '@electron-forge/plugin-vite',
