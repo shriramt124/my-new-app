@@ -6,133 +6,154 @@ const MainContent = ({ activeTab }) => {
     switch (activeTab) {
       case 'dashboards':
         return (
-          <div className="space-y-8">
-            <div className="text-center">
-              <h2 className="text-3xl font-bold text-slate-100 mb-3">Security Dashboard</h2>
-              <p className="text-lg text-slate-400 max-w-2xl mx-auto">Monitor and manage your cybersecurity infrastructure with real-time threat intelligence and analytics.</p>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {[
-                { title: 'Active Threats', value: '12', change: '-3%', icon: 'fas fa-shield-alt', color: 'red', bg: 'from-red-600 to-red-700', status: 'critical' },
-                { title: 'Protected Assets', value: '2,847', change: '+5%', icon: 'fas fa-server', color: 'emerald', bg: 'from-emerald-600 to-emerald-700', status: 'secure' },
-                { title: 'Network Scans', value: '1,234', change: '+12%', icon: 'fas fa-search', color: 'cyan', bg: 'from-cyan-600 to-cyan-700', status: 'active' },
-                { title: 'Security Score', value: '94%', change: '+2%', icon: 'fas fa-chart-line', color: 'blue', bg: 'from-blue-600 to-blue-700', status: 'good' }
-              ].map((stat, index) => (
-                <div key={index} className="group stat-card transition-all duration-300 hover:scale-105">
-                  <div className="flex items-center justify-between mb-4">
-                    <div>
-                      <p className="text-sm font-medium text-slate-400 mb-1">{stat.title}</p>
-                      <p className="text-3xl font-bold text-slate-100">{stat.value}</p>
-                    </div>
-                    <div className={`p-3 bg-gradient-to-br ${stat.bg} rounded-xl shadow-lg group-hover:shadow-xl group-hover:shadow-${stat.color}-500/20 transition-all duration-300`}>
-                      <i className={`${stat.icon} text-white text-xl`}></i>
-                    </div>
-                  </div>
-                  <div className="flex items-center text-sm">
-                    <span className={`font-semibold px-2 py-1 rounded-full ${
-                      stat.change.startsWith('+') ? 'text-emerald-400 bg-emerald-900/30' : 'text-red-400 bg-red-900/30'
-                    }`}>{stat.change}</span>
-                    <span className="text-slate-500 ml-2">from last scan</span>
-                  </div>
+          <div className="p-6 space-y-6">
+            {/* Page Header */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <div className="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center">
+                  <i className="fas fa-tree text-white text-sm"></i>
                 </div>
-              ))}
-            </div>
-            
-            <div className="bg-slate-900/50 backdrop-blur-sm rounded-2xl shadow-lg border border-slate-700/50 p-8">
-              <h3 className="text-xl font-semibold text-slate-100 mb-6 text-center flex items-center justify-center">
-                <i className="fas fa-bolt text-cyan-400 mr-2"></i>
-                Security Operations Center
-              </h3>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {[
-                  { icon: 'fas fa-shield-virus', label: 'Threat Detection', color: 'red' },
-                  { icon: 'fas fa-chart-bar', label: 'Security Analytics', color: 'cyan' },
-                  { icon: 'fas fa-file-alt', label: 'Incident Reports', color: 'blue' },
-                  { icon: 'fas fa-cogs', label: 'Security Config', color: 'slate' }
-                ].map((action, index) => (
-                  <button key={index} className="action-button">
-                    <i className={`${action.icon} text-2xl mb-2 group-hover:scale-110 transition-transform duration-300`}></i>
-                    <p className="text-sm font-medium">{action.label}</p>
-                  </button>
-                ))}
+                <div>
+                  <h1 className="text-xl font-semibold text-gray-900">Forest Recovery</h1>
+                  <p className="text-sm text-gray-600">Recover and restore your Active Directory forest</p>
+                </div>
+              </div>
+              <div className="flex items-center space-x-3">
+                <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center space-x-2">
+                  <i className="fas fa-sync-alt text-sm"></i>
+                  <span>Refresh</span>
+                </button>
+                <button className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                  <i className="fas fa-bars text-sm"></i>
+                </button>
               </div>
             </div>
-          </div>
-        );
-      
-      case 'directory':
-        return (
-          <div className="space-y-6">
-            <div className="text-center">
-              <h1 className="text-2xl font-bold text-slate-100 mb-2">Active Directory Management</h1>
-              <p className="text-slate-400">Secure directory services and user management</p>
+
+            {/* Filters */}
+            <div className="flex items-center space-x-4">
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Search domains..."
+                  className="w-64 pl-10 pr-4 py-2 text-sm border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+                <i className="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm"></i>
+              </div>
+              
+              <select className="px-3 py-2 text-sm border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option>All Domains</option>
+                <option>Root Domain</option>
+                <option>Child Domains</option>
+              </select>
+              
+              <select className="px-3 py-2 text-sm border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option>All Status</option>
+                <option>Active</option>
+                <option>Warning</option>
+                <option>Error</option>
+              </select>
             </div>
-            <div className="stat-card">
-              <p className="text-slate-300">Directory services monitoring and management tools will be available here.</p>
+
+            {/* Domain Controllers Table */}
+            <div className="bg-white rounded-lg border border-gray-200">
+              <div className="px-6 py-4 border-b border-gray-200">
+                <h3 className="text-lg font-medium text-gray-900">Domain Controllers</h3>
+              </div>
+              
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <input type="checkbox" className="rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Domain</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Domain SID</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Site</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">SAM Account</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Net BIOS</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">FQDN</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">GC</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">RO</th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {[
+                      { type: 'Root', domain: 'company.local', domainSid: 'S-1-5-21-237783...', site: 'Default-First-Site-Name', samAccount: 'DC01$', netBios: 'DC01', fqdn: 'dc01.company.local', gc: true, ro: false },
+                      { type: 'Child', domain: 'sales.company.local', domainSid: 'S-1-5-21-445566...', site: 'Sales-Site', samAccount: 'SALESDC$', netBios: 'SALESDC', fqdn: 'salesdc.sales.company.local', gc: false, ro: false },
+                      { type: 'Child', domain: 'dev.company.local', domainSid: 'S-1-5-21-778899...', site: 'Dev-Site', samAccount: 'DEVDC$', netBios: 'DEVDC', fqdn: 'devdc.dev.company.local', gc: false, ro: false }
+                    ].map((dc, index) => (
+                      <tr key={index} className="hover:bg-gray-50">
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <input type="checkbox" className="rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{dc.type}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{dc.domain}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{dc.domainSid}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{dc.site}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{dc.samAccount}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{dc.netBios}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-600">{dc.fqdn}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {dc.gc ? <i className="fas fa-check text-green-500"></i> : <i className="fas fa-times text-gray-400"></i>}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {dc.ro ? <i className="fas fa-check text-green-500"></i> : <i className="fas fa-times text-gray-400"></i>}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
-          </div>
-        );
-      
-      case 'aws':
-        return (
-          <div className="space-y-6">
-            <div className="text-center">
-              <h1 className="text-2xl font-bold text-slate-100 mb-2">AWS Security Management</h1>
-              <p className="text-slate-400">Cloud security monitoring and compliance</p>
-            </div>
-            <div className="stat-card">
-              <p className="text-slate-300">AWS security tools and monitoring dashboard will be available here.</p>
-            </div>
-          </div>
-        );
-      
-      case 'azure':
-        return (
-          <div className="space-y-6">
-            <div className="text-center">
-              <h1 className="text-2xl font-bold text-slate-100 mb-2">Azure Security Center</h1>
-              <p className="text-slate-400">Microsoft Azure security and compliance management</p>
-            </div>
-            <div className="stat-card">
-              <p className="text-slate-300">Azure security management tools will be available here.</p>
-            </div>
-          </div>
-        );
-      
-      case 'forensics':
-        return (
-          <div className="space-y-6">
-            <div className="text-center">
-              <h1 className="text-2xl font-bold text-slate-100 mb-2">Digital Forensics</h1>
-              <p className="text-slate-400">Evidence collection and incident investigation</p>
-            </div>
-            <div className="stat-card">
-              <p className="text-slate-300">Digital forensics tools and case management will be available here.</p>
+
+            {/* Chart Section */}
+            <div className="bg-white rounded-lg border border-gray-200 p-6">
+              <div className="flex items-center justify-center h-64">
+                <div className="text-center">
+                  <div className="w-32 h-32 bg-gradient-to-br from-blue-100 to-blue-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i className="fas fa-chart-pie text-blue-600 text-3xl"></i>
+                  </div>
+                  <p className="text-sm text-gray-500">Chart visualization will be displayed here</p>
+                  <div className="flex items-center justify-center space-x-6 mt-4">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                      <span className="text-sm text-gray-600">Total Count</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                      <span className="text-sm text-gray-600">Warning</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                      <span className="text-sm text-gray-600">Active</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         );
       
       default:
         return (
-          <div className="text-center py-16">
-            <div className="text-6xl text-slate-600 mb-4">
-              <i className="fas fa-shield-alt"></i>
+          <div className="p-6">
+            <div className="text-center py-16">
+              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i className="fas fa-shield-alt text-gray-400 text-2xl"></i>
+              </div>
+              <h3 className="text-lg font-medium text-gray-900 mb-2">Select a module</h3>
+              <p className="text-gray-500">Choose from the sidebar to access different security tools</p>
             </div>
-            <h3 className="text-xl font-semibold text-slate-300">Select a security module</h3>
-            <p className="text-slate-500 mt-2">Choose from the navigation above to access different security tools</p>
           </div>
         );
     }
   };
 
   return (
-    <div className="flex-1 overflow-y-auto bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 min-h-screen">
-      <div className="p-8">
-        <div className="max-w-7xl mx-auto">
-          {getTabContent()}
-        </div>
-      </div>
+    <div className="bg-gray-50 min-h-full">
+      {getTabContent()}
     </div>
   );
 };
