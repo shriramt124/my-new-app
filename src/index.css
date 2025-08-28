@@ -6,19 +6,39 @@
 @layer base {
   body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: #f9fafb;
+    background: #f8fafc;
     color: #111827;
+  }
+  
+  /* Cybersecurity theme colors */
+  :root {
+    --color-cyber-primary: #4f46e5; /* Indigo */
+    --color-cyber-secondary: #7c3aed; /* Purple */
+    --color-cyber-accent: #0f766e; /* Teal */
+    --color-cyber-success: #059669; /* Emerald */
+    --color-cyber-warning: #d97706; /* Amber */
+    --color-cyber-danger: #dc2626; /* Red */
+    --color-cyber-info: #0284c7; /* Sky */
+  }
+  
+  /* Height utility for main content */
+  .h-screen-minus-header {
+    height: calc(100vh - 140px);
   }
 }
 
 @layer components {
-  /* Clean, minimal button styles */
+  /* Cybersecurity themed button styles */
   .btn-primary {
-    @apply bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 flex items-center space-x-2;
+    @apply bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 flex items-center space-x-2 shadow-sm;
   }
 
   .btn-secondary {
-    @apply bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200;
+    @apply bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 border border-gray-300;
+  }
+
+  .btn-cyber {
+    @apply bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-sm;
   }
 
   /* Card styles */
@@ -34,21 +54,25 @@
     @apply p-6;
   }
 
-  /* Status indicators */
+  /* Cybersecurity status indicators */
   .status-online {
-    @apply w-2 h-2 bg-green-500 rounded-full;
+    @apply w-2.5 h-2.5 bg-teal-500 rounded-full shadow-sm;
   }
 
   .status-warning {
-    @apply w-2 h-2 bg-yellow-500 rounded-full;
+    @apply w-2.5 h-2.5 bg-yellow-500 rounded-full shadow-sm;
   }
 
   .status-error {
-    @apply w-2 h-2 bg-red-500 rounded-full;
+    @apply w-2.5 h-2.5 bg-red-500 rounded-full shadow-sm;
   }
 
   .status-offline {
-    @apply w-2 h-2 bg-gray-400 rounded-full;
+    @apply w-2.5 h-2.5 bg-gray-400 rounded-full;
+  }
+
+  .status-info {
+    @apply w-2.5 h-2.5 bg-indigo-500 rounded-full shadow-sm;
   }
 
   /* Table styles */
@@ -77,22 +101,22 @@
     @apply pl-10 pr-4 py-2 text-sm border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200;
   }
 
-  /* Navigation styles */
+  /* Cybersecurity navigation styles */
   .nav-item {
     @apply flex items-center space-x-3 px-3 py-2.5 rounded-lg transition-all duration-200 text-sm font-medium;
   }
 
   .nav-item-active {
-    @apply bg-blue-50 text-blue-700 border border-blue-200;
+    @apply bg-indigo-50 text-indigo-700 border border-indigo-200 shadow-sm;
   }
 
   .nav-item-inactive {
     @apply text-gray-600 hover:bg-gray-50 hover:text-gray-900;
   }
 
-  /* Sidebar styles */
+  /* Cybersecurity sidebar styles */
   .sidebar {
-    @apply bg-white border-r border-gray-200 flex-shrink-0 transition-all duration-300;
+    @apply bg-white border-r border-gray-200 flex-shrink-0 transition-all duration-300 shadow-sm;
   }
 
   .sidebar-collapsed {
@@ -103,9 +127,9 @@
     @apply w-64;
   }
 
-  /* Professional color scheme */
+  /* Cybersecurity color scheme */
   .bg-primary {
-    @apply bg-blue-600;
+    @apply bg-indigo-600;
   }
 
   .bg-secondary {
@@ -113,7 +137,7 @@
   }
 
   .text-primary {
-    @apply text-blue-600;
+    @apply text-indigo-600;
   }
 
   .text-secondary {
@@ -121,12 +145,16 @@
   }
 
   .border-primary {
-    @apply border-blue-200;
+    @apply border-indigo-200;
   }
 
-  /* Security status colors */
+  .bg-cyber-gradient {
+    @apply bg-gradient-to-r from-indigo-600 to-purple-600;
+  }
+
+  /* Cybersecurity status colors */
   .security-success {
-    @apply bg-green-50 text-green-700 border-green-200;
+    @apply bg-teal-50 text-teal-700 border-teal-200;
   }
 
   .security-warning {
@@ -138,7 +166,11 @@
   }
 
   .security-info {
-    @apply bg-blue-50 text-blue-700 border-blue-200;
+    @apply bg-indigo-50 text-indigo-700 border-indigo-200;
+  }
+
+  .security-purple {
+    @apply bg-purple-50 text-purple-700 border-purple-200;
   }
 }
 
