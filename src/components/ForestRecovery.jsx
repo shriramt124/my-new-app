@@ -102,14 +102,12 @@ const ForestRecovery = ({ isCollapsed }) => {
         <div className="bg-cyber-darker border-b border-cyber-dark/50 px-6 py-4 flex-shrink-0">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-cyber-accent rounded-lg flex items-center justify-center shadow-cyber-sm">
-                  <i className="fas fa-tree text-cyber-black text-sm"></i>
-                </div>
-                <div>
-                  <h1 className="text-xl font-semibold text-cyber-light">Forest Recovery</h1>
-                  <p className="text-sm text-cyber-light/70">Recover and restore your Active Directory forest</p>
-                </div>
+              <div className="w-8 h-8 bg-cyber-accent rounded-lg flex items-center justify-center shadow-cyber-sm">
+                <i className="fas fa-tree text-cyber-black text-sm"></i>
+              </div>
+              <div>
+                <h1 className="text-xl font-semibold text-cyber-light">Forest Recovery</h1>
+                <p className="text-sm text-cyber-light/70">Recover and restore your Active Directory forest</p>
               </div>
             </div>
             
@@ -135,13 +133,14 @@ const ForestRecovery = ({ isCollapsed }) => {
           </div>
         </div>
 
-        {/* Content Area */}
+        {/* Main Content Area - Two Column Layout */}
         <div className="flex flex-1 overflow-hidden">
-          {/* Main Content */}
-          <div className={`flex-1 p-6 flex flex-col min-w-0 overflow-hidden transition-all duration-300 ${
-            isRightSidebarOpen ? 'mr-80' : 'mr-0'
+          {/* Left Section - Main Content */}
+          <div className={`flex flex-col p-6 overflow-hidden transition-all duration-300 ${
+            isRightSidebarOpen ? 'flex-1' : 'w-full'
           }`}>
-            {/* Search and Filter Section */}
+            
+            {/* Row 1: Search and Filter Section */}
             <div className="flex items-center space-x-4 mb-6">
               <div className="relative">
                 <input
@@ -176,15 +175,14 @@ const ForestRecovery = ({ isCollapsed }) => {
               </select>
             </div>
 
-            {/* Table Container */}
-            <div className="bg-cyber-dark rounded-lg border border-cyber-light/10 shadow-cyber-sm flex-1 flex flex-col">
+            {/* Row 2: Data Table Section */}
+            <div className="bg-cyber-dark rounded-lg border border-cyber-light/10 shadow-cyber-sm flex-1 flex flex-col mb-6">
               <div className="px-6 py-4 border-b border-cyber-light/10 bg-cyber-darker">
                 <h3 className="text-lg font-semibold text-cyber-light">Domain Controllers</h3>
               </div>
               
-              {/* Horizontally Scrollable Table */}
               <div className="flex-1 overflow-auto">
-                <table className="w-full text-sm min-w-[500px]">
+                <table className="w-full text-sm min-w-max">
                   <thead className="bg-cyber-darker border-b border-cyber-light/10 sticky top-0 z-10">
                     <tr>
                       <th className="text-left py-3 px-4 font-medium text-cyber-light w-12">
@@ -279,109 +277,109 @@ const ForestRecovery = ({ isCollapsed }) => {
               </div>
             </div>
 
-            {/* Stats Section */}
-            <div className="mt-6">
-              <div className="grid grid-cols-3 gap-4">
-                <div className="bg-cyber-dark rounded-lg border border-cyber-light/10 p-4 text-center">
-                  <div className="text-2xl font-bold text-cyber-accent mb-2">2</div>
-                  <div className="text-sm text-cyber-light/70">AD Forests</div>
-                </div>
-                <div className="bg-cyber-dark rounded-lg border border-cyber-light/10 p-4 text-center">
-                  <div className="text-2xl font-bold text-cyber-accent mb-2">5</div>
-                  <div className="text-sm text-cyber-light/70">AD Domains</div>
-                </div>
-                <div className="bg-cyber-dark rounded-lg border border-cyber-light/10 p-4 text-center">
-                  <div className="text-2xl font-bold text-cyber-accent mb-2">12</div>
-                  <div className="text-sm text-cyber-light/70">Domain Controllers</div>
-                </div>
+            {/* Row 3: Stats Section */}
+            <div className="grid grid-cols-3 gap-4">
+              <div className="bg-cyber-dark rounded-lg border border-cyber-light/10 p-4 text-center shadow-cyber-sm">
+                <div className="text-2xl font-bold text-cyber-accent mb-2">2</div>
+                <div className="text-sm text-cyber-light/70">AD Forests</div>
+              </div>
+              <div className="bg-cyber-dark rounded-lg border border-cyber-light/10 p-4 text-center shadow-cyber-sm">
+                <div className="text-2xl font-bold text-cyber-accent mb-2">5</div>
+                <div className="text-sm text-cyber-light/70">AD Domains</div>
+              </div>
+              <div className="bg-cyber-dark rounded-lg border border-cyber-light/10 p-4 text-center shadow-cyber-sm">
+                <div className="text-2xl font-bold text-cyber-accent mb-2">12</div>
+                <div className="text-sm text-cyber-light/70">Domain Controllers</div>
               </div>
             </div>
           </div>
 
-          {/* Right Sidebar */}
-          <div className={`fixed right-0 top-0 bottom-0 bg-cyber-darker border-l border-cyber-dark/30 transition-all duration-300 overflow-y-auto z-40 ${
-            isRightSidebarOpen ? 'w-80 translate-x-0' : 'w-80 translate-x-full'
+          {/* Right Section - Information Panel */}
+          <div className={`bg-cyber-darker border-l border-cyber-dark/30 flex-shrink-0 transition-all duration-300 overflow-hidden ${
+            isRightSidebarOpen ? 'w-80' : 'w-0'
           }`}>
-            <div className="h-full flex flex-col">
-              {/* Sidebar Header */}
-              <div className="p-4 border-b border-cyber-dark/30 bg-cyber-darker flex-shrink-0">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-lg font-semibold text-cyber-light">Information Panel</h3>
-                  <button
-                    onClick={() => setIsRightSidebarOpen(false)}
-                    className="text-cyber-light/50 hover:text-cyber-light transition-colors"
-                  >
-                    <i className="fas fa-times"></i>
-                  </button>
-                </div>
-              </div>
-
-              {/* Sidebar Content */}
-              <div className="flex-1 p-4 space-y-6 overflow-y-auto">
-                {/* Dependencies Section */}
-                <div className="bg-cyber-dark rounded-lg border border-cyber-light/10 p-4">
-                  <div className="flex items-center space-x-2 mb-4">
-                    <i className="fas fa-link text-cyber-accent"></i>
-                    <h4 className="font-semibold text-cyber-light">Dependencies</h4>
-                  </div>
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-cyber-light/70">DNS Services</span>
-                      <div className="w-3 h-3 bg-cyber-accent rounded-full"></div>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-cyber-light/70">LDAP Connection</span>
-                      <div className="w-3 h-3 bg-cyber-accent rounded-full"></div>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-cyber-light/70">Kerberos Auth</span>
-                      <div className="w-3 h-3 bg-cyber-accent rounded-full"></div>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-cyber-light/70">Replication</span>
-                      <div className="w-3 h-3 bg-cyber-accent rounded-full"></div>
-                    </div>
+            {isRightSidebarOpen && (
+              <div className="w-80 h-full flex flex-col">
+                {/* Sidebar Header */}
+                <div className="p-4 border-b border-cyber-dark/30 bg-cyber-darker flex-shrink-0">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-lg font-semibold text-cyber-light">Information Panel</h3>
+                    <button
+                      onClick={() => setIsRightSidebarOpen(false)}
+                      className="text-cyber-light/50 hover:text-cyber-light transition-colors"
+                    >
+                      <i className="fas fa-times"></i>
+                    </button>
                   </div>
                 </div>
 
-                {/* Recent Activities Section */}
-                <div className="bg-cyber-dark rounded-lg border border-cyber-light/10 p-4">
-                  <div className="flex items-center space-x-2 mb-4">
-                    <i className="fas fa-clock text-cyber-accent"></i>
-                    <h4 className="font-semibold text-cyber-light">Recent Activities</h4>
-                  </div>
-                  <div className="space-y-3">
-                    {recentActivity.map((activity, index) => (
-                      <div key={index} className="flex items-start space-x-3">
-                        <div className="w-2 h-2 bg-cyber-accent rounded-full mt-2 flex-shrink-0"></div>
-                        <div className="flex-1">
-                          <div className="text-sm font-medium text-cyber-light">{activity.action}</div>
-                          <div className="text-sm text-cyber-light/70">{activity.target}</div>
-                          <div className="text-xs text-cyber-light/50 mt-1">{activity.time}</div>
-                        </div>
+                {/* Sidebar Content */}
+                <div className="flex-1 p-4 space-y-6 overflow-y-auto">
+                  {/* Dependencies Section */}
+                  <div className="bg-cyber-dark rounded-lg border border-cyber-light/10 p-4">
+                    <div className="flex items-center space-x-2 mb-4">
+                      <i className="fas fa-link text-cyber-accent"></i>
+                      <h4 className="font-semibold text-cyber-light">Dependencies</h4>
+                    </div>
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-cyber-light/70">DNS Services</span>
+                        <div className="w-3 h-3 bg-cyber-accent rounded-full"></div>
                       </div>
-                    ))}
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-cyber-light/70">LDAP Connection</span>
+                        <div className="w-3 h-3 bg-cyber-accent rounded-full"></div>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-cyber-light/70">Kerberos Auth</span>
+                        <div className="w-3 h-3 bg-cyber-accent rounded-full"></div>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-cyber-light/70">Replication</span>
+                        <div className="w-3 h-3 bg-cyber-accent rounded-full"></div>
+                      </div>
+                    </div>
                   </div>
-                </div>
 
-                {/* Status Summary */}
-                <div className="bg-cyber-dark rounded-lg border border-cyber-light/10 p-4">
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-sm text-cyber-light/70">Status</span>
-                    <span className="text-sm text-cyber-accent font-medium">Ready</span>
+                  {/* Recent Activities Section */}
+                  <div className="bg-cyber-dark rounded-lg border border-cyber-light/10 p-4">
+                    <div className="flex items-center space-x-2 mb-4">
+                      <i className="fas fa-clock text-cyber-accent"></i>
+                      <h4 className="font-semibold text-cyber-light">Recent Activities</h4>
+                    </div>
+                    <div className="space-y-3">
+                      {recentActivity.map((activity, index) => (
+                        <div key={index} className="flex items-start space-x-3">
+                          <div className="w-2 h-2 bg-cyber-accent rounded-full mt-2 flex-shrink-0"></div>
+                          <div className="flex-1">
+                            <div className="text-sm font-medium text-cyber-light">{activity.action}</div>
+                            <div className="text-sm text-cyber-light/70">{activity.target}</div>
+                            <div className="text-xs text-cyber-light/50 mt-1">{activity.time}</div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                  <div className="text-xs text-cyber-light/50 mb-4">Last refresh: 2:15 PM</div>
-                  
-                  <div className="pt-3 border-t border-cyber-light/10">
-                    <div className="flex items-center space-x-2 text-sm text-cyber-light/70">
-                      <i className="fas fa-exclamation-triangle text-cyber-yellow"></i>
-                      <span>1 warning</span>
-                      <button className="text-cyber-accent hover:text-cyber-accent/80 text-xs">View Logs</button>
+
+                  {/* Status Summary */}
+                  <div className="bg-cyber-dark rounded-lg border border-cyber-light/10 p-4">
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-sm text-cyber-light/70">Status</span>
+                      <span className="text-sm text-cyber-accent font-medium">Ready</span>
+                    </div>
+                    <div className="text-xs text-cyber-light/50 mb-4">Last refresh: 2:15 PM</div>
+                    
+                    <div className="pt-3 border-t border-cyber-light/10">
+                      <div className="flex items-center space-x-2 text-sm text-cyber-light/70">
+                        <i className="fas fa-exclamation-triangle text-cyber-yellow"></i>
+                        <span>1 warning</span>
+                        <button className="text-cyber-accent hover:text-cyber-accent/80 text-xs">View Logs</button>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
