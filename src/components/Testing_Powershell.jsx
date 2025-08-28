@@ -8,13 +8,13 @@ function TestingPowerShell() {
     const fetchData = async () => {
         setLoading(true);
         try {
-            // Example: Get list of processes
-            const command = "Get-Process | Select-Object -Property Name, Id, CPU | ConvertTo-Json";
+            // Execute the mock API PowerShell script
+            const command = ".\\scripts\\sample_api.ps1";
 
             const result = await window.electronAPI.runPowerShellCommand(command);
 
             if (result.success) {
-                // Parse JSON if PowerShell returned JSON
+                // Parse JSON from the script's output
                 const parsed = JSON.parse(result.output);
                 setData(parsed);
             } else {
@@ -31,7 +31,7 @@ function TestingPowerShell() {
         <div>
             <h1>PowerShell Data in Electron + React</h1>
             <button onClick={fetchData} disabled={loading}>
-                {loading ? 'Loading...' : 'Run PowerShell'}
+                {loading ? 'Loading...' : 'Run PowerShell & Get Mock Data'}
             </button>
 
             <pre>
