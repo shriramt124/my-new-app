@@ -36,7 +36,8 @@ const Header = ({ currentUser, onLogout }) => {
         { icon: 'fas fa-plus-circle', label: 'New Dashboard', desc: 'Create a new dashboard from scratch', path: '/dashboards/new' },
         { icon: 'fas fa-palette', label: 'Templates', desc: 'Use pre-built dashboard templates', path: '/dashboards/templates' },
         { icon: 'fas fa-eye', label: 'Preview Mode', desc: 'Preview your dashboard', path: '/dashboards/preview' },
-        { icon: 'fas fa-download', label: 'Export Data', desc: 'Export dashboard data', path: '/dashboards/export' }
+        { icon: 'fas fa-download', label: 'Export Data', desc: 'Export dashboard data', path: '/dashboards/export' },
+        { icon: 'fas fa-download', label: 'Testing', desc: 'Testing', path: '/testing' }
       ]
     },
     {

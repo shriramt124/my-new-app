@@ -10,6 +10,7 @@ import AzureContent from './components/AzureContent';
 import ForensicsContent from './components/ForensicsContent';
 import LoginScreen from './components/LoginScreen';
 import Cleanup from './components/Cleanup';
+import TestingPowerShell from './components/Testing_Powershell';
 
 // Dashboard Components
 const NewDashboard = () => <div className="p-8"><h1 className="text-2xl font-bold">New Dashboard</h1></div>;
@@ -44,6 +45,10 @@ const EvidenceSearch = () => <div className="p-8"><h1 className="text-2xl font-b
 const NewCase = () => <div className="p-8"><h1 className="text-2xl font-bold">New Forensics Case</h1></div>;
 const GenerateReport = () => <div className="p-8"><h1 className="text-2xl font-bold">Generate Report</h1></div>;
 const EvidenceCapture = () => <div className="p-8"><h1 className="text-2xl font-bold">Evidence Capture</h1></div>;
+
+
+//testing component 
+ 
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -140,6 +145,10 @@ const App = () => {
           <Route path="/forensics/new-case" element={<NewCase />} />
           <Route path="/forensics/generate-report" element={<GenerateReport />} />
           <Route path="/forensics/evidence-capture" element={<EvidenceCapture />} />
+
+
+          {/* Testign powershell route */}
+          <Route path="/testing" element={<TestingPowerShell />} />
         </Routes>
       </div>
     </HashRouter>

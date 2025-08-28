@@ -1,6 +1,7 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'node:path';
 import started from 'electron-squirrel-startup';
+const { exec } = require('child_process');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
@@ -14,6 +15,7 @@ const createWindow = () => {
     height: 600,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
+      contextIsolation:true
     },
   });
 
@@ -54,3 +56,21 @@ app.on('window-all-closed', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
+
+
+// Handle IPC: Run PowerShell command
+ipcMain.handle('run-powershell', async (event, command) => {
+  return new Promise((resolve, reject) => {
+    exec(`powershell -Command "${command}"`, (error, stdout, stderr) => {
+      if (error) {
+        console.error('PowerShell Error:', error);
+        return resolve({ success: false, error: error.message, output: stderr });
+      }
+      if (stderr) {
+        console.warn('PowerShell stderr:', stderr);
+        // Sometimes non-error output goes to stderr, but we still accept stdout
+      }
+      resolve({ success: true, output: stdout.trim() });
+    });
+  });
+});
