@@ -114,18 +114,14 @@ const ForestRecovery = ({ isCollapsed }) => {
             </div>
             
             <div className="flex items-center space-x-3">
-              <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors flex items-center space-x-2">
-                <i className="fas fa-sync-alt text-sm"></i>
+              <button className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center space-x-2">
+                <i className="fas fa-sync-alt text-xs"></i>
                 <span>Refresh</span>
               </button>
               
               <button
                 onClick={() => setIsRightSidebarOpen(!isRightSidebarOpen)}
-                className={`p-2 rounded-lg transition-colors ${
-                  isRightSidebarOpen 
-                    ? 'bg-blue-600 text-white' 
-                    : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
-                }`}
+                className="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md transition-colors"
                 title="Toggle Dependencies and Recent Activity"
               >
                 <i className="fas fa-bars text-sm"></i>
