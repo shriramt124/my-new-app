@@ -5,7 +5,18 @@ module.exports = {
   packagerConfig: {
     asar: {
       unpack: "{scripts/**/*,scripts}"
-    }
+    },
+    timeout: 300000, // 5 minutes timeout
+    ignore: [
+      /node_modules\/\.cache/,
+      /\.vite/,
+      /out/,
+      /attached_assets/,
+      /\.git/,
+      /\.replit/,
+      /README\.md/,
+      /\.gitignore/
+    ]
   },
   rebuildConfig: {},
   makers: [
